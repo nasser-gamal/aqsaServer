@@ -1,0 +1,49 @@
+ في حالة لم يتغير البنك 
+
+amount => 2000 => 2500
+providerFees => 10 => 12
+providerRevenue => 20 => 20
+balanceBefore => 10000
+balanceAfter => 12000
+profit = 10;
+
+trausrey => 60
+
+bankAccount => 12000
+
+
+
+totalAmount = 2500;
+totalAmountdeffreance = 2500 - 2000 = 500;
+newbankAccountAmount = bankAccountAmount + totalAmountdeffreance = 12500;
+balanceAfter = newbankAccountAmount;
+calcProfit = providerRevenue - providerFees => 20 - 12 = 8;
+newProfit = calcProfit - profit => 8 - 10 = -2;
+trausrey = trausrey.amount + newProfit => 60 + -2 = 58
+
+
+
+
+
+
+oldBankAccount = balanceBefore;
+newbankAccount = newbankAccount.balance + amountTotal
+balanceBefore = newbankAccount.balance
+balanceAfter = balance + amountTotal
+
+
+
+
+
+
+
+
+
+
+
+Role => superAdmin - admin - agent
+links => name - ..etc
+pages => name - linkId ..etc
+rolePages => linksId - roleId
+pageClaims => name - linksId => users => users.view - users.create - users.update - users.delete
+roleAccessControl => pageClaims - roleId

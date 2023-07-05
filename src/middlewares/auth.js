@@ -1,0 +1,22 @@
+import BadRequestError from '../utils/badRequestError.js';
+import jwt from 'jsonwebtoken';
+import constants from '../utils/constants.js';
+
+export const isAuth = (req, res, next) => {
+  try {
+    const { token } = req.cookies;
+    const decodeToken = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decodeToken;
+    next();
+  } catch (err) {
+    throw new BadRequestError(constants.UNAUTHORIZED, 401);
+  }
+};
+
+export const checkUserRole = (requiredRoles) => (req, res, next) => {
+  if (requiredRoles.includes(req.user.role.name)) {
+    next();
+  } else {
+    throw new BadRequestError(constants.UNAUTHORIZED, 401);
+  }
+};
