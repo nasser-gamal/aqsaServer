@@ -13,7 +13,6 @@ export const createOne = async (data) => {
 
 export const updateOne = async (userId, data) => {
   try {
-    console.log(userId, data);
     const user = await User.update(
       {
         ...data,
@@ -103,9 +102,10 @@ export const findById = async (userId) => {
   }
 };
 
-export const findAll = async (query) => {
+export const findAll = async (whereClause, query) => {
   try {
     const users = await User.findAll({
+      where: whereClause,
       include: [
         {
           model: Role,

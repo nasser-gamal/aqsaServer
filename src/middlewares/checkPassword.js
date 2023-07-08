@@ -5,8 +5,7 @@ import constants from '../utils/constants.js';
 export const checkPassword = async (req, res, next) => {
   try {
     const { password } = req.body;
-    // const userId = req.user.id;
-    const userId = 7;
+    const userId = req.user.id;
     const user = await userRepository.findById(userId);
 
     const matchedPassword = await user.comparePassword(password);

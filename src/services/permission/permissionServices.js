@@ -18,7 +18,6 @@ const isRoleExist = async (roleId) => {
 export const createPermmission = async (data) => {
   const { links, roleId } = data;
 
-  console.log(data)
   await isRoleExist(roleId);
 
   links.map(async (linkId) => {

@@ -42,7 +42,7 @@ const findSegment = async (serviceId, amountTotal) => {
 };
 
 const calcCommission = (amountTotal, percentage) => {
-  let commission = percentage * amountTotal;
+  let commission = (percentage / 100) * amountTotal;
   return commission;
 };
 
@@ -50,14 +50,12 @@ export const createCommission = async (userId, data) => {
   const { agentId, commissions } = data;
 
   await isAgentExist(agentId);
-  console.log(commissions);
   const lastCommissions = await Promise.all(
     commissions.map(async (commission) => {
       const segment = await findSegment(
         commission.serviceId,
         commission.amountTotal
       );
-      console.log(segment);
       const calccommission = calcCommission(
         commission.amountTotal,
         segment.percentage
@@ -76,19 +74,15 @@ export const createCommission = async (userId, data) => {
 };
 
 export const updateCommission = async (commissionId, data) => {
-  const { amountTotal, count, note, serviceId, agentId } = data;
-
+  const { amountTotal, count, segment } = data;
   await isCommissionExist(commissionId);
-  await isCategoryExist(serviceId);
-  await isAgentExist(agentId);
+  await isCategoryExist(segment.service.id);
 
-  const segment = await findSegment(serviceId, amountTotal);
-  const commission = calcCommission(amountTotal, segment.percentage);
+  const getSegment = await findSegment(segment.service.id, amountTotal);
+  const commission = calcCommission(amountTotal, getSegment.percentage);
 
   await commissionRepository.updateOne(commissionId, {
     amountTotal,
-    note,
-    agentId,
     commission,
     count,
     segmentId: segment.id,
@@ -147,7 +141,6 @@ export const findAllCommissions = async (queryParams) => {
     return acc + commission.commission;
   }, 0);
 
-  console.log('Total Amount:', totalAmount);
   return { commissions, pagination, totalAmount, totalCommissions };
 };
 

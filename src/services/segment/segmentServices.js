@@ -57,7 +57,6 @@ export const updateSegment = async (segmentId, data) => {
   };
   const existSegment = await isSegmentExist(query);
 
-  console.log('------------------------------------', existSegment);
 
   if (existSegment) {
     throw new BadRequestError(constants.SEGMENT_EXIST);

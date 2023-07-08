@@ -13,8 +13,8 @@ const isRoleExist = async (roleId) => {
   return checkResourceExists(role, constants.ROLE_NOT_FOUND);
 };
 
-const isUserExist = async (userId) => {
-  const user = await userRepository.findById(userId);
+const isUserExist = async (agentId) => {
+  const user = await userRepository.findById(agentId);
   return checkResourceExists(user, constants.USER_NOT_FOUND);
 };
 
@@ -90,9 +90,11 @@ export const createAgent = async (userData) => {
   });
 
   let message = `الرقم السري الخاص بك ${password}`;
-  // const response = await sendSMSMessage(phoneNumber, message);
+  const response = await sendSMSMessage(phoneNumber, message);
 
-  // console.log(response);
+  if (response.code !== 1901) {
+    throw new BadRequestError(constants.SMS_ERROR);
+  }
 
   return {
     message: constants.CREATE_USER_SUCCESS,
@@ -113,7 +115,6 @@ export const updateAgent = async (userId, userData) => {
   } = userData;
 
   await isUserExist(userId);
-  console.log(userId);
 
   await isDataTaken(userId, phoneNumber, email, accountNumber, nationalId);
 
@@ -129,10 +130,8 @@ export const updateAgent = async (userId, userData) => {
   return { message: constants.UPDATE_USER_SUCCESS };
 };
 
-export const updatePassword = async (userId) => {
-  const user = await isUserExist(userId);
-
-  // await comparePassword(user, password);
+export const updatePassword = async (agentId) => {
+  const user = await isUserExist(agentId);
 
   const password = generatePassword();
 
@@ -140,15 +139,14 @@ export const updatePassword = async (userId) => {
 
   const hashPassword = await user.hashPassword(password);
 
-  await userRepository.updateOne(userId, {
+  await userRepository.updateOne(agentId, {
     password: hashPassword,
   });
 
-  // const response = await sendSMSMessage(user.phoneNumber, message);
-  // console.log(response);
-  // if (response.code !== 1901) {
-  //   throw new BadRequestError(constants.SMS_ERROR);
-  // }
+  const response = await sendSMSMessage(user.phoneNumber, message);
+  if (response.code !== 1901) {
+    throw new BadRequestError(constants.SMS_ERROR);
+  }
 
   return { message: constants.UPDATE_PASSWORD_SUCCESS };
 };
@@ -168,19 +166,16 @@ export const updateStatus = async (userId) => {
 export const deleteAgent = async (userId) => {
   await isUserExist(userId);
 
-  await userRepository.deleteOne(userId);
+  await userRepository.updateOne(userId, { isActive: false });
 
   return { message: constants.DELETE_USER_SUCCESS };
 };
 
 export const getAllAgents = async () => {
-  console.log(
-    '0-----------------------------------------------------------------------------------'
+  const users = await userRepository.findAll(
+    { isActive: true },
+    { name: 'agent' }
   );
-  const users = await userRepository.findAll({
-    name: 'agent',
-    // isActive: true,
-  });
 
   return { users };
 };

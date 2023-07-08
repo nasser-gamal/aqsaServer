@@ -1,6 +1,5 @@
 import * as agentServices from '../../services/auth/agentServices.js';
 
-
 export const getAllAgents = async (req, res, next) => {
   try {
     const users = await agentServices.getAllAgents();
@@ -39,7 +38,6 @@ export const updateAgent = async (req, res, next) => {
 export const updatePassword = async (req, res, next) => {
   try {
     const { userId } = req.params;
-
     const { message } = await agentServices.updatePassword(userId);
 
     return res.status(200).json({ message: message });

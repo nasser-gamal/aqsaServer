@@ -11,13 +11,16 @@ router.route(links.segment.GET_SEGMENTS).get(segmentControllers.getAllSegments);
 router
   .route(links.segment.GET_SEGMENT)
   .get(
-    // auth.isAuth,
-     segmentControllers.getSegment);
+    auth.isAuth,
+    auth.checkUserRole(['superAdmin', 'admin']),
+    segmentControllers.getSegment
+  );
 
 router
   .route(links.segment.CREATE_SEGMENT)
   .post(
-    // auth.isAuth,
+    auth.isAuth,
+    auth.checkUserRole(['superAdmin', 'admin']),
     validate.segmentValidate,
     validate.validateInputs,
     segmentControllers.addSegment
@@ -26,7 +29,8 @@ router
 router
   .route(links.segment.UPDATE_SEGMENT)
   .put(
-    // auth.isAuth,
+    auth.isAuth,
+    auth.checkUserRole(['superAdmin', 'admin']),
     validate.segmentValidate,
     validate.validateInputs,
     segmentControllers.updateSegment
@@ -35,7 +39,9 @@ router
 router
   .route(links.segment.DELETE_SEGMENT)
   .delete(
-    // auth.isAuth,
-     segmentControllers.deleteSegment);
+    auth.isAuth,
+    auth.checkUserRole(['superAdmin', 'admin']),
+    segmentControllers.deleteSegment
+  );
 
 export default router;

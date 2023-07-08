@@ -56,8 +56,6 @@ export const findAll = async (
   sort
 ) => {
   try {
-    console.log(whereClause);
-    console.log(commissionQuery);
     const pageNumber = +page || 1;
     const itemPerPage = +limit || 100;
     const orderBy = order || 'createdAt';

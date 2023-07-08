@@ -11,7 +11,6 @@ const isLinkExist = async (linkId) => {
 
 export const createPageClaim = async (data) => {
   const { claims, systemMenuId } = data;
-  console.log(data)
   await isLinkExist(systemMenuId);
 
   claims.map((claim) => {

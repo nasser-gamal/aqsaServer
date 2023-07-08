@@ -76,9 +76,11 @@ export const createUser = async (userData) => {
   });
 
   let message = `الرقم السري الخاص بك ${password}`;
-  // const response = await sendSMSMessage(phoneNumber, message);
 
-  // console.log(response);
+  const response = await sendSMSMessage(phoneNumber, message);
+  if (response.code !== 1901) {
+    throw new BadRequestError(constants.SMS_ERROR);
+  }
 
   return {
     message: constants.CREATE_USER_SUCCESS,
@@ -132,11 +134,11 @@ export const updatePassword = async (userId) => {
     password: hashPassword,
   });
 
-  // const response = await sendSMSMessage(user.phoneNumber, message);
-  // console.log(response);
-  // if (response.code !== 1901) {
-  //   throw new BadRequestError(constants.SMS_ERROR);
-  // }
+  const response = await sendSMSMessage(user.phoneNumber, message);
+
+  if (response.code !== 1901) {
+    throw new BadRequestError(constants.SMS_ERROR);
+  }
 
   return { message: constants.UPDATE_PASSWORD_SUCCESS };
 };
@@ -156,15 +158,15 @@ export const updateStatus = async (userId) => {
 export const deleteUser = async (userId) => {
   await isUserExist(userId);
 
-  await userRepository.deleteOne(userId);
+  await userRepository.updateOne(userId, { isActive: false });
 
   return { message: constants.DELETE_USER_SUCCESS };
 };
 
 export const getAllAdmins = async () => {
-  const users = await userRepository.findAll({
-    name: 'admin',
-    // isActive: true,
-  });
+  const users = await userRepository.findAll(
+    { isActive: true },
+    { name: 'admin' }
+  );
   return { users };
 };

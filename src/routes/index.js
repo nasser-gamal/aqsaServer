@@ -20,14 +20,14 @@ import withdrawRoutes from './transaction/withdrawRoutes.js';
 import transferRoutes from './transaction/transferRoutes.js';
 import commissionRoutes from './commisssion/commissionRoutes.js';
 
-router.use('/role', roleRoutes);
-router.use('/user', userRoutes);
-router.use('/agent', agentRoutes);
-router.use('/auth', authRoutes);
 // router.use('/links', systemMenuRoutes);
 // router.use('/pages', pagesRoutes);
 // router.use('/pageClaim', pageClaimRoutes);
 // router.use('/roleMenu', rolePagesRoutes);
+router.use('/role', roleRoutes);
+router.use('/user', userRoutes);
+router.use('/agent', agentRoutes);
+router.use('/auth', authRoutes);
 router.use('/category', categoryRoutes);
 router.use('/segment', segmentRoutes);
 router.use('/banks', bankRoutes);

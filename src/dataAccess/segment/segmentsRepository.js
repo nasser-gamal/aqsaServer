@@ -41,7 +41,7 @@ export const findAll = async (page, limit, order, sort, whereClause) => {
   try {
     const pageNumber = +page || 1;
     const itemPerPage = +limit || 10;
-    const orderBy = order || 'createdAt';
+    const orderBy = order || 'id';
     const sortBy = sort || 'ASC';
 
     const segments = await Segment.findAndCountAll({

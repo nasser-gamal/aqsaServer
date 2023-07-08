@@ -2,7 +2,6 @@ import * as categoryServices from '../../services/category/categoryServices.js';
 
 export const addCategory = async (req, res, next) => {
   try {
-    console.log('------------------------------------', req.cookies);
     const data = req.body;
     const userId = 7;
     // const userId = req.user.id;
@@ -17,7 +16,6 @@ export const updateCategory = async (req, res, next) => {
   try {
     const data = req.body;
     const { categoryId } = req.params;
-    console.log('------------------------------------', categoryId)
     const { message } = await categoryServices.updateCategory(categoryId, data);
     return res.status(200).json({ message });
   } catch (err) {
