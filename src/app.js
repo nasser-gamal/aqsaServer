@@ -1,27 +1,27 @@
-import express from 'express';
+const express = require('express');
 const app = express();
 
-import cors from 'cors';
-import morgan from 'morgan';
-import cookieParser from 'cookie-parser';
-import dotenv from 'dotenv';
+const cors = require('cors');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
 dotenv.config();
 
-import errorHandler from './middlewares/errorHandler.js';
-import ApiError from './utils/apiError.js';
-import sequelize from './config/database.js';
+const errorHandler = require('./middlewares/errorHandler.js');
+const ApiError = require('./utils/apiError.js');
+const sequelize = require('./config/database.js');
 
-import routes from './routes/index.js';
+const routes = require('./routes/index.js');
 
-import User from './models/auth/userModel.js';
-import Role from './models/auth/roleModel.js';
-import BankAccount from './models/banks/bankAccountModel.js';
-import Bank from './models/banks/bankModel.js';
-import Transaction from './models/transaction/transactionModel.js';
-import Transfer from './models/transaction/transferModel.js';
-import Category from './models/category/categoryModel.js';
-import Segment from './models/segments/segmentsModel.js';
-import Commission from './models/commission/commissionModel.js';
+const User = require('./models/auth/userModel.js');
+const Role = require('./models/auth/roleModel.js');
+const BankAccount = require('./models/banks/bankAccountModel.js');
+const Bank = require('./models/banks/bankModel.js');
+const Transaction = require('./models/transaction/transactionModel.js');
+const Transfer = require('./models/transaction/transferModel.js');
+const Category = require('./models/category/categoryModel.js');
+const Segment = require('./models/segments/segmentsModel.js');
+const Commission = require('./models/commission/commissionModel.js');
 
 const corsOptions = {
   origin: process.env.CLIENT_URL,

@@ -1,7 +1,7 @@
-import Role from '../../models/auth/roleModel.js';
+const Role = require('../../models/auth/roleModel');
 
 
-export const findById = async (roleId) => {
+exports.findById = async (roleId) => {
   try {
     const role = await Role.findByPk(roleId);
     return role;
@@ -10,7 +10,7 @@ export const findById = async (roleId) => {
   }
 };
 
-export const findAll = async () => {
+exports.findAll = async () => {
   try {
     const role = await Role.findAll();
     return role;
@@ -19,7 +19,7 @@ export const findAll = async () => {
   }
 };
 
-export const findOne = async (query) => {
+exports.findOne = async (query) => {
   try {
     const role = await Role.findOne({ where: query });
     return role;
@@ -28,7 +28,7 @@ export const findOne = async (query) => {
   }
 };
 
-export const createOne = async (data) => {
+exports.createOne = async (data) => {
   try {
     const role = await Role.create(data);
     return role;
@@ -37,7 +37,7 @@ export const createOne = async (data) => {
   }
 };
 
-export const updateOne = async (roleId, data) => {
+exports.updateOne = async (roleId, data) => {
   try {
     const role = await Role.update({ data }, { where: { id: roleId } });
     return role;
@@ -46,7 +46,7 @@ export const updateOne = async (roleId, data) => {
   }
 };
 
-export const deleteOne = async (roleId) => {
+exports.deleteOne = async (roleId) => {
   try {
     const role = await Role.destroy({ where: { id: roleId } });
     return role;

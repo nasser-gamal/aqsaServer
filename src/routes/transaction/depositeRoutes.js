@@ -1,10 +1,10 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
 
-import * as depositeControllers from '../../controllers/transaction/depositeControllers.js';
-import links from '../../links/links.js';
-import * as validate from '../../utils/validation.js';
-import * as auth from '../../middlewares/auth.js';
+const depositeControllers = require('../../controllers/transaction/depositeControllers.js');
+const links = require('../../links/links.js');
+const validate = require('../../utils/validation.js');
+const auth = require('../../middlewares/auth.js');
 
 router
   .route(links.transaction.CREATE_TRANSACTION)
@@ -27,4 +27,4 @@ router
 router
   .route(links.transaction.DELETE_TRANSACTION)
   .delete(auth.isAuth, depositeControllers.deleteDeposite);
-export default router;
+module.exports = router;

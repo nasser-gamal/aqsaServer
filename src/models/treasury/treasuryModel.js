@@ -1,5 +1,5 @@
-import Sequelize from 'sequelize';
-import sequelize from '../../config/database.js';
+const Sequelize = require('sequelize');
+const sequelize = require('../../config/database.js');
 
 const Treasury = sequelize.define('treasury', {
   id: {
@@ -14,4 +14,4 @@ const Treasury = sequelize.define('treasury', {
   },
 });
 
-export default Treasury;
+module.exports =   Treasury;

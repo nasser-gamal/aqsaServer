@@ -1,6 +1,6 @@
-import * as categoryServices from '../../services/category/categoryServices.js';
+const categoryServices = require('../../services/category/categoryServices');
 
-export const addCategory = async (req, res, next) => {
+exports.addCategory = async (req, res, next) => {
   try {
     const data = req.body;
     const userId = 7;
@@ -12,7 +12,7 @@ export const addCategory = async (req, res, next) => {
   }
 };
 
-export const updateCategory = async (req, res, next) => {
+exports.updateCategory = async (req, res, next) => {
   try {
     const data = req.body;
     const { categoryId } = req.params;
@@ -23,7 +23,7 @@ export const updateCategory = async (req, res, next) => {
   }
 };
 
-export const deleteCategory = async (req, res, next) => {
+exports.deleteCategory = async (req, res, next) => {
   try {
     const { categoryId } = req.params;
 
@@ -34,7 +34,7 @@ export const deleteCategory = async (req, res, next) => {
   }
 };
 
-export const getAllCategorys = async (req, res, next) => {
+exports.getAllCategorys = async (req, res, next) => {
   try {
     const { categories } = await categoryServices.findAllCategories();
     return res.status(200).json(categories);
@@ -43,7 +43,7 @@ export const getAllCategorys = async (req, res, next) => {
   }
 };
 
-export const getCategory = async (req, res, next) => {
+exports.getCategory = async (req, res, next) => {
   try {
     const { categoryId } = req.params;
 

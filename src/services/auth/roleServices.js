@@ -1,9 +1,9 @@
-import * as userRepository from '../../dataAccess/auth/userRepository.js';
-import * as roleRepository from '../../dataAccess/auth/roleRepository.js';
+const userRepository = require('../../dataAccess/auth/userRepository.js');
+const roleRepository = require('../../dataAccess/auth/roleRepository.js');
 
-import constants from '../../utils/constants.js';
-import { checkResourceExists } from '../../utils/checkResourceExists.js';
-import BadRequestError from '../../utils/badRequestError.js';
+const constants = require('../../utils/constants.js');
+const { checkResourceExists } = require('../../utils/checkResourceExists.js');
+const BadRequestError = require('../../utils/badRequestError.js');
 
 const isRoleExists = async (roleId) => {
   const role = await roleRepository.findById(roleId);
@@ -15,17 +15,17 @@ const isRoleNameExists = async (name) => {
   return roleNameExists;
 };
 
-export const getAllRoles = async () => {
+exports.getAllRoles = async () => {
   const roles = await roleRepository.findAll();
   return { roles };
 };
 
-export const getRoleById = async (roleId) => {
+exports.getRoleById = async (roleId) => {
   const role = await roleRepository.findById(roleId);
   return { role };
 };
 
-export const createRole = async (roleData) => {
+exports.createRole = async (roleData) => {
   const { name, nameAr } = roleData;
 
   const roleNameExists = await isRoleNameExists(name);
@@ -39,7 +39,7 @@ export const createRole = async (roleData) => {
   return { message: constants.CREATE_ROLE_SUCCESS };
 };
 
-export const updateRole = async (roleId, roleData) => {
+exports.updateRole = async (roleId, roleData) => {
   const { name, nameAr } = roleData;
 
   await isRoleExists(roleId);
@@ -49,7 +49,7 @@ export const updateRole = async (roleId, roleData) => {
   return { message: constants.UPDATE_ROLE_SUCCESS };
 };
 
-export const deleteRole = async (roleId) => {
+exports.deleteRole = async (roleId) => {
   await isRoleExists(roleId);
   await roleRepository.deleteOne(roleId);
   return { message: constants.DELETE_ROLE_SUCCESS };

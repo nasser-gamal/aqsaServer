@@ -1,11 +1,11 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
 
-import * as authControllers from '../../controllers/auth/authControllers.js';
-import links from '../../links/links.js';
+const authControllers = require('../../controllers/auth/authControllers.js');
+const links = require('../../links/links.js');
 
-import * as validate from '../../utils/validation.js';
-import * as auth from '../../middlewares/auth.js';
+const validate = require('../../utils/validation.js');
+const auth = require('../../middlewares/auth.js');
 
 router
   .route(links.auth.LOGIN)
@@ -20,4 +20,4 @@ router
     authControllers.logout
   );
 
-export default router;
+module.exports = router;

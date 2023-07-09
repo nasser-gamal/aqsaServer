@@ -1,6 +1,6 @@
-import User from '../../models/auth/userModel.js';
+const User = require('../../models/auth/userModel');
 
-export const getUser = async (query) => {
+exports.getUser = async (query) => {
   try {
     const user = await User.findOne({
       where: query,

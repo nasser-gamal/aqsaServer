@@ -1,7 +1,7 @@
-import * as  bankAccountServices from '../../services/banks/bankAccountServices.js';
+const bankAccountServices = require('../../services/banks/bankAccountServices');
 
 
-export const createBankAccount = async (req, res, next) => {
+exports.createBankAccount = async (req, res, next) => {
   try {
     const data = req.body;
 
@@ -13,7 +13,7 @@ export const createBankAccount = async (req, res, next) => {
   }
 };
 
-export const updateBankAccount = async (req, res, next) => {
+exports.updateBankAccount = async (req, res, next) => {
   try {
     const { bankAccountId } = req.params;
     const data = req.body;
@@ -28,7 +28,7 @@ export const updateBankAccount = async (req, res, next) => {
   }
 };
 
-export const deleteBankAccount = async (req, res, next) => {
+exports.deleteBankAccount = async (req, res, next) => {
   try {
     const { bankAccountId } = req.params;
 
@@ -39,7 +39,7 @@ export const deleteBankAccount = async (req, res, next) => {
   }
 };
 
-export const getAllBankAccounts = async (req, res, next) => {
+exports.getAllBankAccounts = async (req, res, next) => {
   try {
     const banks = await bankAccountServices.getAllBankAccounts();
 
@@ -49,7 +49,7 @@ export const getAllBankAccounts = async (req, res, next) => {
   }
 };
 
-export const getBankAccount = async (req, res, next) => {
+exports.getBankAccount = async (req, res, next) => {
   try {
     const { bankAccountId } = req.params;
 

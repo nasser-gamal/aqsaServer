@@ -1,7 +1,7 @@
-import Treasury from '../../models/treasury/treasuryModel.js';
+const Treasury = require('../../models/treasury/treasuryModel.js');
 
 
-export const findOne = async () => {
+exports.findOne = async () => {
   try {
     const treasury = await Treasury.findOne({});
     return treasury;
@@ -10,7 +10,7 @@ export const findOne = async () => {
   }
 };
 
-export const updateOne = async (treasuryId) => {
+exports.updateOne = async (treasuryId) => {
   try {
     const treasury = await Treasury.update(
       {

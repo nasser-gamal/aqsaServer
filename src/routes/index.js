@@ -1,24 +1,24 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
 
 // Import route files
-import roleRoutes from './auth/roleRoutes.js';
-import userRoutes from './auth/userRoutes.js';
-import agentRoutes from './auth/agentRoutes.js';
-import authRoutes from './auth/authRoutes.js';
-// import systemMenuRoutes from './links/systemMenuRoutes.js';
-// import pagesRoutes from './links/pagesRoutes.js';
-// import pageClaimRoutes from './claims/pageClaimRoutes.js';
-// import rolePagesRoutes from './permmission/rolePagesRoutes.js';
-import categoryRoutes from './category/categoryRoutes.js';
-import segmentRoutes from './segment/segmentRoutes.js';
-import bankAccountsRoutes from './banks/bankAccountRoutes.js';
-import bankRoutes from './banks/bankRoutes.js';
-import transactionRoutes from './transaction/transactionRoutes.js';
-import depositeRoutes from './transaction/depositeRoutes.js';
-import withdrawRoutes from './transaction/withdrawRoutes.js';
-import transferRoutes from './transaction/transferRoutes.js';
-import commissionRoutes from './commisssion/commissionRoutes.js';
+const roleRoutes = require('./auth/roleRoutes.js');
+const userRoutes = require('./auth/userRoutes.js');
+const agentRoutes = require('./auth/agentRoutes.js');
+const authRoutes = require('./auth/authRoutes.js');
+// const systemMenuRoutes = require('./links/systemMenuRoutes.js');
+// const pagesRoutes = require('./links/pagesRoutes.js');
+// const pageClaimRoutes = require('./claims/pageClaimRoutes.js');
+// const rolePagesRoutes = require('./permmission/rolePagesRoutes.js');
+const categoryRoutes = require('./category/categoryRoutes.js');
+const segmentRoutes = require('./segment/segmentRoutes.js');
+const bankAccountsRoutes = require('./banks/bankAccountRoutes.js');
+const bankRoutes = require('./banks/bankRoutes.js');
+const transactionRoutes = require('./transaction/transactionRoutes.js');
+const depositeRoutes = require('./transaction/depositeRoutes.js');
+const withdrawRoutes = require('./transaction/withdrawRoutes.js');
+const transferRoutes = require('./transaction/transferRoutes.js');
+const commissionRoutes = require('./commisssion/commissionRoutes.js');
 
 // router.use('/links', systemMenuRoutes);
 // router.use('/pages', pagesRoutes);
@@ -38,4 +38,4 @@ router.use('/transaction/withdraw', withdrawRoutes);
 router.use('/transaction/transfer', transferRoutes);
 router.use('/commission', commissionRoutes);
 
-export default router;
+module.exports = router;

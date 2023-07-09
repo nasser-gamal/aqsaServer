@@ -3,4 +3,4 @@ const imgPath = (img) => {
   return imgURL;
 };
 
-export default imgPath;
+module.exports = imgPath;

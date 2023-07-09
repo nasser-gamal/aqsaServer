@@ -1,9 +1,9 @@
-import User from '../../models/auth/userModel.js';
-import Category from '../../models/category/categoryModel.js';
-import Segment from '../../models/segments/segmentsModel.js';
-import { pagination } from '../../utils/pagination.js';
+const User = require('../../models/auth/userModel.js');
+const Category = require('../../models/category/categoryModel.js');
+const Segment = require('../../models/segments/segmentsModel.js');
+const { pagination } = require('../../utils/pagination.js');
 
-export const createOne = async (data) => {
+exports.createOne = async (data) => {
   try {
     const segment = await Segment.create(data);
     return segment;
@@ -12,7 +12,7 @@ export const createOne = async (data) => {
   }
 };
 
-export const updateOne = async (segmentId, data) => {
+exports.updateOne = async (segmentId, data) => {
   try {
     const segment = await Segment.update(
       {
@@ -26,7 +26,7 @@ export const updateOne = async (segmentId, data) => {
   }
 };
 
-export const deleteOne = async (segmentId) => {
+exports.deleteOne = async (segmentId) => {
   try {
     const segment = await Segment.destroy({
       where: { id: segmentId },
@@ -37,7 +37,7 @@ export const deleteOne = async (segmentId) => {
   }
 };
 
-export const findAll = async (page, limit, order, sort, whereClause) => {
+exports.findAll = async (page, limit, order, sort, whereClause) => {
   try {
     const pageNumber = +page || 1;
     const itemPerPage = +limit || 10;
@@ -72,7 +72,7 @@ export const findAll = async (page, limit, order, sort, whereClause) => {
   }
 };
 
-export const findById = async (segmentId) => {
+exports.findById = async (segmentId) => {
   try {
     const segment = await Segment.findByPk(segmentId, {
       attributes: { exclude: ['createdBy', 'serviceId'] },
@@ -95,7 +95,7 @@ export const findById = async (segmentId) => {
   }
 };
 
-export const findOne = async (query) => {
+exports.findOne = async (query) => {
   try {
     const segment = await Segment.findOne({
       where: query,

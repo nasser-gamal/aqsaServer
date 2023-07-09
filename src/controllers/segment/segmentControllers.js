@@ -1,6 +1,6 @@
-import * as segmentServices from '../../services/segment/segmentServices.js';
+const segmentServices = require('../../services/segment/segmentServices');
 
-export const addSegment = async (req, res, next) => {
+exports.addSegment = async (req, res, next) => {
   try {
     const data = req.body;
     const userId = 7;
@@ -13,7 +13,7 @@ export const addSegment = async (req, res, next) => {
   }
 };
 
-export const updateSegment = async (req, res, next) => {
+exports.updateSegment = async (req, res, next) => {
   try {
     const data = req.body;
     const { segmentId } = req.params;
@@ -25,7 +25,7 @@ export const updateSegment = async (req, res, next) => {
   }
 };
 
-export const deleteSegment = async (req, res, next) => {
+exports.deleteSegment = async (req, res, next) => {
   try {
     const { segmentId } = req.params;
 
@@ -36,7 +36,7 @@ export const deleteSegment = async (req, res, next) => {
   }
 };
 
-export const getAllSegments = async (req, res, next) => {
+exports.getAllSegments = async (req, res, next) => {
   try {
     const { segments } = await segmentServices.findAllSegments();
     return res.status(200).json(segments);
@@ -45,7 +45,7 @@ export const getAllSegments = async (req, res, next) => {
   }
 };
 
-export const getSegment = async (req, res, next) => {
+exports.getSegment = async (req, res, next) => {
   try {
     const { segmentId } = req.params;
 

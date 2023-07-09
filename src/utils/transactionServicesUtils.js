@@ -1,21 +1,21 @@
-import * as bankAccountRepository from '../dataAccess/banks/bankAccountRepository.js';
-import * as transactionRepository from '../dataAccess/transaction/transactionRepository.js';
-import * as treasuryRepository from '../dataAccess/treasury/treasuryRepository.js';
+const bankAccountRepository = require('../dataAccess/banks/bankAccountRepository.js');
+const transactionRepository = require('../dataAccess/transaction/transactionRepository.js');
+const treasuryRepository = require('../dataAccess/treasury/treasuryRepository.js');
 
-import { checkResourceExists } from './checkResourceExists.js';
-import constants from './constants.js';
+const { checkResourceExists } = require('./checkResourceExists.js');
+const constants = require('./constants.js');
 
-export const isTransactionExists = async (query) => {
+exports.isTransactionExists = async (query) => {
   const transaction = await transactionRepository.findOne(query);
   return checkResourceExists(transaction, constants.TRANSACTIONS_NOT_FOUND);
 };
 
-export const findBankAccount = async (bankAccountId) => {
+exports.findBankAccount = async (bankAccountId) => {
   const bankAccount = await bankAccountRepository.findById(bankAccountId);
   return checkResourceExists(bankAccount, constants.BANK_ACCOUNT_NOT_FOUND);
 };
 
-export const updateBankAccount = async (bankAccount, amountTotal) => {
+exports.updateBankAccount = async (bankAccount, amountTotal) => {
   let balanceBefore = Number(bankAccount.balance);
   const balanceAfter = balanceBefore + Number(amountTotal);
 
@@ -28,18 +28,18 @@ export const updateBankAccount = async (bankAccount, amountTotal) => {
   };
 };
 
-export const findTreasury = async () => {
+exports.findTreasury = async () => {
   const treasury = treasuryRepository.findOne();
   return checkResourceExists(treasury, constants.TREASURY_NOT_FOUND);
 };
 
-export const updateTreasury = async (treasury, amountTotal) => {
+exports.updateTreasury = async (treasury, amountTotal) => {
   await treasury.update({
     amountTotal,
   });
 };
 
-export const profitStatus = (profit) => {
+exports.profitStatus = (profit) => {
   let status;
   if (profit === 0) {
     status = 'لا يوجد';
@@ -52,7 +52,7 @@ export const profitStatus = (profit) => {
 };
 
 
-export const updateTransactionInfo = async (
+exports.updateTransactionInfo = async (
   transaction,
   amount,
   profit,

@@ -1,7 +1,7 @@
-import * as bankServices from '../../services/banks/bankServices.js';
+const bankServices = require('../../services/banks/bankServices');
 
 
-export const createBank = async (req, res, next) => {
+exports.createBank = async (req, res, next) => {
   try {
     const data = req.body;
 
@@ -13,7 +13,7 @@ export const createBank = async (req, res, next) => {
   }
 };
 
-export const updateBank = async (req, res, next) => {
+exports.updateBank = async (req, res, next) => {
   try {
     const { bankId } = req.params;
     const data = req.body;
@@ -28,7 +28,7 @@ export const updateBank = async (req, res, next) => {
   }
 };
 
-export const deleteBank = async (req, res, next) => {
+exports.deleteBank = async (req, res, next) => {
   try {
     const { bankId } = req.params;
 
@@ -39,7 +39,7 @@ export const deleteBank = async (req, res, next) => {
   }
 };
 
-export const getAllBanks = async (req, res, next) => {
+exports.getAllBanks = async (req, res, next) => {
   try {
     const banks = await bankServices.getAllBanks();
 
@@ -49,7 +49,7 @@ export const getAllBanks = async (req, res, next) => {
   }
 };
 
-export const getBank = async (req, res, next) => {
+exports.getBank = async (req, res, next) => {
   try {
     const { bankId } = req.params;
 

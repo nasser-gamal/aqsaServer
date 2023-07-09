@@ -1,5 +1,5 @@
-import Sequelize from 'sequelize';
-import sequelize from '../../config/database.js';
+const Sequelize = require('sequelize');
+const sequelize = require('../../config/database.js');
 
 import bcrypt from 'bcrypt';
 
@@ -57,7 +57,7 @@ const User = sequelize.define('user', {
   },
 });
 
-export default User;
+module.exports = User;
 
 // Hash Password Before Create
 User.beforeCreate(async (user, options) => {

@@ -1,7 +1,7 @@
-import * as userRepository from '../../dataAccess/auth/userRepository.js';
-import constants from '../../utils/constants.js';
-import BadRequestError from '../../utils/badRequestError.js';
-import generateToken from '../../utils/generateToken.js';
+const userRepository = require('../../dataAccess/auth/userRepository.js');
+const constants = require('../../utils/constants.js');
+const BadRequestError = require('../../utils/badRequestError.js');
+const generateToken = require('../../utils/generateToken.js');
 
 const checkPhoneNumber = async (phoneNumber) => {
   const user = await userRepository.findOne({
@@ -24,7 +24,7 @@ const comparePassword = async (user, password) => {
   return matchPassword;
 };
 
-export const userLogin = async (userData) => {
+exports.userLogin = async (userData) => {
   const { phoneNumber, password } = userData;
 
   const user = await checkPhoneNumber(phoneNumber);

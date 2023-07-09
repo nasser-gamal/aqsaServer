@@ -1,6 +1,6 @@
-import * as agentServices from '../../services/auth/agentServices.js';
+const agentServices = require('../../services/auth/agentServices.js');
 
-export const getAllAgents = async (req, res, next) => {
+exports.getAllAgents = async (req, res, next) => {
   try {
     const users = await agentServices.getAllAgents();
 
@@ -10,7 +10,7 @@ export const getAllAgents = async (req, res, next) => {
   }
 };
 
-export const addAgent = async (req, res, next) => {
+exports.addAgent = async (req, res, next) => {
   try {
     const userData = req.body;
 
@@ -22,7 +22,7 @@ export const addAgent = async (req, res, next) => {
   }
 };
 
-export const updateAgent = async (req, res, next) => {
+exports.updateAgent = async (req, res, next) => {
   try {
     const userData = req.body;
     const { userId } = req.params;
@@ -35,7 +35,7 @@ export const updateAgent = async (req, res, next) => {
   }
 };
 
-export const updatePassword = async (req, res, next) => {
+exports.updatePassword = async (req, res, next) => {
   try {
     const { userId } = req.params;
     const { message } = await agentServices.updatePassword(userId);
@@ -46,7 +46,7 @@ export const updatePassword = async (req, res, next) => {
   }
 };
 
-export const updateUserStatus = async (req, res, next) => {
+exports.updateUserStatus = async (req, res, next) => {
   try {
     const { userId } = req.params;
 
@@ -58,7 +58,7 @@ export const updateUserStatus = async (req, res, next) => {
   }
 };
 
-export const deleteAgent = async (req, res, next) => {
+exports.deleteAgent = async (req, res, next) => {
   try {
     const { userId } = req.params;
 

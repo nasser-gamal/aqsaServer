@@ -7,4 +7,4 @@ function generatePassword() {
   return numberString;
 }
 
-export default generatePassword;
+module.exports = generatePassword;

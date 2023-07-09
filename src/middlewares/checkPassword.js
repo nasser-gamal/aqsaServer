@@ -2,7 +2,7 @@ import * as userRepository from '../dataAccess/auth/userRepository.js';
 import BadRequestError from '../utils/badRequestError.js';
 import constants from '../utils/constants.js';
 
-export const checkPassword = async (req, res, next) => {
+exports.checkPassword = async (req, res, next) => {
   try {
     const { password } = req.body;
     const userId = req.user.id;

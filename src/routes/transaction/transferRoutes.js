@@ -1,10 +1,10 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
 
-import * as transferControllers from '../../controllers/transaction/transferControllers.js';
-import links from '../../links/links.js';
-import * as validate from '../../utils/validation.js';
-import * as auth from '../../middlewares/auth.js';
+const transferControllers = require('../../controllers/transaction/transferControllers.js');
+const links = require('../../links/links.js');
+const validate = require('../../utils/validation.js');
+const auth = require('../../middlewares/auth.js');
 
 router
   .route(links.transaction.GET_TRANSACTIONS)
@@ -36,4 +36,4 @@ router
   .route(links.transaction.DELETE_TRANSACTION)
   .delete(auth.isAuth, transferControllers.deleteTransfer);
 
-export default router;
+module.exports = router;

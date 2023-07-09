@@ -1,4 +1,4 @@
-import fs from 'fs';
+const fs = require('fs');
 
 const deleteFile = (path) => {
   fs.unlink(path, (err) => {
@@ -6,4 +6,4 @@ const deleteFile = (path) => {
   });
 };
 
-export default deleteFile;
+module.exports =  deleteFile;

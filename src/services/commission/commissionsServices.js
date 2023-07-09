@@ -1,12 +1,13 @@
-import * as commissionRepository from '../../dataAccess/commission/commissionRepository.js';
-import * as categoryRepository from '../../dataAccess/category/categoryRepository.js';
-import * as userRepository from '../../dataAccess/auth/userRepository.js';
-import * as segmentsRepository from '../../dataAccess/segment/segmentsRepository.js';
+const commissionRepository = require('../../dataAccess/commission/commissionRepository.js');
+const categoryRepository = require('../../dataAccess/category/categoryRepository.js');
+const userRepository = require('../../dataAccess/auth/userRepository.js');
+const segmentsRepository = require('../../dataAccess/segment/segmentsRepository.js');
 
-import { checkResourceExists } from '../../utils/checkResourceExists.js';
-import constants from '../../utils/constants.js';
+const { checkResourceExists } = require('../../utils/checkResourceExists.js');
+const constants = require('../../utils/constants.js');
 
-import { Op } from 'sequelize';
+const { Op } = require('sequelize');
+
 
 const isCommissionExist = async (commissionId) => {
   const commission = await commissionRepository.findById(commissionId);
@@ -46,7 +47,7 @@ const calcCommission = (amountTotal, percentage) => {
   return commission;
 };
 
-export const createCommission = async (userId, data) => {
+exports.createCommission = async (userId, data) => {
   const { agentId, commissions } = data;
 
   await isAgentExist(agentId);
@@ -73,7 +74,7 @@ export const createCommission = async (userId, data) => {
   return { message: constants.CREATE_COMMISSION_SUCCESS };
 };
 
-export const updateCommission = async (commissionId, data) => {
+exports.updateCommission = async (commissionId, data) => {
   const { amountTotal, count, segment } = data;
   await isCommissionExist(commissionId);
   await isCategoryExist(segment.service.id);
@@ -91,14 +92,14 @@ export const updateCommission = async (commissionId, data) => {
   return { message: constants.UPDATE_COMMISSION_SUCCESS };
 };
 
-export const deleteCommission = async (commissionId) => {
+exports.deleteCommission = async (commissionId) => {
   await isCommissionExist(commissionId);
   await commissionRepository.deleteOne(commissionId);
 
   return { message: constants.DELETE_COMMISSION_SUCCESS };
 };
 
-export const findAllCommissions = async (queryParams) => {
+exports.findAllCommissions = async (queryParams) => {
   const { search, agentId, year, month } = queryParams;
 
   const startDate = new Date(year, month - 1, 1);
@@ -144,7 +145,7 @@ export const findAllCommissions = async (queryParams) => {
   return { commissions, pagination, totalAmount, totalCommissions };
 };
 
-export const findCommissionById = async (commissionId) => {
+exports.findCommissionById = async (commissionId) => {
   const commission = await isCommissionExist(commissionId);
   return { commission };
 };

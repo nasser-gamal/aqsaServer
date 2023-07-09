@@ -1,11 +1,12 @@
-import * as segmentsRepository from '../../dataAccess/segment/segmentsRepository.js';
-import * as categoryRepository from '../../dataAccess/category/categoryRepository.js';
+const segmentsRepository = require('../../dataAccess/segment/segmentsRepository.js');
+const categoryRepository = require('../../dataAccess/category/categoryRepository.js');
 
-import BadRequestError from '../../utils/badRequestError.js';
-import { checkResourceExists } from '../../utils/checkResourceExists.js';
-import constants from '../../utils/constants.js';
+const BadRequestError = require('../../utils/badRequestError.js');
+const { checkResourceExists } = require('../../utils/checkResourceExists.js');
+const constants = require('../../utils/constants.js');
 
-import { Op } from 'sequelize';
+const { Op } = require('sequelize');
+
 
 const isCategoryExist = async (serviceId) => {
   const category = await categoryRepository.findById(serviceId);
@@ -17,7 +18,7 @@ const isSegmentExist = async (query) => {
   return segment;
 };
 
-export const createSegment = async (userId, data) => {
+exports.createSegment = async (userId, data) => {
   const { title, start, end, percentage, note, serviceId } = data;
 
   await isCategoryExist(serviceId);
@@ -40,7 +41,7 @@ export const createSegment = async (userId, data) => {
   return { message: constants.CREATE_SEGMENT_SUCCESS };
 };
 
-export const updateSegment = async (segmentId, data) => {
+exports.updateSegment = async (segmentId, data) => {
   const { title, start, end, percentage, note, serviceId, userId } = data;
 
   await isCategoryExist(serviceId);
@@ -75,7 +76,7 @@ export const updateSegment = async (segmentId, data) => {
   return { message: constants.UPDATE_SEGMENT_SUCCESS };
 };
 
-export const deleteSegment = async (segmentId) => {
+exports.deleteSegment = async (segmentId) => {
   const segment = await isSegmentExist({ id: segmentId });
   checkResourceExists(segment, constants.SEGEMNT_NOT_FOUND);
 
@@ -83,12 +84,12 @@ export const deleteSegment = async (segmentId) => {
   return { message: constants.DELETE_SEGMENT_SUCCESS };
 };
 
-export const findAllSegments = async () => {
+exports.findAllSegments = async () => {
   const segments = await segmentsRepository.findAll();
   return { segments };
 };
 
-export const findSegmentById = async (segmentId) => {
+exports.findSegmentById = async (segmentId) => {
   const segment = await segmentsRepository.findById(segmentId);
   checkResourceExists(segment, constants.SEGEMNT_NOT_FOUND);
   return { segment };

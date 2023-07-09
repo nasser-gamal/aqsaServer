@@ -1,10 +1,10 @@
-import User from '../../models/auth/userModel.js';
-import Category from '../../models/category/categoryModel.js';
-import Commission from '../../models/commission/commissionModel.js';
-import Segment from '../../models/segments/segmentsModel.js';
-import { pagination } from '../../utils/pagination.js';
+const User = require('../../models/auth/userModel');
+const Category = require('../../models/category/categoryModel');
+const Commission = require('../../models/commission/commissionModel');
+const Segment = require('../../models/segments/segmentsModel');
+const { pagination } = require('../../utils/pagination');
 
-export const createMany = async (data) => {
+exports.createMany = async (data) => {
   try {
     const commission = await Commission.bulkCreate(data);
     return commission;
@@ -13,7 +13,7 @@ export const createMany = async (data) => {
   }
 };
 
-export const createOne = async (data) => {
+exports.createOne = async (data) => {
   try {
     const commission = await Commission.create(data);
     return commission;
@@ -22,7 +22,7 @@ export const createOne = async (data) => {
   }
 };
 
-export const updateOne = async (commissionId, data) => {
+exports.updateOne = async (commissionId, data) => {
   try {
     const commission = await Commission.update(
       {
@@ -36,7 +36,7 @@ export const updateOne = async (commissionId, data) => {
   }
 };
 
-export const deleteOne = async (commissionId) => {
+exports.deleteOne = async (commissionId) => {
   try {
     const commission = await Commission.destroy({
       where: { id: commissionId },
@@ -47,7 +47,7 @@ export const deleteOne = async (commissionId) => {
   }
 };
 
-export const findAll = async (
+exports.findAll = async (
   whereClause,
   commissionQuery,
   page,
@@ -103,7 +103,7 @@ export const findAll = async (
   }
 };
 
-export const findById = async (commissionId) => {
+exports.findById = async (commissionId) => {
   try {
     const commissions = await Commission.findByPk(commissionId, {
       attributes: { exclude: ['createdBy', 'segmentId', 'agentId'] },
@@ -138,7 +138,7 @@ export const findById = async (commissionId) => {
   }
 };
 
-export const findOne = async (query) => {
+exports.findOne = async (query) => {
   try {
     const commission = await Commission.findOne({
       where: query,

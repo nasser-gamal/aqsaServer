@@ -1,12 +1,13 @@
-import * as userRepository from '../../dataAccess/auth/userRepository.js';
-import * as roleRepository from '../../dataAccess/auth/roleRepository.js';
+const userRepository = require('../../dataAccess/auth/userRepository.js');
+const roleRepository = require('../../dataAccess/auth/roleRepository.js');
 
-import BadRequestError from '../../utils/badRequestError.js';
-import constants from '../../utils/constants.js';
-import generatePassword from '../../utils/generatePassword.js';
-import { checkResourceExists } from '../../utils/checkResourceExists.js';
-import { sendSMSMessage } from '../../utils/sms.js';
-import { Op } from 'sequelize';
+const BadRequestError = require('../../utils/badRequestError.js');
+const constants = require('../../utils/constants.js');
+const generatePassword = require('../../utils/generatePassword.js');
+const { checkResourceExists } = require('../../utils/checkResourceExists.js');
+const { sendSMSMessage } = require('../../utils/sms.js');
+const { Op } = require('sequelize');
+
 
 const isRoleExist = async (roleId) => {
   const role = await roleRepository.findById(roleId);
@@ -51,7 +52,7 @@ const isDataTaken = async (
   }
 };
 
-export const createAgent = async (userData) => {
+exports.createAgent = async (userData) => {
   const {
     userName,
     accountName,
@@ -103,7 +104,7 @@ export const createAgent = async (userData) => {
   };
 };
 
-export const updateAgent = async (userId, userData) => {
+exports.updateAgent = async (userId, userData) => {
   const {
     userName,
     accountName,
@@ -130,7 +131,7 @@ export const updateAgent = async (userId, userData) => {
   return { message: constants.UPDATE_USER_SUCCESS };
 };
 
-export const updatePassword = async (agentId) => {
+exports.updatePassword = async (agentId) => {
   const user = await isUserExist(agentId);
 
   const password = generatePassword();
@@ -151,7 +152,7 @@ export const updatePassword = async (agentId) => {
   return { message: constants.UPDATE_PASSWORD_SUCCESS };
 };
 
-export const updateStatus = async (userId) => {
+exports.updateStatus = async (userId) => {
   const user = await isUserExist(userId);
 
   await userRepository.updateOne(userId, { isActive: !user.isActive });
@@ -163,7 +164,7 @@ export const updateStatus = async (userId) => {
   return { message };
 };
 
-export const deleteAgent = async (userId) => {
+exports.deleteAgent = async (userId) => {
   await isUserExist(userId);
 
   await userRepository.updateOne(userId, { isActive: false });
@@ -171,7 +172,7 @@ export const deleteAgent = async (userId) => {
   return { message: constants.DELETE_USER_SUCCESS };
 };
 
-export const getAllAgents = async () => {
+exports.getAllAgents = async () => {
   const users = await userRepository.findAll(
     { isActive: true },
     { name: 'agent' }

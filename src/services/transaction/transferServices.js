@@ -1,9 +1,9 @@
-import * as transferRepository from '../../dataAccess/transaction/transferRepository.js';
-import * as bankAccountRepository from '../../dataAccess/banks/bankAccountRepository.js';
+const transferRepository = require('../../dataAccess/transaction/transferRepository.js');
+const bankAccountRepository = require('../../dataAccess/banks/bankAccountRepository.js');
 
-import { checkResourceExists } from '../../utils/checkResourceExists.js';
-import constants from '../../utils/constants.js';
-import BadRequestError from '../../utils/badRequestError.js';
+const { checkResourceExists } = require('../../utils/checkResourceExists.js');
+const constants = require('../../utils/constants.js');
+const BadRequestError = require('../../utils/badRequestError.js');
 
 const isBankAccountExist = async (bankAccountId) => {
   const bankAccount = await bankAccountRepository.findById(bankAccountId);
@@ -35,7 +35,7 @@ const updateBankAccountBalance = async (
   });
 };
 
-export const addTransfer = async (userId, data) => {
+exports.addTransfer = async (userId, data) => {
   const { amountTotal, senderId, recipientId, note } = data;
 
   const sender = await isBankAccountExist(senderId);
@@ -71,7 +71,7 @@ export const addTransfer = async (userId, data) => {
   return { message: constants.CREATE_TRANSFER_SUCCESS };
 };
 
-export const updateTransfer = async (transactionId, data) => {
+exports.updateTransfer = async (transactionId, data) => {
   const { amountTotal, note } = data;
 
   const transfer = await isTransferExist(transactionId);
@@ -101,7 +101,7 @@ export const updateTransfer = async (transactionId, data) => {
   return { message: constants.UPDATE_TRANSACTION_SUCCESS };
 };
 
-export const deleteTransfer = async (transactionId) => {
+exports.deleteTransfer = async (transactionId) => {
   const transfer = await isTransferExist(transactionId);
 
   const sender = await isBankAccountExist(transfer.senderId);
@@ -122,12 +122,12 @@ export const deleteTransfer = async (transactionId) => {
   return { message: constants.DELETE_TRANSACTION_SUCCESS };
 };
 
-export const findAllTransfers = async () => {
+exports.findAllTransfers = async () => {
   const { transfers, pagination } = await transferRepository.findAll();
   return { transfers, pagination };
 };
 
-export const findTransfer = async (transactionId) => {
+exports.findTransfer = async (transactionId) => {
   await isTransferExist(transactionId);
   const transfer = await transferRepository.findById(transactionId);
   return { transfer };

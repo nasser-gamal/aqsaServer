@@ -1,6 +1,6 @@
-import ApiError from './apiError.js';
+const ApiError = require('./apiError.js');
 
-export const checkResourceExists = (resource, errorMessage) => {
+exports.checkResourceExists = (resource, errorMessage) => {
   if (!resource) {
     throw new ApiError(errorMessage);
   }
