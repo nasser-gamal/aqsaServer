@@ -1,10 +1,10 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
 
-import * as commissionControllers from '../../controllers/commission/commissionControllers.js';
-import links from '../../links/links.js';
-import * as validate from '../../utils/validation.js';
-import * as auth from '../../middlewares/auth.js';
+const commissionControllers = require('../../controllers/commission/commissionControllers.js');
+const links = require('../../links/links.js');
+const validate = require('../../utils/validation.js');
+const auth = require('../../middlewares/auth.js');
 
 router
   .route(links.commission.GET_COMMISSIONS)
@@ -46,4 +46,4 @@ router
     commissionControllers.deleteCommission
   );
 
-export default router;
+module.exports = router;

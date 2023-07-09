@@ -2,7 +2,7 @@ import BadRequestError from '../utils/badRequestError.js';
 import jwt from 'jsonwebtoken';
 import constants from '../utils/constants.js';
 
-export const isAuth = (req, res, next) => {
+exports.isAuth = (req, res, next) => {
   try {
     const { token } = req.cookies;
     const decodeToken = jwt.verify(token, process.env.JWT_SECRET);
@@ -13,7 +13,7 @@ export const isAuth = (req, res, next) => {
   }
 };
 
-export const checkUserRole = (requiredRoles) => (req, res, next) => {
+exports.checkUserRole = (requiredRoles) => (req, res, next) => {
   if (requiredRoles.includes(req.user.role.name)) {
     next();
   } else {

@@ -1,10 +1,10 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
 
-import * as segmentControllers from '../../controllers/segment/segmentControllers.js';
-import links from '../../links/links.js';
-import * as validate from '../../utils/validation.js';
-import * as auth from '../../middlewares/auth.js';
+const segmentControllers = require('../../controllers/segment/segmentControllers.js');
+const links = require('../../links/links.js');
+const validate = require('../../utils/validation.js');
+const auth = require('../../middlewares/auth.js');
 
 router.route(links.segment.GET_SEGMENTS).get(segmentControllers.getAllSegments);
 
@@ -44,4 +44,4 @@ router
     segmentControllers.deleteSegment
   );
 
-export default router;
+module.exports = router;

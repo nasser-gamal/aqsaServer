@@ -1,6 +1,6 @@
-import * as transactionRepository from '../../dataAccess/transaction/transactionRepository.js';
+const transactionRepository = require('../../dataAccess/transaction/transactionRepository.js');
 
-export const findAllTransactions = async (
+exports.findAllTransactions = async (
   page,
   limit,
   order,

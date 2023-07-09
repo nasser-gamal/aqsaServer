@@ -1,7 +1,7 @@
-import * as authServices from '../../services/auth/authServices.js';
-import constants from '../../utils/constants.js';
+const authServices = require('../../services/auth/authServices');
+const constants = require('../../utils/constants');
 
-export const login = async (req, res, next) => {
+exports.login = async (req, res, next) => {
   try {
     const userData = req.body;
 
@@ -18,7 +18,7 @@ export const login = async (req, res, next) => {
   }
 };
 
-export const logout = (req, res, next) => {
+exports.logout = (req, res, next) => {
   try {
     res.clearCookie('token', {
       httpOnly: true,

@@ -1,5 +1,5 @@
-import Sequelize from 'sequelize';
-import sequelize from '../../config/database.js';
+const Sequelize = require('sequelize');
+const sequelize = require('../../config/database.js');
 
 const Segment = sequelize.define('segment', {
   id: {
@@ -35,4 +35,4 @@ const Segment = sequelize.define('segment', {
   },
 });
 
-export default Segment;
+module.exports =   Segment;

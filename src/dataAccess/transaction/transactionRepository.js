@@ -1,10 +1,10 @@
-import Transaction from '../../models/transaction/transactionModel.js';
-import User from '../../models/auth/userModel.js';
-import BankAccount from '../../models/banks/bankAccountModel.js';
-import Bank from '../../models/banks/bankModel.js';
-import { pagination } from '../../utils/pagination.js';
+const Transaction = require('../../models/transaction/transactionModel.js');
+const User = require('../../models/auth/userModel.js');
+const BankAccount = require('../../models/banks/bankAccountModel.js');
+const Bank = require('../../models/banks/bankModel.js');
+const { pagination } = require('../../utils/pagination.js');
 
-export const createOne = async (data) => {
+exports.createOne = async (data) => {
   try {
     const transaction = await Transaction.create(data);
     return transaction;
@@ -13,7 +13,7 @@ export const createOne = async (data) => {
   }
 };
 
-export const updateOne = async (transactionId, data) => {
+exports.updateOne = async (transactionId, data) => {
   try {
     const transaction = await Transaction.update(
       {
@@ -27,7 +27,7 @@ export const updateOne = async (transactionId, data) => {
   }
 };
 
-export const deleteOne = async (transactionId) => {
+exports.deleteOne = async (transactionId) => {
   try {
     const transaction = await Transaction.destroy({
       where: { id: transactionId },
@@ -38,7 +38,7 @@ export const deleteOne = async (transactionId) => {
   }
 };
 
-export const findAll = async (page, limit, order, sort, whereClause) => {
+exports.findAll = async (page, limit, order, sort, whereClause) => {
   try {
     const pageNumber = +page || 1;
     const itemPerPage = +limit || 2;
@@ -69,7 +69,7 @@ export const findAll = async (page, limit, order, sort, whereClause) => {
   }
 };
 
-export const findById = async (transactionId) => {
+exports.findById = async (transactionId) => {
   try {
     const transaction = await Transaction.findByPk(transactionId, {
       include: [{ model: User }, { model: BankAccount }],
@@ -80,7 +80,7 @@ export const findById = async (transactionId) => {
   }
 };
 
-export const findOne = async (query) => {
+exports.findOne = async (query) => {
   try {
     const transaction = await Transaction.findOne({
       where: query,

@@ -79,4 +79,4 @@ const constants = {
   PASSWORD_WRONG: 'الرقم السري خطأ',
 };
 
-export default constants;
+module.exports = constants;

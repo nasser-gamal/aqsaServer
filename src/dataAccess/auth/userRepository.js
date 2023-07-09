@@ -1,8 +1,8 @@
-import { Op } from 'sequelize';
-import Role from '../../models/auth/roleModel.js';
-import User from '../../models/auth/userModel.js';
+const { Op } = require('sequelize');
+const Role = require('../../models/auth/roleModel');
+const User = require('../../models/auth/userModel');
 
-export const createOne = async (data) => {
+exports.createOne = async (data) => {
   try {
     const user = await User.create(data);
     return user;
@@ -11,7 +11,7 @@ export const createOne = async (data) => {
   }
 };
 
-export const updateOne = async (userId, data) => {
+exports.updateOne = async (userId, data) => {
   try {
     const user = await User.update(
       {
@@ -25,7 +25,7 @@ export const updateOne = async (userId, data) => {
   }
 };
 
-export const deleteOne = async (userId) => {
+exports.deleteOne = async (userId) => {
   try {
     const user = await User.destroy({ where: { id: userId } });
 
@@ -35,7 +35,7 @@ export const deleteOne = async (userId) => {
   }
 };
 
-export const isUserExists = async (
+exports.isUserExists = async (
   phoneNumber,
   email,
   accountNumber,
@@ -60,7 +60,7 @@ export const isUserExists = async (
   return user;
 };
 
-export const isDataTaken = async (
+exports.isDataTaken = async (
   userId,
   phoneNumber,
   email,
@@ -91,7 +91,7 @@ export const isDataTaken = async (
   }
 };
 
-export const findById = async (userId) => {
+exports.findById = async (userId) => {
   try {
     const user = await User.findByPk(userId, {
       include: { model: Role },
@@ -102,7 +102,7 @@ export const findById = async (userId) => {
   }
 };
 
-export const findAll = async (whereClause, query) => {
+exports.findAll = async (whereClause, query) => {
   try {
     const users = await User.findAll({
       where: whereClause,
@@ -119,7 +119,7 @@ export const findAll = async (whereClause, query) => {
   }
 };
 
-export const findOne = async (query) => {
+exports.findOne = async (query) => {
   try {
     const user = await User.findOne({
       where: query,

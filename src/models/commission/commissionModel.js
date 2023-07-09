@@ -1,5 +1,5 @@
-import Sequelize from 'sequelize';
-import sequelize from '../../config/database.js';
+const Sequelize = require('sequelize');
+const sequelize = require('../../config/database.js');
 
 const Commission = sequelize.define('commission', {
   id: {
@@ -32,4 +32,4 @@ const Commission = sequelize.define('commission', {
   },
 });
 
-export default Commission;
+module.exports =  Commission;

@@ -1,10 +1,10 @@
-import User from '../../models/auth/userModel.js';
-import BankAccount from '../../models/banks/bankAccountModel.js';
-import Bank from '../../models/banks/bankModel.js';
-import { pagination } from '../../utils/pagination.js';
-import Transfer from '../../models/transaction/transferModel.js';
+const User = require('../../models/auth/userModel.js');
+const BankAccount = require('../../models/banks/bankAccountModel.js');
+const Bank = require('../../models/banks/bankModel.js');
+const { pagination } = require('../../utils/pagination.js');
+const Transfer = require('../../models/transaction/transferModel.js');
 
-export const createOne = async (data) => {
+exports.createOne = async (data) => {
   try {
     const transfer = await Transfer.create(data);
     return transfer;
@@ -13,7 +13,7 @@ export const createOne = async (data) => {
   }
 };
 
-export const updateOne = async (transferId, data) => {
+exports.updateOne = async (transferId, data) => {
   try {
     const transfer = await Transfer.update(
       {
@@ -27,7 +27,7 @@ export const updateOne = async (transferId, data) => {
   }
 };
 
-export const deleteOne = async (transferId) => {
+exports.deleteOne = async (transferId) => {
   try {
     const transfer = await Transfer.destroy({
       where: { id: transferId },
@@ -38,7 +38,7 @@ export const deleteOne = async (transferId) => {
   }
 };
 
-export const findAll = async (page, limit, order, sort, whereClause) => {
+exports.findAll = async (page, limit, order, sort, whereClause) => {
   try {
     const pageNumber = +page || 1;
     const itemPerPage = +limit || 2;
@@ -80,7 +80,7 @@ export const findAll = async (page, limit, order, sort, whereClause) => {
   }
 };
 
-export const findById = async (transferId) => {
+exports.findById = async (transferId) => {
   try {
     const transfer = await Transfer.findByPk(transferId, {
       include: [
@@ -109,7 +109,7 @@ export const findById = async (transferId) => {
   }
 };
 
-export const findOne = async (query) => {
+exports.findOne = async (query) => {
   try {
     const transfer = await Transfer.findOne({
       where: query,

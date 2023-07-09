@@ -1,8 +1,9 @@
-import Category from '../../models/category/categoryModel.js';
-import { pagination } from '../../utils/pagination.js';
+const Category = require('../../models/category/categoryModel');
+const { pagination } = require('../../utils/pagination');
 
 
-export const createOne = async (data) => {
+
+exports.createOne = async (data) => {
   try {
     const category = await Category.create(data);
     return category;
@@ -11,7 +12,7 @@ export const createOne = async (data) => {
   }
 };
 
-export const updateOne = async (categoryId, data) => {
+exports.updateOne = async (categoryId, data) => {
   try {
     const category = await Category.update(
       {
@@ -25,7 +26,7 @@ export const updateOne = async (categoryId, data) => {
   }
 };
 
-export const deleteOne = async (categoryId) => {
+exports.deleteOne = async (categoryId) => {
   try {
     const category = await Category.destroy({
       where: { id: categoryId },
@@ -36,7 +37,7 @@ export const deleteOne = async (categoryId) => {
   }
 };
 
-export const findAll = async (page, limit, order, sort, whereClause) => {
+exports.findAll = async (page, limit, order, sort, whereClause) => {
   try {
     const pageNumber = +page || 1;
     const itemPerPage = +limit || 20;
@@ -59,7 +60,7 @@ export const findAll = async (page, limit, order, sort, whereClause) => {
   }
 };
 
-export const findById = async (categoryId) => {
+exports.findById = async (categoryId) => {
   try {
     const category = await Category.findByPk(categoryId);
     return category;
@@ -68,7 +69,7 @@ export const findById = async (categoryId) => {
   }
 };
 
-export const findOne = async (query) => {
+exports.findOne = async (query) => {
   try {
     const category = await Category.findOne({
       where: query,

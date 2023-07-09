@@ -1,5 +1,5 @@
-import Sequelize from 'sequelize';
-import sequelize from '../../config/database.js';
+const Sequelize = require('sequelize');
+const sequelize = require('../../config/database.js');
 
 const Transaction = sequelize.define('transaction', {
   id: {
@@ -87,4 +87,4 @@ const Transaction = sequelize.define('transaction', {
   },
 });
 
-export default Transaction;
+module.exports =   Transaction;

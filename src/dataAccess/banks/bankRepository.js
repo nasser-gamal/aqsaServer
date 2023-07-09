@@ -1,8 +1,7 @@
+const BankAccount = require('../../models/banks/bankAccountModel');
+const Bank = require('../../models/banks/bankModel');
 
-import BankAccount from '../../models/banks/bankAccountModel.js';
-import Bank from '../../models/banks/bankModel.js';
-
-export const createOne = async (data) => {
+exports.createOne = async (data) => {
   try {
     const bank = await Bank.create(data);
     return bank;
@@ -11,7 +10,7 @@ export const createOne = async (data) => {
   }
 };
 
-export const updateOne = async (bankId, data) => {
+exports.updateOne = async (bankId, data) => {
   try {
     const bank = await Bank.update(
       {
@@ -25,7 +24,7 @@ export const updateOne = async (bankId, data) => {
   }
 };
 
-export const deleteOne = async (bankId) => {
+exports.deleteOne = async (bankId) => {
   try {
     const bank = await Bank.destroy({ where: { id: bankId } });
     return bank;
@@ -34,7 +33,7 @@ export const deleteOne = async (bankId) => {
   }
 };
 
-export const findById = async (bankId) => {
+exports.findById = async (bankId) => {
   try {
     const bank = await Bank.findByPk(bankId, {
       include: { model: BankAccount },
@@ -45,7 +44,7 @@ export const findById = async (bankId) => {
   }
 };
 
-export const findOne = async (query) => {
+exports.findOne = async (query) => {
   try {
     const banks = await Bank.findOne({ where: query });
     return banks;
@@ -54,7 +53,7 @@ export const findOne = async (query) => {
   }
 };
 
-export const findAll = async () => {
+exports.findAll = async () => {
   try {
     const banks = await Bank.findAll({ include: { model: BankAccount } });
     return banks;

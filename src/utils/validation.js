@@ -1,13 +1,13 @@
 import { body, validationResult } from 'express-validator';
 
 // validation for roles
-export const roleValidate = [
+exports.roleValidate = [
   body('name').trim().not().isEmpty().withMessage('ادخل اسم الصلاحية'),
   body('nameAr').trim().not().isEmpty().withMessage('ادخل اسم الصلاحية'),
 ];
 
 // validation for add new user
-export const userValidate = [
+exports.userValidate = [
   body('accountName').trim().not().isEmpty().withMessage('ادخل اسم الحساب'),
   body('userName').trim().not().isEmpty().withMessage('ادخل اسم صاحب الحساب'),
   body('email').custom((value, { req }) => {
@@ -30,7 +30,7 @@ export const userValidate = [
 ];
 
 // validation for add new Agent
-export const agentValidate = [
+exports.agentValidate = [
   body('nationalId')
     .trim()
     .not()
@@ -49,7 +49,7 @@ export const agentValidate = [
     .withMessage('رقم الحساب غير صالح'),
 ];
 
-export const updateUserValidate = [
+exports.updateUserValidate = [
   body('accountName').trim().not().isEmpty().withMessage('ادخل اسم الحساب'),
   body('userName').trim().not().isEmpty().withMessage('ادخل اسم صاحب الحساب'),
   body('email').custom((value, { req }) => {
@@ -71,16 +71,16 @@ export const updateUserValidate = [
   body('address').trim().not().isEmpty().withMessage('ادخل  العنوان'),
 ];
 
-export const loginValidate = [
+exports.loginValidate = [
   body('phoneNumber').trim().not().isEmpty().withMessage('ادخل رقم الهاتف'),
   body('password').trim().not().isEmpty().withMessage('ادخل كلمة المرور'),
 ];
 
-export const passwordValidate = [
+exports.passwordValidate = [
   body('password').trim().not().isEmpty().withMessage('ادخل  كلمة المرور'),
 ];
 
-export const linkValidate = [
+exports.linkValidate = [
   body('title').trim().not().isEmpty().withMessage('ادخل اسم الصفحة'),
   body('isLink').trim().not().isEmpty().withMessage('حدد دور اللينك'),
   body('pageURL')
@@ -95,7 +95,7 @@ export const linkValidate = [
   body('imgPath').trim().not().isEmpty().withMessage('ادخل مكان حفظ الصورة'),
 ];
 
-export const pageValidate = [
+exports.pageValidate = [
   body('title').trim().not().isEmpty().withMessage('ادخل اسم الصفحة'),
   body('pageURL').trim().not().isEmpty().withMessage('ادخل رابط الصفحة'),
   body('order').trim().not().isEmpty().withMessage('ادخل ترتيب الصفحة'),
@@ -103,11 +103,11 @@ export const pageValidate = [
   body('imgPath').trim().not().isEmpty().withMessage('ادخل مكان حفظ الصورة'),
 ];
 
-export const bankValidate = [
+exports.bankValidate = [
   body('bankName').trim().not().isEmpty().withMessage('ادخل اسم الحساب'),
 ];
 
-export const bankAccountValidate = [
+exports.bankAccountValidate = [
   body('accountName').trim().not().isEmpty().withMessage('ادخل اسم الحساب'),
   body('bankId').trim().not().isEmpty().withMessage('ادخل نوع الحساب'),
   body('bankNumber').trim().not().isEmpty().withMessage('ادخل رقم الحساب'),
@@ -118,7 +118,7 @@ export const bankAccountValidate = [
     .withMessage('ادخل الرصيد الافتتاحي للحساب'),
 ];
 
-export const depositeValidate = [
+exports.depositeValidate = [
   body('bankAccountId').not().isEmpty().withMessage('اختر البنك'),
   body('type').not().isEmpty().withMessage('اختر نوع العملية'),
   body('number')
@@ -146,7 +146,7 @@ export const depositeValidate = [
     .isNumeric()
     .withMessage('عائد المزود يجب ان تكون رقم'),
 ];
-export const withDrawValidate = [
+exports.withDrawValidate = [
   body('bankAccountId').not().isEmpty().withMessage('اختر الحساب'),
   body('type').not().isEmpty().withMessage('اختر نوع العملية'),
   body('number')
@@ -187,7 +187,7 @@ export const withDrawValidate = [
     .withMessage('عائد المركز يجب ان تكون رقم'),
 ];
 
-export const transferValidate = [
+exports.transferValidate = [
   body('senderId').not().isEmpty().withMessage('ادخل الحساب المحول منه'),
   body('recipientId').not().isEmpty().withMessage('ادخل الحساب المحول إليه'),
   body('amountTotal')
@@ -198,30 +198,30 @@ export const transferValidate = [
     .withMessage('المبلغ يجب أن يكون قيمة'),
 ];
 
-export const categoryValidate = [
+exports.categoryValidate = [
   body('name').not().isEmpty().withMessage('ادخل اسم الخدمة'),
 ];
 
-export const segmentValidate = [
+exports.segmentValidate = [
   body('serviceId').not().isEmpty().withMessage('اختر الخدمة'),
   body('title').not().isEmpty().withMessage('ادخل الشريحة'),
   body('start').not().isEmpty().withMessage('ادخل بداية الشريحة'),
   body('percentage').not().isEmpty().withMessage('ادخل النسبة او العمولة'),
 ];
 
-export const commissionValidate = [
+exports.commissionValidate = [
   body('serviceId').not().isEmpty().withMessage('اختر الخدمة'),
   body('agentId').not().isEmpty().withMessage('اختر الوكيل'),
   body('amountTotal').not().isEmpty().withMessage('ادخل القيمة'),
   body('count').not().isEmpty().withMessage('ادخل عدد العمليات'),
 ];
 
-export const permissionValidate = [
+exports.permissionValidate = [
   body('linkId').not().isEmpty().withMessage('اختر الصلاحيات المتاحة'),
   body('roleId').not().isEmpty().withMessage('اختر الصلاحية'),
 ];
 
-export const claimsValidate = [
+exports.claimsValidate = [
   body('systemMenuId').not().isEmpty().withMessage('اختر'),
   body('claims').custom((value, { req }) => {
     if (value.length < 1) {

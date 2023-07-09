@@ -1,11 +1,11 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
 
-import * as roleControllers from '../../controllers/auth/roleControllers.js';
-import links from '../../links/links.js';
+const roleControllers = require('../../controllers/auth/roleControllers.js');
+const links = require('../../links/links.js');
 
-import * as validate from '../../utils/validation.js';
-import * as auth from '../../middlewares/auth.js';
+const validate = require('../../utils/validation.js');
+const auth = require('../../middlewares/auth.js');
 
 router
   .route(links.role.GET_ROLES)
@@ -30,4 +30,4 @@ router
   .route(links.role.DELETE_ROLE)
   .delete(auth.isAuth, roleControllers.deleteRole);
 
-export default router;
+module.exports = router;

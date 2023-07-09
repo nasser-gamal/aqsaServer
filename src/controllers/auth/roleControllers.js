@@ -1,6 +1,6 @@
-import * as roleServices from '../../services/auth/roleServices.js';
+const roleServices = require('../../services/auth/roleServices');
 
-export const getAllRoles = async (req, res, next) => {
+exports.getAllRoles = async (req, res, next) => {
   try {
     const { roles } = await roleServices.getAllRoles();
 
@@ -10,7 +10,7 @@ export const getAllRoles = async (req, res, next) => {
   }
 };
 
-export const addRole = async (req, res, next) => {
+exports.addRole = async (req, res, next) => {
   try {
     const roleData = req.body;
 
@@ -22,7 +22,7 @@ export const addRole = async (req, res, next) => {
   }
 };
 
-export const updateRole = async (req, res, next) => {
+exports.updateRole = async (req, res, next) => {
   try {
     const { roleId } = req.params;
     const roleData = req.body;
@@ -35,7 +35,7 @@ export const updateRole = async (req, res, next) => {
   }
 };
 
-export const deleteRole = async (req, res, next) => {
+exports.deleteRole = async (req, res, next) => {
   try {
     const { roleId } = req.params;
 

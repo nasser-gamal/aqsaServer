@@ -1,17 +1,18 @@
-import * as bankRepository from '../../dataAccess/banks/bankRepository.js';
+const bankRepository = require('../../dataAccess/banks/bankRepository.js');
 
-import BadRequestError from '../../utils/badRequestError.js';
-import constants from '../../utils/constants.js';
-import { checkResourceExists } from '../../utils/checkResourceExists.js';
+const BadRequestError = require('../../utils/badRequestError.js');
+const constants = require('../../utils/constants.js');
+const { checkResourceExists } = require('../../utils/checkResourceExists.js');
 
-import { Op } from 'sequelize';
+const { Op } = require('sequelize');
+
 
 const isBankExist = async (bankId) => {
   const bank = await bankRepository.findById(bankId);
   return checkResourceExists(bank, constants.BANK_NOT_FOUND);
 };
 
-export const createBank = async (data) => {
+exports.createBank = async (data) => {
   const { bankName, note } = data;
 
   const existBank = await bankRepository.findOne({ bankName });
@@ -28,7 +29,7 @@ export const createBank = async (data) => {
   return { message: constants.CREATE_BANK_SUCCESS };
 };
 
-export const updateBank = async (bankId, data) => {
+exports.updateBank = async (bankId, data) => {
   const { bankName, note } = data;
 
   await isBankExist(bankId);
@@ -51,7 +52,7 @@ export const updateBank = async (bankId, data) => {
   return { message: constants.UPDATE_BANK_SUCCESS };
 };
 
-export const deleteBank = async (bankId) => {
+exports.deleteBank = async (bankId) => {
   const bank = await isBankExist(bankId);
 
   await bankRepository.deleteOne(bankId);
@@ -59,12 +60,12 @@ export const deleteBank = async (bankId) => {
   return { message: constants.DELETE_BANK_SUCCESS };
 };
 
-export const getAllBanks = async () => {
+exports.getAllBanks = async () => {
   const banks = await bankRepository.findAll();
   return { banks };
 };
 
-export const getBank = async (bankId) => {
+exports.getBank = async (bankId) => {
   const bank = await isBankExist(bankId);
   return { bank };
 };

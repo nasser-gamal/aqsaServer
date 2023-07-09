@@ -1,4 +1,4 @@
-export const pagination = (pageNumber, itemPerPage, totalCount) => {
+exports.pagination = (pageNumber, itemPerPage, totalCount) => {
   const hasNextPage = itemPerPage * pageNumber < totalCount;
   const hasPreviousPage = pageNumber > 1;
   const hasNextTwoPage = itemPerPage * (pageNumber + 2) < totalCount;

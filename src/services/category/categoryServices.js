@@ -1,16 +1,16 @@
-import { Op } from 'sequelize';
-import * as categoryRepository from '../../dataAccess/category/categoryRepository.js';
+const { Op } = require('sequelize');
+const categoryRepository = require('../../dataAccess/category/categoryRepository.js');
 
-import BadRequestError from '../../utils/badRequestError.js';
-import { checkResourceExists } from '../../utils/checkResourceExists.js';
-import constants from '../../utils/constants.js';
+const BadRequestError = require('../../utils/badRequestError.js');
+const { checkResourceExists } = require('../../utils/checkResourceExists.js');
+const constants = require('../../utils/constants.js');
 
 const isCategoryExist = async (query) => {
   const category = await categoryRepository.findOne(query);
   return category;
 };
 
-export const createCategory = async (userId, data) => {
+exports.createCategory = async (userId, data) => {
   const { name, note } = data;
 
   const category = await isCategoryExist({ name });
@@ -28,7 +28,7 @@ export const createCategory = async (userId, data) => {
   return { message: constants.CREATE_CATEGORY_SUCCESS };
 };
 
-export const updateCategory = async (categoryId, data) => {
+exports.updateCategory = async (categoryId, data) => {
   const { name, note } = data;
 
   const category = await isCategoryExist({ id: categoryId });
@@ -53,7 +53,7 @@ export const updateCategory = async (categoryId, data) => {
   return { message: constants.UPDATE_CATEGORY_SUCCESS };
 };
 
-export const deleteCategory = async (categoryId) => {
+exports.deleteCategory = async (categoryId) => {
   const category = await isCategoryExist({ id: categoryId });
   checkResourceExists(category, constants.CATEGORY_NOT_FOUND);
 
@@ -62,12 +62,12 @@ export const deleteCategory = async (categoryId) => {
   return { message: constants.DELETE_CATEGORY_SUCCESS };
 };
 
-export const findAllCategories = async () => {
+exports.findAllCategories = async () => {
   const categories = await categoryRepository.findAll();
   return { categories };
 };
 
-export const findCategoryById = async (categoryId) => {
+exports.findCategoryById = async (categoryId) => {
   const category = await isCategoryExist({ id: categoryId });
   checkResourceExists(category, constants.CATEGORY_NOT_FOUND);
   return { category };

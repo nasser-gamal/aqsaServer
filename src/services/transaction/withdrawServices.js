@@ -1,8 +1,8 @@
-import * as transactionRepository from '../../dataAccess/transaction/transactionRepository.js';
-import * as transactionServicesUtils from '../../utils/transactionServicesUtils.js';
+const transactionRepository = require('../../dataAccess/transaction/transactionRepository.js');
+const transactionServicesUtils = require('../../utils/transactionServicesUtils.js');
 
-import constants from '../../utils/constants.js';
-import BadRequestError from '../../utils/badRequestError.js';
+const constants = require('../../utils/constants.js');
+const BadRequestError = require('../../utils/badRequestError.js');
 
 
 // const checkBankAccountBalance = async (bankAccount, amountTotal) => {
@@ -38,7 +38,7 @@ const calcWithDraw = (
   };
 };
 
-export const addWithDraw = async (userId, data) => {
+exports.addWithDraw = async (userId, data) => {
   const {
     bankAccountId,
     type,
@@ -102,7 +102,7 @@ export const addWithDraw = async (userId, data) => {
   return { message: constants.CREATE_TRANSACTION_SUCCESS };
 };
 
-export const updateWithDraw = async (transactionId, data) => {
+exports.updateWithDraw = async (transactionId, data) => {
   const {
     bankAccountId,
     type,
@@ -176,7 +176,7 @@ export const updateWithDraw = async (transactionId, data) => {
   return { message: constants.UPDATE_TRANSACTION_SUCCESS };
 };
 
-export const deleteWithDraw = async (transactionId) => {
+exports.deleteWithDraw = async (transactionId) => {
   const transaction = await transactionServicesUtils.isTransactionExists({
     id: transactionId,
   });

@@ -1,10 +1,10 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
 
-import * as categoryControllers from '../../controllers/category/categoryControllers.js';
-import links from '../../links/links.js';
-import * as validate from '../../utils/validation.js';
-import * as auth from '../../middlewares/auth.js';
+const categoryControllers = require('../../controllers/category/categoryControllers.js');
+const links = require('../../links/links.js');
+const validate = require('../../utils/validation.js');
+const auth = require('../../middlewares/auth.js');
 
 router
   .route(links.category.GET_CATEGORYS)
@@ -50,4 +50,4 @@ router
     categoryControllers.deleteCategory
   );
 
-export default router;
+module.exports = router;

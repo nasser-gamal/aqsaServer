@@ -1,10 +1,11 @@
-import * as bankAccountRepository from '../../dataAccess/banks/bankAccountRepository.js';
-import * as bankRepository from '../../dataAccess/banks/bankRepository.js';
+const bankAccountRepository = require('../../dataAccess/banks/bankAccountRepository.js');
+const bankRepository = require('../../dataAccess/banks/bankRepository.js');
 
-import BadRequestError from '../../utils/badRequestError.js';
-import constants from '../../utils/constants.js';
-import { checkResourceExists } from '../../utils/checkResourceExists.js';
-import { Op } from 'sequelize';
+const BadRequestError = require('../../utils/badRequestError.js');
+const constants = require('../../utils/constants.js');
+const { checkResourceExists } = require('../../utils/checkResourceExists.js');
+const { Op } = require('sequelize');
+
 
 const isBankExist = async (bankId) => {
   const bank = await bankRepository.findById(bankId);
@@ -16,7 +17,7 @@ const isBankAccountExist = async (bankAccountId) => {
   return checkResourceExists(bankAccount, constants.BANK_ACCOUNT_NOT_FOUND);
 };
 
-export const createBankAccount = async (data) => {
+exports.createBankAccount = async (data) => {
   const { accountName, bankId, bankNumber, balance, note } = data;
 
   await isBankExist(bankId);
@@ -41,7 +42,7 @@ export const createBankAccount = async (data) => {
   return { message: constants.CREATE_BANK_ACCOUNT_SUCCESS };
 };
 
-export const updateBankAccount = async (bankAccountId, data) => {
+exports.updateBankAccount = async (bankAccountId, data) => {
   const { accountName, bankNumber, balance, note, bankId } = data;
 
   await isBankExist(bankId);
@@ -68,7 +69,7 @@ export const updateBankAccount = async (bankAccountId, data) => {
   return { message: constants.UPDATE_BANK_ACCOUNT_SUCCESS };
 };
 
-export const deleteBankAccount = async (bankAccountId) => {
+exports.deleteBankAccount = async (bankAccountId) => {
   await isBankAccountExist(bankAccountId);
 
   await bankAccountRepository.deleteOne(bankAccountId);
@@ -76,12 +77,12 @@ export const deleteBankAccount = async (bankAccountId) => {
   return { message: constants.DELETE_BANK_ACCOUNT_SUCCESS };
 };
 
-export const getAllBankAccounts = async () => {
+exports.getAllBankAccounts = async () => {
   const banks = await bankAccountRepository.findAll();
   return { banks };
 };
 
-export const getBankAccount = async (bankAccountId) => {
+exports.getBankAccount = async (bankAccountId) => {
   const bank = await isBankAccountExist(bankAccountId);
   return { bank };
 };

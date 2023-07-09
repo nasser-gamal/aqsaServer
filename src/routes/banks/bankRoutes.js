@@ -1,11 +1,11 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
 
-import links from '../../links/links.js';
+const links = require('../../links/links.js');
 
-import * as bankControllers from '../../controllers/banks/bankControllers.js';
-import * as validate from '../../utils/validation.js';
-import * as auth from '../../middlewares/auth.js';
+const bankControllers = require('../../controllers/banks/bankControllers.js');
+const validate = require('../../utils/validation.js');
+const auth = require('../../middlewares/auth.js');
 
 router
   .route(links.bank.GET_BANKS)
@@ -34,4 +34,4 @@ router
   .route(links.bank.DELETE_BANK)
   .delete(auth.isAuth, bankControllers.deleteBank);
 
-export default router;
+module.exports = router;

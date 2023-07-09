@@ -1,6 +1,6 @@
-import * as commissionsServices from '../../services/commission/commissionsServices.js';
+const commissionsServices = require('../../services/commission/commissionsServices');
 
-export const addCommission = async (req, res, next) => {
+exports.addCommission = async (req, res, next) => {
   try {
     const data = req.body;
     const userId = 7;
@@ -16,7 +16,7 @@ export const addCommission = async (req, res, next) => {
   }
 };
 
-export const updateCommission = async (req, res, next) => {
+exports.updateCommission = async (req, res, next) => {
   try {
     const data = req.body;
     const { commissionId } = req.params;
@@ -31,7 +31,7 @@ export const updateCommission = async (req, res, next) => {
   }
 };
 
-export const deleteCommission = async (req, res, next) => {
+exports.deleteCommission = async (req, res, next) => {
   try {
     const { commissionId } = req.params;
 
@@ -44,7 +44,7 @@ export const deleteCommission = async (req, res, next) => {
   }
 };
 
-export const getAllCommissions = async (req, res, next) => {
+exports.getAllCommissions = async (req, res, next) => {
   try {
     const query = req.query;
     const { commissions, pagination, totalAmount, totalCommissions } =
@@ -57,7 +57,7 @@ export const getAllCommissions = async (req, res, next) => {
   }
 };
 
-export const getCommission = async (req, res, next) => {
+exports.getCommission = async (req, res, next) => {
   try {
     const { commissionId } = req.params;
 

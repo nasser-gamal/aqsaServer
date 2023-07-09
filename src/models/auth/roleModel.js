@@ -1,6 +1,5 @@
-import Sequelize from 'sequelize';
-import sequelize from '../../config/database.js';
-
+const Sequelize = require('sequelize');
+const sequelize = require('../../config/database.js');
 
 const Role = sequelize.define('role', {
   id: {
@@ -25,4 +24,4 @@ Role.associate = function (models) {
   });
 };
 
-export default Role;
+module.exports = Role;

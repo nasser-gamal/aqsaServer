@@ -1,5 +1,5 @@
-import Sequelize from 'sequelize';
-import sequelize from '../../config/database.js';
+const Sequelize = require('sequelize');
+const sequelize = require('../../config/database.js');
 
 const Transfer = sequelize.define('transfer', {
   id: {
@@ -45,4 +45,4 @@ const Transfer = sequelize.define('transfer', {
 });
 
 
-export default Transfer;
+module.exports =   Transfer;

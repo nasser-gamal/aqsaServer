@@ -1,5 +1,5 @@
-import multer from 'multer';
-import BadRequestError from '../utils/badRequestError.js';
+const multer = require('multer');
+const BadRequestError = require('../utils/badRequestError.js');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -33,4 +33,4 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({ storage, fileFilter });
 
-export default upload;
+module.exports = upload;

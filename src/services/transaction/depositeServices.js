@@ -1,9 +1,9 @@
-import * as transactionRepository from '../../dataAccess/transaction/transactionRepository.js';
+const transactionRepository = require('../../dataAccess/transaction/transactionRepository.js');
 
-import * as transactionServicesUtils from '../../utils/transactionServicesUtils.js';
-import * as treasuryRepository from '../../dataAccess/treasury/treasuryRepository.js';
+const transactionServicesUtils = require('../../utils/transactionServicesUtils.js');
+const treasuryRepository = require('../../dataAccess/treasury/treasuryRepository.js');
 
-import constants from '../../utils/constants.js';
+const constants = require('../../utils/constants.js');
 
 const calcDeposite = (amount, providerFees, providerRevenue) => {
   let amountTotal = amount.toFixed(2);
@@ -17,7 +17,7 @@ const calcDeposite = (amount, providerFees, providerRevenue) => {
   };
 };
 
-export const addDeposit = async (userId, data) => {
+exports.addDeposit = async (userId, data) => {
   const {
     bankAccountId,
     type,
@@ -68,7 +68,7 @@ export const addDeposit = async (userId, data) => {
   return { message: constants.CREATE_TRANSACTION_SUCCESS };
 };
 
-export const updateDeposite = async (transactionId, data) => {
+exports.updateDeposite = async (transactionId, data) => {
   const {
     bankAccountId,
     type,
@@ -127,7 +127,7 @@ export const updateDeposite = async (transactionId, data) => {
   return { message: constants.UPDATE_TRANSACTION_SUCCESS };
 };
 
-export const deleteDeposite = async (transactionId) => {
+exports.deleteDeposite = async (transactionId) => {
   const transaction = await transactionServicesUtils.isTransactionExists({
     id: transactionId,
   });
