@@ -9,7 +9,7 @@ exports.login = async (req, res, next) => {
 
     res.cookie('token', token, {
       httpOnly: true,
-      secure: true,
+      secure: false,
     });
 
     return res.status(200).json({ user });
