@@ -1,6 +1,8 @@
-import * as userRepository from '../dataAccess/auth/userRepository.js';
-import BadRequestError from '../utils/badRequestError.js';
-import constants from '../utils/constants.js';
+
+
+const userRepository = require('../dataAccess/auth/userRepository.js')
+const jwt = require('jsonwebtoken')
+const constants = require('../utils/constants.js')
 
 exports.checkPassword = async (req, res, next) => {
   try {

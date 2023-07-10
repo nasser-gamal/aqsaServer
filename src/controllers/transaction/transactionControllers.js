@@ -1,6 +1,6 @@
-import * as transactionServices from '../../services/transaction/transactionServices.js';
+const transactionServices = require('../../services/transaction/transactionServices.js')
 
-export const getAllTransactions = async (req, res, next) => {
+exports.getAllTransactions = async (req, res, next) => {
   try {
     const { page, limit, order, sort } = req.query;
 

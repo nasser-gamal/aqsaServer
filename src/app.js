@@ -129,10 +129,11 @@ app.use('*', (req, res, next) => {
 });
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 8080;
-sequelize
-  .sync()
-  .then((result) => {
-    app.listen(PORT);
-  })
+const PORT = process.env.PORT || 3000;
+
+ sequelize
+ .sync()
+ .then((result) => {
+	app.listen(PORT);
+ })
   .catch((err) => console.log(err));

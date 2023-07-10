@@ -1,6 +1,8 @@
-import * as transferServices from '../../services/transaction/transferServices.js';
+const transactionServices = require('../../services/transaction/transactionServices')
 
-export const addTransfer = async (req, res, next) => {
+
+
+exports.addTransfer = async (req, res, next) => {
   try {
     const data = req.body;
     const userId = req.user.id;
@@ -12,7 +14,7 @@ export const addTransfer = async (req, res, next) => {
   }
 };
 
-export const updateTransfer = async (req, res, next) => {
+exports.updateTransfer = async (req, res, next) => {
   try {
     const { transactionId } = req.params;
     const data = req.body;
@@ -26,7 +28,7 @@ export const updateTransfer = async (req, res, next) => {
   }
 };
 
-export const deleteTransfer = async (req, res, next) => {
+exports.deleteTransfer = async (req, res, next) => {
   try {
     const { transactionId } = req.params;
     const { message } = await transferServices.deleteTransfer(transactionId);
@@ -36,7 +38,7 @@ export const deleteTransfer = async (req, res, next) => {
   }
 };
 
-export const getAllTransfers = async (req, res, next) => {
+exports.getAllTransfers = async (req, res, next) => {
   try {
     const { transfers, pagination } = await transferServices.findAllTransfers();
     return res.status(200).json({ transfers, pagination });
@@ -45,7 +47,7 @@ export const getAllTransfers = async (req, res, next) => {
   }
 };
 
-export const getTransfer = async (req, res, next) => {
+exports.getTransfer = async (req, res, next) => {
   try {
     const { transactionId } = req.params;
     const { transfer } = await transferServices.findTransfer(transactionId);

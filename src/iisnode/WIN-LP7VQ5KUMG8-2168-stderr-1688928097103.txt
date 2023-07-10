@@ -1,0 +1,16 @@
+Application has thrown an uncaught exception and is terminated:
+C:\nodejs\server\src\controllers\transaction\transactionControllers.js:1
+import * as transactionServices from '../../services/transaction/transactionServices.js';
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+    at internalCompileFunction (node:internal/vm:73:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1178:20)
+    at Module._compile (node:internal/modules/cjs/loader:1220:27)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1310:10)
+    at Module.load (node:internal/modules/cjs/loader:1119:32)
+    at Module._load (node:internal/modules/cjs/loader:960:12)
+    at Module.require (node:internal/modules/cjs/loader:1143:19)
+    at require (node:internal/modules/cjs/helpers:110:18)
+    at Object.<anonymous> (C:\nodejs\server\src\routes\transaction\transactionRoutes.js:4:32)
+    at Module._compile (node:internal/modules/cjs/loader:1256:14)

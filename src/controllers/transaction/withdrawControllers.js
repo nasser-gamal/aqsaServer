@@ -1,7 +1,10 @@
-import * as withdrawServices from '../../services/transaction/withdrawServices.js';
-import * as transactionServices from '../../services/transaction/transactionServices.js';
 
-export const addWithDraw = async (req, res, next) => {
+
+const transactionServices = require('../../services/transaction/transactionServices')
+const withdrawServices = require('../../services/transaction/withdrawServices')
+
+
+exports.addWithDraw = async (req, res, next) => {
   try {
     const data = req.body;
     const userId = req.user.id;
@@ -13,7 +16,7 @@ export const addWithDraw = async (req, res, next) => {
   }
 };
 
-export const updateWithDraw = async (req, res, next) => {
+exports.updateWithDraw = async (req, res, next) => {
   try {
     const data = req.body;
     const { transactionId } = req.params;
@@ -31,7 +34,7 @@ export const updateWithDraw = async (req, res, next) => {
 };
 
 
-export const deleteWithDraw = async (req, res, next) => {
+exports.deleteWithDraw = async (req, res, next) => {
   try {
     const { transactionId } = req.params;
 
@@ -44,7 +47,7 @@ export const deleteWithDraw = async (req, res, next) => {
 
 
 
-export const getAllWithDraws = async (req, res, next) => {
+exports.getAllWithDraws = async (req, res, next) => {
   try {
     const { page, limit, order, sort } = req.query;
     let whereClause = { type: 'سحب' };

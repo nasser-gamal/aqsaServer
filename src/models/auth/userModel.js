@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../../config/database.js');
 
-import bcrypt from 'bcrypt';
+
+const bcrypt = require('bcrypt')
 
 const User = sequelize.define('user', {
   id: {

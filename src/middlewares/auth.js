@@ -1,6 +1,8 @@
-import BadRequestError from '../utils/badRequestError.js';
-import jwt from 'jsonwebtoken';
-import constants from '../utils/constants.js';
+
+const BadRequestError = require('../utils/badRequestError.js')
+const jwt = require('jsonwebtoken')
+const constants = require('../utils/constants.js')
+
 
 exports.isAuth = (req, res, next) => {
   try {

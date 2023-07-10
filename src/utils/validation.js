@@ -1,4 +1,5 @@
-import { body, validationResult } from 'express-validator';
+
+const { body, validationResult } = require('express-validator')
 
 // validation for roles
 exports.roleValidate = [
@@ -231,7 +232,7 @@ exports.claimsValidate = [
   }),
 ];
 
-export function validateInputs(req, res, next) {
+exports.validateInputs = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ message: errors.array()[0].msg });

@@ -1,7 +1,8 @@
-import * as depositeServices from '../../services/transaction/depositeServices.js';
-import * as transactionServices from '../../services/transaction/transactionServices.js';
 
-export const addDepsite = async (req, res, next) => {
+const depositeServices = require('../../services/transaction/depositeServices')
+const transactionServices = require('../../services/transaction/transactionServices')
+
+exports.addDepsite = async (req, res, next) => {
   try {
     const data = req.body;
     const userId = req.user.id;
@@ -13,7 +14,7 @@ export const addDepsite = async (req, res, next) => {
   }
 };
 
-export const updateDeposite = async (req, res, next) => {
+exports.updateDeposite = async (req, res, next) => {
   try {
     const data = req.body;
     const { transactionId } = req.params;
@@ -29,7 +30,7 @@ export const updateDeposite = async (req, res, next) => {
   }
 };
 
-export const deleteDeposite = async (req, res, next) => {
+exports.deleteDeposite = async (req, res, next) => {
   try {
     const { transactionId } = req.params;
 
@@ -40,7 +41,7 @@ export const deleteDeposite = async (req, res, next) => {
   }
 };
 
-export const getAllDeposites = async (req, res, next) => {
+exports.getAllDeposites = async (req, res, next) => {
   try {
     const { page, limit, order, sort } = req.query;
     let whereClause = { type: 'ايداع' };
