@@ -41,17 +41,16 @@ app.use('/uploads', express.static('uploads'));
 app.use(cors(corsOptions));
 app.use(morgan('tiny'));
 
-
 app.use((req, res, next) => {
   res.setHeader(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept'
   );
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   next();
 });
-
 
 User.belongsTo(Role);
 Role.hasMany(User);
@@ -143,9 +142,9 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 
- sequelize
- .sync()
- .then((result) => {
-	app.listen(PORT);
- })
+sequelize
+  .sync()
+  .then((result) => {
+    app.listen(PORT);
+  })
   .catch((err) => console.log(err));
