@@ -26,7 +26,7 @@ const Commission = require('./models/commission/commissionModel.js');
 const corsOptions = {
   origin: process.env.CLIENT_URL,
   credentials: true,
-  // methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   // allowedHeaders: [
   //   'Content-Type',
   //   'Authorization',
@@ -40,13 +40,7 @@ app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
 app.use(cors(corsOptions));
 app.use(morgan('tiny'));
-app.use((req, res, next) => {
-  // Set the Access-Control-Allow-Origin header
-  res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
-  
-  // Proceed to the next middleware or route
-  next();
-});
+
 
 User.belongsTo(Role);
 Role.hasMany(User);
