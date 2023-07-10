@@ -102,10 +102,9 @@ exports.findById = async (userId) => {
   }
 };
 
-exports.findAll = async (whereClause, query) => {
+exports.findAll = async (query) => {
   try {
     const users = await User.findAll({
-      where: whereClause,
       include: [
         {
           model: Role,
