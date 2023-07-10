@@ -109,6 +109,7 @@ exports.findAll = async (query) => {
         {
           model: Role,
           where: query,
+          attributes: {exclude: ['password']}
         },
       ],
     });
