@@ -16,8 +16,8 @@ router
   );
 
 router.route(links.user.CREATE_USER).post(
-  // auth.isAuth,
-  // auth.checkUserRole(['superAdmin']),
+  auth.isAuth,
+  auth.checkUserRole(['superAdmin']),
   validate.userValidate,
   validate.validateInputs,
   userControllers.addUser
@@ -26,8 +26,8 @@ router.route(links.user.CREATE_USER).post(
 router
   .route(links.user.UPDATE_USER)
   .put(
-    // auth.isAuth,
-    // auth.checkUserRole(['superAdmin']),
+    auth.isAuth,
+    auth.checkUserRole(['superAdmin']),
     validate.updateUserValidate,
     validate.validateInputs,
     userControllers.updateUser
