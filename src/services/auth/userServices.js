@@ -166,7 +166,6 @@ exports.deleteUser = async (userId) => {
 
 exports.getAllAdmins = async () => {
   const users = await userRepository.findAll(
-    { isActive: true },
     { name: 'admin' }
   );
   return { users };

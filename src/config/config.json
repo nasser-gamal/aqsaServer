@@ -3,14 +3,14 @@
     "host": "localhost",
     "database": "aqsa",
     "username": "root",
-    "password": "aqsa74new",
+    "password": "74neverforget",
     "dialect": "mysql"
   },
   "production": {
     "host": "localhost",
     "database": "aqsa",
     "username": "root",
-    "password": "aqsa74new",
+    "password": "74neverforget",
     "dialect": "mysql"
   }
 }

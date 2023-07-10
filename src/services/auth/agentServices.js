@@ -174,7 +174,6 @@ exports.deleteAgent = async (userId) => {
 
 exports.getAllAgents = async () => {
   const users = await userRepository.findAll(
-    { isActive: true },
     { name: 'agent' }
   );
 
