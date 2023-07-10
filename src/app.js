@@ -25,7 +25,7 @@ const Commission = require('./models/commission/commissionModel.js');
 
 const corsOptions = {
   origin: process.env.CLIENT_URL,
-  // credentials: true,
+  credentials: true,
 
   // allowedHeaders: [
   //   'Content-Type',
@@ -40,6 +40,16 @@ app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
 app.use(cors(corsOptions));
 app.use(morgan('tiny'));
+
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
 
 
 User.belongsTo(Role);
