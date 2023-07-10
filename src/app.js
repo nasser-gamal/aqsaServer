@@ -26,12 +26,12 @@ const Commission = require('./models/commission/commissionModel.js');
 const corsOptions = {
   origin: process.env.CLIENT_URL,
   credentials: true,
-
-  // allowedHeaders: [
-  //   'Content-Type',
-  //   'Authorization',
-  //   'Access-Control-Allow-Credentials',
-  // ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: [
+    'Content-Type',
+    'Authorization',
+    'Access-Control-Allow-Credentials',
+  ],
 };
 
 app.use(express.json());
