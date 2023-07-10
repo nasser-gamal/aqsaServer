@@ -3,8 +3,7 @@ const commissionsServices = require('../../services/commission/commissionsServic
 exports.addCommission = async (req, res, next) => {
   try {
     const data = req.body;
-    const userId = 7;
-    // const userId = req.user.id;
+    const userId = req.user.id;
 
     const { message } = await commissionsServices.createCommission(
       userId,

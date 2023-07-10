@@ -3,8 +3,7 @@ const segmentServices = require('../../services/segment/segmentServices');
 exports.addSegment = async (req, res, next) => {
   try {
     const data = req.body;
-    const userId = 7;
-    // const userId = req.user.id;
+    const userId = req.user.id;
 
     const { message } = await segmentServices.createSegment(userId, data);
     return res.status(201).json({ message });
