@@ -57,7 +57,7 @@ exports.findAll = async (
 ) => {
   try {
     const pageNumber = +page || 1;
-    const itemPerPage = +limit || 100;
+    const itemPerPage = +limit || 1000;
     const orderBy = order || 'createdAt';
     const sortBy = sort || 'DESC';
 

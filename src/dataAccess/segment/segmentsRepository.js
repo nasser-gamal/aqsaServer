@@ -40,7 +40,7 @@ exports.deleteOne = async (segmentId) => {
 exports.findAll = async (page, limit, order, sort, whereClause) => {
   try {
     const pageNumber = +page || 1;
-    const itemPerPage = +limit || 10;
+    const itemPerPage = +limit || 10000;
     const orderBy = order || 'id';
     const sortBy = sort || 'ASC';
 
