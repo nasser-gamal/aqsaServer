@@ -24,7 +24,7 @@ const Segment = require('./models/segments/segmentsModel.js');
 const Commission = require('./models/commission/commissionModel.js');
 
 const corsOptions = {
-  origin: 'aqsa.alaqsa-pay.com',
+  origin: process.env.CLIENT_URL,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: [
@@ -47,7 +47,7 @@ app.use((req, res, next) => {
     'Origin, X-Requested-With, Content-Type, Accept'
   );
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Origin', 'aqsa.alaqsa-pay.com');
+  res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   next();
