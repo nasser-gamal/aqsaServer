@@ -42,11 +42,6 @@ app.use(cors(corsOptions));
 app.use(morgan('tiny'));
 
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
-  res.setHeader('Content-Type', 'application/json');
-  next();
-});
 
 
 User.belongsTo(Role);
@@ -136,6 +131,16 @@ app.use('*', (req, res, next) => {
   next(new ApiError("cann't find this endpoint"));
 });
 app.use(errorHandler);
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  res.setHeader('Content-Type', 'application/json');
+  next();
+});
 
 const PORT = process.env.PORT || 3000;
 
