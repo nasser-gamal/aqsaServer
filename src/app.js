@@ -27,7 +27,7 @@ const UserCommission = require('./models/commission/userCommission.js');
 const corsOptions = {
   origin: process.env.CLIENT_URL,
   credentials: true,
-  methods: ['GET ,POST,PUT, DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
 };
 
 app.use(express.json());
