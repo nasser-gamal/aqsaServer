@@ -11,6 +11,7 @@ const constants = {
   BANK_ACCOUNT_EXIST: 'هذا الحساب البنكي موجود',
   CATEGORY_EIXST: 'هذه الخدمة موجودة',
   SEGMENT_EXIST: 'هذه الشريحة موجودة',
+  USER_COMMISSION_EXIST: 'تم اضافة عمولة للعميل من قبل',
 
   IMG_REQUIRED: 'اختر الصورة',
 

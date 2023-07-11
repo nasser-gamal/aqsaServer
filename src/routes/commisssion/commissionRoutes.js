@@ -9,8 +9,8 @@ const auth = require('../../middlewares/auth.js');
 router
   .route(links.commission.GET_COMMISSIONS)
   .get(
-    auth.isAuth,
-    auth.checkUserRole(['superAdmin', 'admin']),
+    // auth.isAuth,
+    // auth.checkUserRole(['superAdmin', 'admin']),
     commissionControllers.getAllCommissions
   );
 
@@ -25,8 +25,8 @@ router
 router
   .route(links.commission.CREATE_COMMISSION)
   .post(
-    auth.isAuth,
-    auth.checkUserRole(['superAdmin', 'admin']),
+    // auth.isAuth,
+    // auth.checkUserRole(['superAdmin', 'admin']),
     commissionControllers.addCommission
   );
 

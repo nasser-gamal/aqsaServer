@@ -46,11 +46,11 @@ exports.deleteCommission = async (req, res, next) => {
 exports.getAllCommissions = async (req, res, next) => {
   try {
     const query = req.query;
-    const { commissions, pagination, totalAmount, totalCommissions } =
+    const { userCommission, commissions, totalAmount, totalCommissions } =
       await commissionsServices.findAllCommissions(query);
     return res
       .status(200)
-      .json({ commissions, pagination, totalAmount, totalCommissions });
+      .json({ userCommission, commissions, totalAmount, totalCommissions });
   } catch (err) {
     return next(err);
   }

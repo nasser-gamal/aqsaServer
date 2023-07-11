@@ -22,6 +22,7 @@ const Transfer = require('./models/transaction/transferModel.js');
 const Category = require('./models/category/categoryModel.js');
 const Segment = require('./models/segments/segmentsModel.js');
 const Commission = require('./models/commission/commissionModel.js');
+const UserCommission = require('./models/commission/userCommission.js');
 
 const corsOptions = {
   origin: process.env.CLIENT_URL,
@@ -119,12 +120,12 @@ Segment.belongsTo(User, {
   as: 'creator',
 });
 
-Commission.belongsTo(User, {
+UserCommission.belongsTo(User, {
   foreignKey: 'agentId',
   as: 'agent',
 });
 
-Commission.belongsTo(User, {
+UserCommission.belongsTo(User, {
   foreignKey: 'createdBy',
   as: 'creator',
 });
@@ -133,6 +134,9 @@ Commission.belongsTo(Segment, {
   foreignKey: 'segmentId',
   as: 'segment',
 });
+
+UserCommission.hasMany(Commission);
+Commission.belongsTo(UserCommission);
 
 app.use('/api', routes);
 
