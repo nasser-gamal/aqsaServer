@@ -27,15 +27,15 @@ const UserCommission = require('./models/commission/userCommission.js');
 const corsOptions = {
   origin: process.env.CLIENT_URL,
   credentials: true,
-  methods: ['PUT'],
+  methods: ['GET ,POST,PUT, DELETE'],
 };
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
-app.use(morgan('tiny'));
 app.use(cors(corsOptions));
+app.use(morgan('tiny'));
 
 // app.use((req, res, next) => {
 //   res.setHeader(
