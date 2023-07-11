@@ -27,66 +27,33 @@ const UserCommission = require('./models/commission/userCommission.js');
 const corsOptions = {
   origin: process.env.CLIENT_URL,
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: [
-    'Content-Type',
-    'Authorization',
-    'Access-Control-Allow-Credentials',
-  ],
+  methods: ['PUT'],
 };
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: [
-      'Content-Type',
-      'Authorization',
-      'Access-Control-Allow-Credentials',
-    ],
-  })
-);
 app.use(morgan('tiny'));
+app.use(cors(corsOptions));
 
-app.use((req, res, next) => {
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  );
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
-  res.setHeader('Content-Type', 'application/json; charset=utf-8');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept'
+//   );
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//   res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
+//   res.setHeader('Content-Type', 'application/json; charset=utf-8');
+//   res.setHeader('Access-Control-Allow-Credentials', 'true');
+//   next();
+// });
 
 User.belongsTo(Role);
 Role.hasMany(User);
 
 BankAccount.belongsTo(Bank);
 Bank.hasMany(BankAccount);
-
-// Pages.belongsTo(SystemMenu);
-// SystemMenu.hasMany(Pages);
-// RolePage.belongsTo(Role);
-// Role.hasMany(RolePage);
-
-// RolePage.belongsTo(SystemMenu);
-// SystemMenu.hasMany(RolePage);
-
-// RoleClaim.belongsTo(PageClaim);
-// PageClaim.hasMany(RoleClaim);
-
-// RoleClaim.belongsTo(Role);
-// Role.hasMany(RoleClaim);
-
-// PageClaim.belongsTo(SystemMenu);
-// SystemMenu.hasMany(PageClaim);
 
 Transaction.belongsTo(BankAccount);
 BankAccount.hasMany(Transaction);
