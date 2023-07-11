@@ -101,16 +101,18 @@ exports.updateCommission = async (commissionId, data) => {
   const getSegment = await findSegment(segment.service.id, amountTotal);
   const commission = calcCommission(amountTotal, getSegment.percentage);
 
-  await userCommission.addCommissions(id, {
-    through: { amountTotal, commission, count, segmentId: getSegment.id },
-  });
-
-  // await commissionRepository.updateOne(commissionId, {
-  //   amountTotal,
-  //   commission,
-  //   count,
-  //   segmentId: getSegment.id,
-  // });
+  // await userCommission.setCommissions(
+  //   [
+  //     {
+  //       amountTotal,
+  //       commission,
+  //       count,
+  //       segmentId: getSegment.id,
+  //       userCommissionId: userCommission.id,
+  //     },
+  //   ],
+  //   { through: { where: { id: commissionId } } }
+  // );
 
   return { message: constants.UPDATE_COMMISSION_SUCCESS };
 };
@@ -152,7 +154,11 @@ exports.findAllCommissions = async (queryParams) => {
     userQuery
   );
 
-  checkResourceExists(userCommission, constants.COMMISSION_NOT_FOUND);
+  if (!userCommission) {
+    return {
+      commissions: [],
+    };
+  }
 
   const commissions = await userCommission.getCommissions({
     include: {

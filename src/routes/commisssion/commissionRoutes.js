@@ -10,7 +10,7 @@ router
   .route(links.commission.GET_COMMISSIONS)
   .get(
     auth.isAuth,
-    auth.checkUserRole(['superAdmin', 'admin']),
+    auth.checkUserRole(['superAdmin', 'admin', 'agent']),
     commissionControllers.getAllCommissions
   );
 
