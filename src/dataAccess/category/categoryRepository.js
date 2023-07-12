@@ -42,7 +42,7 @@ exports.findAll = async (page, limit, order, sort, whereClause) => {
     const pageNumber = +page || 1;
     const itemPerPage = +limit || 100;
     const orderBy = order || 'createdAt';
-    const sortBy = sort || 'DESC';
+    const sortBy = sort || 'ASC';
 
     const categories = await Category.findAndCountAll({
       where: whereClause,
