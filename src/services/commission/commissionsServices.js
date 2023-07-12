@@ -168,9 +168,9 @@ exports.findAllCommissions = async (queryParams) => {
       include: {
         model: Category,
         as: 'service',
-        attributes: ['id', 'name'],
-        order: [['createdAt', 'DESC']],
+        attributes: ['id', 'name', 'createdAt'],
       },
+      order: [[{ model: Category, as: 'service' }, 'createdAt', 'ASC']],
     },
   });
 
