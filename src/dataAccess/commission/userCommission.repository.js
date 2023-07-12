@@ -56,16 +56,16 @@ exports.findAll = async (
   sort
 ) => {
   try {
-    // const pageNumber = +page || 1;
-    // const itemPerPage = +limit || 1000;
-    // const orderBy = order || 'createdAt';
-    // const sortBy = sort || 'DESC';
+    const pageNumber = +page || 1;
+    const itemPerPage = +limit || 1000;
+    const orderBy = order || 'createdAt';
+    const sortBy = sort || 'DESC';
 
     const commissions = await UserCommission.findAndCountAll({
       // where: commissionQuery,
-      // order: [[orderBy, sortBy]],
-      // limit: itemPerPage,
-      // offset: (pageNumber - 1) * itemPerPage,
+      order: [[orderBy, sortBy]],
+      limit: itemPerPage,
+      offset: (pageNumber - 1) * itemPerPage,
 
       // attributes: { exclude: ['createdBy', 'agentId'] },
       // include: [
