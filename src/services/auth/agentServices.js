@@ -8,7 +8,6 @@ const { checkResourceExists } = require('../../utils/checkResourceExists.js');
 const { sendSMSMessage } = require('../../utils/sms.js');
 const { Op } = require('sequelize');
 
-
 const isRoleExist = async (roleId) => {
   const role = await roleRepository.findById(roleId);
   return checkResourceExists(role, constants.ROLE_NOT_FOUND);
@@ -144,10 +143,10 @@ exports.updatePassword = async (agentId) => {
     password: hashPassword,
   });
 
-  const response = await sendSMSMessage(user.phoneNumber, message);
-  if (response.code !== 1901) {
-    throw new BadRequestError(constants.SMS_ERROR);
-  }
+  await sendSMSMessage(user.phoneNumber, message);
+  // if (response.code !== 1901) {
+  //   throw new BadRequestError(constants.SMS_ERROR);
+  // }
 
   return { message: constants.UPDATE_PASSWORD_SUCCESS };
 };
@@ -173,9 +172,7 @@ exports.deleteAgent = async (userId) => {
 };
 
 exports.getAllAgents = async () => {
-  const users = await userRepository.findAll(
-    { name: 'agent' }
-  );
+  const users = await userRepository.findAll({ name: 'agent' });
 
   return { users };
 };

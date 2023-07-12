@@ -29,7 +29,7 @@ exports.updateAgent = async (req, res, next) => {
 
     const { message } = await agentServices.updateAgent(userId, userData);
 
-    return res.status(200).json({ message: message });
+    return res.status(201).json({ message: message });
   } catch (err) {
     return next(err);
   }

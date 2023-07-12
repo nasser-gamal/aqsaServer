@@ -134,12 +134,11 @@ exports.updatePassword = async (userId) => {
   await userRepository.updateOne(userId, {
     password: hashPassword,
   });
+ await sendSMSMessage(user.phoneNumber, message);
 
-  const response = await sendSMSMessage(user.phoneNumber, message);
-
-  if (response.code !== 1901) {
-    throw new BadRequestError(constants.SMS_ERROR);
-  }
+  // if (response.code !== 1901) {
+  //   throw new BadRequestError(constants.SMS_ERROR);
+  // }
 
   return { message: constants.UPDATE_PASSWORD_SUCCESS };
 };

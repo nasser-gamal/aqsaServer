@@ -94,25 +94,17 @@ exports.createCommission = async (userId, data) => {
 };
 
 exports.updateCommission = async (commissionId, data) => {
-  const { id, amountTotal, count, segment } = data;
-
-  const userCommission = await isCommissionExist(commissionId);
+  const { amountTotal, count, segment } = data;
 
   const getSegment = await findSegment(segment.service.id, amountTotal);
   const commission = calcCommission(amountTotal, getSegment.percentage);
 
-  // await userCommission.setCommissions(
-  //   [
-  //     {
-  //       amountTotal,
-  //       commission,
-  //       count,
-  //       segmentId: getSegment.id,
-  //       userCommissionId: userCommission.id,
-  //     },
-  //   ],
-  //   { through: { where: { id: commissionId } } }
-  // );
+  await commissionRepository.updateOne(commissionId, {
+    amountTotal,
+    commission,
+    count,
+    segmentId: getSegment.id,
+  });
 
   return { message: constants.UPDATE_COMMISSION_SUCCESS };
 };
