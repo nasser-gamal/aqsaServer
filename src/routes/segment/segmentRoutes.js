@@ -6,7 +6,13 @@ const links = require('../../links/links.js');
 const validate = require('../../utils/validation.js');
 const auth = require('../../middlewares/auth.js');
 
-router.route(links.segment.GET_SEGMENTS).get(segmentControllers.getAllSegments);
+router
+  .route(links.segment.GET_SEGMENTS)
+  .get(
+    auth.isAuth,
+    auth.checkUserRole(['superAdmin', 'admin', 'agent']),
+    segmentControllers.getAllSegments
+  );
 
 router
   .route(links.segment.GET_SEGMENT)

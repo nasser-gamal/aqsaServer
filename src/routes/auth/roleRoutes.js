@@ -9,25 +9,31 @@ const auth = require('../../middlewares/auth.js');
 
 router
   .route(links.role.GET_ROLES)
-  .get(auth.isAuth, roleControllers.getAllRoles);
-router
-  .route(links.role.CREATE_ROLE)
-  .post(
+  .get(
     auth.isAuth,
-    validate.roleValidate,
-    validate.validateInputs,
-    roleControllers.addRole
+    auth.checkUserRole(['superAdmin']),
+    roleControllers.getAllRoles
   );
-router
-  .route(links.role.UPDATE_ROLE)
-  .put(
-    auth.isAuth,
-    validate.roleValidate,
-    validate.validateInputs,
-    roleControllers.updateRole
-  );
+router.route(links.role.CREATE_ROLE).post(
+  auth.isAuth,
+  auth.checkUserRole(['superAdmin']),
+  validate.roleValidate,
+  validate.validateInputs,
+  roleControllers.addRole
+);
+router.route(links.role.UPDATE_ROLE).put(
+  auth.isAuth,
+  auth.checkUserRole(['superAdmin']),
+  validate.roleValidate,
+  validate.validateInputs,
+  roleControllers.updateRole
+);
 router
   .route(links.role.DELETE_ROLE)
-  .delete(auth.isAuth, roleControllers.deleteRole);
+  .delete(
+    auth.isAuth,
+    auth.checkUserRole(['superAdmin']),
+    roleControllers.deleteRole
+  );
 
 module.exports = router;
