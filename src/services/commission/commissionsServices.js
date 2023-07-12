@@ -169,7 +169,7 @@ exports.findAllCommissions = async (queryParams) => {
         model: Category,
         as: 'service',
         attributes: ['id', 'name'],
-        order: ['createdAt', 'DESC'],
+        order: [['createdAt', 'ASC']],
       },
     },
   });
