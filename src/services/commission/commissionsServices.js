@@ -81,7 +81,7 @@ exports.createCommission = async (userId, data) => {
         commission.amountTotal,
         segment.percentage
       );
-      userCommission.createCommission({
+      await userCommission.createCommission({
         amountTotal: commission.amountTotal,
         commission: calccommission,
         segmentId: segment.id,
