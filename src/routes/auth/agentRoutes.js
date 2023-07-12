@@ -47,7 +47,7 @@ router
   );
 router
   .route(links.user.UPDATE_STATUS)
-  .put(
+  .patch(
     auth.isAuth,
     auth.checkUserRole(['superAdmin']),
     agentControllers.updateUserStatus
