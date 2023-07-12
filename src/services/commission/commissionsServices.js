@@ -165,7 +165,12 @@ exports.findAllCommissions = async (queryParams) => {
       model: Segment,
       as: 'segment',
       attributes: ['id', 'title', 'start', 'end', 'percentage'],
-      include: { model: Category, as: 'service', attributes: ['id', 'name'] },
+      include: {
+        model: Category,
+        as: 'service',
+        attributes: ['id', 'name'],
+        order: ['createdAt', 'ASC'],
+      },
     },
   });
 
@@ -177,7 +182,12 @@ exports.findAllCommissions = async (queryParams) => {
     return acc + commission.commission;
   }, 0);
 
-  return { userCommission, commissions, totalAmount, totalCommissions };
+  return {
+    userCommission,
+    commissions,
+    totalAmount: totalAmount.toFixed(2),
+    totalCommissions: totalCommissions.toFixed(2),
+  };
 };
 
 exports.findCommissionById = async (commissionId) => {
