@@ -33,7 +33,7 @@ const findSegment = async (serviceId, amountTotal) => {
     [Op.or]: [
       {
         start: { [Op.lte]: amountTotal },
-        end: { [Op.gt]: amountTotal },
+        end: { [Op.gte]: amountTotal },
       },
       {
         start: { [Op.lte]: amountTotal },
