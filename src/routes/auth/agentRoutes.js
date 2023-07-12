@@ -27,7 +27,7 @@ router
 
 router
   .route(links.user.UPDATE_USER)
-  .put(
+  .patch(
     auth.isAuth,
     auth.checkUserRole(['superAdmin']),
     validate.updateUserValidate,
