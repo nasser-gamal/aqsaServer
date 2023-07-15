@@ -6,7 +6,7 @@ const treasuryRepository = require('../../dataAccess/treasury/treasuryRepository
 const constants = require('../../utils/constants.js');
 
 const calcDeposite = (amount, providerFees, providerRevenue) => {
-  let amountTotal = amount.toFixed(2);
+  let amountTotal = Number(amount).toFixed(2);
   let profit = (+providerRevenue - +providerFees).toFixed(2);
   let totalProviderDeduction = (amountTotal - profit).toFixed(2);
 
@@ -18,15 +18,8 @@ const calcDeposite = (amount, providerFees, providerRevenue) => {
 };
 
 exports.addDeposit = async (userId, data) => {
-  const {
-    bankAccountId,
-    type,
-    number,
-    amount,
-    providerFees,
-    providerRevenue,
-    note,
-  } = data;
+  const { bankAccountId, number, amount, providerFees, providerRevenue, note } =
+    data;
 
   const bankAccount = await transactionServicesUtils.findBankAccount(
     bankAccountId
@@ -49,8 +42,8 @@ exports.addDeposit = async (userId, data) => {
   );
 
   await transactionRepository.createOne({
-    type,
-    amount: amount.toFixed(2),
+    type: 'ايداع',
+    amount: Number(amount).toFixed(2),
     number,
     providerFees,
     amountTotal,
@@ -111,7 +104,6 @@ exports.updateDeposite = async (transactionId, data) => {
   await bankAccount.update({ balance: balanceAfter });
 
   await transactionRepository.updateOne(transactionId, {
-    type,
     amount: amount.toFixed(2),
     number,
     providerFees,

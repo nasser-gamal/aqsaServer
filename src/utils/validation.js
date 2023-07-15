@@ -1,5 +1,4 @@
-
-const { body, validationResult } = require('express-validator')
+const { body, validationResult } = require('express-validator');
 
 // validation for roles
 exports.roleValidate = [
@@ -116,12 +115,13 @@ exports.bankAccountValidate = [
     .trim()
     .not()
     .isEmpty()
-    .withMessage('ادخل الرصيد الافتتاحي للحساب'),
+    .withMessage('ادخل الرصيد الافتتاحي للحساب')
+    .isNumeric()
+    .withMessage('القيمة يجب ان تكون رقم'),
 ];
 
 exports.depositeValidate = [
   body('bankAccountId').not().isEmpty().withMessage('اختر البنك'),
-  body('type').not().isEmpty().withMessage('اختر نوع العملية'),
   body('number')
     .not()
     .isEmpty()
@@ -149,7 +149,6 @@ exports.depositeValidate = [
 ];
 exports.withDrawValidate = [
   body('bankAccountId').not().isEmpty().withMessage('اختر الحساب'),
-  body('type').not().isEmpty().withMessage('اختر نوع العملية'),
   body('number')
     .not()
     .isEmpty()
@@ -238,4 +237,4 @@ exports.validateInputs = (req, res, next) => {
     return res.status(400).json({ message: errors.array()[0].msg });
   }
   next();
-}
+};

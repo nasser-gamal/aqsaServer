@@ -78,8 +78,8 @@ exports.deleteBankAccount = async (bankAccountId) => {
 };
 
 exports.getAllBankAccounts = async () => {
-  const banks = await bankAccountRepository.findAll();
-  return { banks };
+  const bankAccounts = await bankAccountRepository.findAll();
+  return { bankAccounts };
 };
 
 exports.getBankAccount = async (bankAccountId) => {

@@ -25,6 +25,7 @@ exports.createCategory = async (userId, data) => {
     createdBy: userId,
   });
 
+
   return { message: constants.CREATE_CATEGORY_SUCCESS };
 };
 

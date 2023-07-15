@@ -47,11 +47,11 @@ exports.findAll = async (page, limit, order, sort, whereClause) => {
 
     const transactions = await Transaction.findAndCountAll({
       where: whereClause,
-      order: [[orderBy, sortBy]],
-      limit: itemPerPage,
-      offset: (pageNumber - 1) * itemPerPage,
+      // order: [[orderBy, sortBy]],
+      // limit: itemPerPage,
+      // offset: (pageNumber - 1) * itemPerPage,
       include: [
-        { model: User, attributes: ['userName', 'accountName'] },
+        // { model: User, attributes: ['userName', 'accountName'] },
         {
           model: BankAccount,
           attributes: ['accountName', 'bankNumber', 'balance'],

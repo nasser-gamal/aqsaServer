@@ -64,10 +64,7 @@ const Transaction = sequelize.define('transaction', {
     type: Sequelize.DataTypes.FLOAT(16, 2),
     allowNull: false,
   },
-  note: {
-    type: Sequelize.DataTypes.FLOAT(16, 2),
-    allowNull: true,
-  },
+
   isActive: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
@@ -85,6 +82,10 @@ const Transaction = sequelize.define('transaction', {
     type: Sequelize.FLOAT(16, 2),
     allowNull: false,
   },
+  note: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
 });
 
-module.exports =   Transaction;
+module.exports = Transaction;

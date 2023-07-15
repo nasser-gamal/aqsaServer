@@ -41,9 +41,9 @@ exports.deleteBankAccount = async (req, res, next) => {
 
 exports.getAllBankAccounts = async (req, res, next) => {
   try {
-    const banks = await bankAccountServices.getAllBankAccounts();
+    const bankAccounts = await bankAccountServices.getAllBankAccounts();
 
-    return res.status(200).send(banks);
+    return res.status(200).send(bankAccounts);
   } catch (err) {
     return next(err);
   }
