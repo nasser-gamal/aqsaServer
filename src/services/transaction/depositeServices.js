@@ -18,8 +18,15 @@ const calcDeposite = (amount, providerFees, providerRevenue) => {
 };
 
 exports.addDeposit = async (userId, data) => {
-  const { bankAccountId, number, amount, providerFees, providerRevenue, note } =
-    data;
+  const {
+    bankAccountId,
+    date,
+    number,
+    amount,
+    providerFees,
+    providerRevenue,
+    note,
+  } = data;
 
   const bankAccount = await transactionServicesUtils.findBankAccount(
     bankAccountId
@@ -45,6 +52,7 @@ exports.addDeposit = async (userId, data) => {
     type: 'ايداع',
     amount: Number(amount).toFixed(2),
     number,
+    date,
     providerFees,
     amountTotal,
     providerRevenue,
@@ -64,7 +72,7 @@ exports.addDeposit = async (userId, data) => {
 exports.updateDeposite = async (transactionId, data) => {
   const {
     bankAccountId,
-    type,
+    date,
     number,
     amount,
     providerFees,
@@ -94,6 +102,7 @@ exports.updateDeposite = async (transactionId, data) => {
   let { balanceAfter, treasuryAmount } =
     await transactionServicesUtils.updateTransactionInfo(
       transaction,
+      date,
       amount,
       profit,
       treasury

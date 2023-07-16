@@ -12,6 +12,10 @@ const Transaction = sequelize.define('transaction', {
     type: Sequelize.ENUM('سحب', 'ايداع'),
     allowNull: false,
   },
+  date: {
+    type: Sequelize.DataTypes.DATE,
+    allowNull: false,
+  },
   number: {
     type: Sequelize.STRING,
     allowNull: false,

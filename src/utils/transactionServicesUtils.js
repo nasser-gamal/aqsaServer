@@ -41,8 +41,8 @@ exports.updateTreasury = async (treasury, amountTotal) => {
 
 exports.profitStatus = (profit) => {
   let status;
-  if (profit === 0) {
-    status = 'لا يوجد';
+  if (profit == 0) {
+    status = 'لا يوجد ربح';
   } else if (profit > 0) {
     status = 'مكسب';
   } else {

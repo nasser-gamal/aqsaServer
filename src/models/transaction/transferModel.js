@@ -44,5 +44,4 @@ const Transfer = sequelize.define('transfer', {
   },
 });
 
-
-module.exports =   Transfer;
+module.exports = Transfer;
