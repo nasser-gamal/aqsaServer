@@ -83,7 +83,10 @@ exports.addWithDraw = async (userId, data) => {
       bankAccount,
       -totalProviderDeduction
     );
-  await transactionServicesUtils.updateTreasury(treasury, profit);
+    await transactionServicesUtils.updateTreasury(
+      treasury,
+      +treasury.amountTotal + +profit
+    );
 
   await transactionRepository.createOne({
     type: 'سحب',
@@ -113,8 +116,8 @@ exports.addWithDraw = async (userId, data) => {
 
 exports.updateWithDraw = async (transactionId, data) => {
   const {
+    isPercentage,
     bankAccountId,
-    type,
     number,
     amount,
     agentDeduction,
@@ -133,15 +136,20 @@ exports.updateWithDraw = async (transactionId, data) => {
     bankAccountId
   );
 
-  const { amountTotal, totalProviderDeduction, totalAgentDeduction, profit } =
-    calcWithDraw(
-      amount,
-      providerFees,
-      providerPercentage,
-      providerRevenue,
-      agentDeduction,
-      agentRevenue
-    );
+  const {
+    amountTotal,
+    totalProviderDeduction,
+    totalAgentDeduction,
+    profit,
+    providerRevenue,
+  } = calcWithDraw(
+    isPercentage,
+    amount,
+    providerFees,
+    providerPercentage,
+    agentDeduction,
+    agentRevenue
+  );
 
   const status = transactionServicesUtils.profitStatus(profit);
 
@@ -160,8 +168,7 @@ exports.updateWithDraw = async (transactionId, data) => {
   await bankAccount.update({ balance: balanceAfter });
 
   await transaction.update({
-    type,
-    amount: amount.toFixed(2),
+    amount: Number(amount).toFixed(2),
     number,
     providerFees,
     providerPercentage,

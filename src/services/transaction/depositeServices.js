@@ -27,7 +27,6 @@ exports.addDeposit = async (userId, data) => {
     providerRevenue,
     note,
   } = data;
-  console.log(date)
 
   const bankAccount = await transactionServicesUtils.findBankAccount(
     bankAccountId
@@ -81,7 +80,6 @@ exports.updateDeposite = async (transactionId, data) => {
     note,
   } = data;
 
-  console.log("data", data)
 
   // check if the Transaction is exists
   const transaction = await transactionServicesUtils.isTransactionExists({
@@ -97,7 +95,6 @@ exports.updateDeposite = async (transactionId, data) => {
     providerFees,
     providerRevenue
   );
-    console.log("amoutnTotal", amountTotal)
   const status = transactionServicesUtils.profitStatus(profit);
 
   const treasury = await transactionServicesUtils.findTreasury();

@@ -105,6 +105,9 @@ const links = {
     UPDATE_COMMISSION: '/update/:commissionId',
     DELETE_COMMISSION: '/delete/:commissionId',
   },
+  treasury: {
+    GET_TREASURY: '/get',
+  },
 };
 
 module.exports = links;

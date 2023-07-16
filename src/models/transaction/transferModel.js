@@ -34,7 +34,7 @@ const Transfer = sequelize.define('transfer', {
     allowNull: false,
   },
   note: {
-    type: Sequelize.DataTypes.FLOAT(16, 2),
+    type: Sequelize.STRING,
     allowNull: true,
   },
   isActive: {

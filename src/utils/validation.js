@@ -189,7 +189,17 @@ exports.withDrawValidate = [
 
 exports.transferValidate = [
   body('senderId').not().isEmpty().withMessage('ادخل الحساب المحول منه'),
-  body('recipientId').not().isEmpty().withMessage('ادخل الحساب المحول إليه'),
+  body('recipientId')
+    .not()
+    .isEmpty()
+    .withMessage('ادخل الحساب المحول إليه')
+    .custom((value, { req }) => {
+      if (value == req.body.senderId) {
+        throw new Error('لا يمكن التحويل لنفس الحساب');
+      }
+      return true;
+    }),
+
   body('amountTotal')
     .not()
     .isEmpty()
