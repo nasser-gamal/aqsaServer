@@ -4,7 +4,6 @@ const transactionServicesUtils = require('../../utils/transactionServicesUtils.j
 const constants = require('../../utils/constants.js');
 const BadRequestError = require('../../utils/badRequestError.js');
 
-
 // const checkBankAccountBalance = async (bankAccount, amountTotal) => {
 //   if (+bankAccount.balance < +amountTotal) {
 //     throw new BadRequestError(constants.BANK_ACCOUNT_BALANCE_NOT_ENOUGH, 400);
@@ -14,13 +13,13 @@ const BadRequestError = require('../../utils/badRequestError.js');
 const calcWithDraw = (
   amount,
   providerFees,
-  providerRevenue,
+  providerPercentage,
   agentDeduction,
   agentRevenue
 ) => {
   // المخصوم م البنك
   let amountTotal = (+amount + +providerFees).toFixed(2);
-
+  let providerRevenue = (providerPercentage / 100) * amountTotal;
   // المخصوم م المزود
   let totalProviderDeduction = (amountTotal - +providerRevenue).toFixed(2);
 
@@ -35,13 +34,14 @@ const calcWithDraw = (
     totalProviderDeduction,
     totalAgentDeduction,
     profit,
+    providerRevenue,
   };
 };
 
 exports.addWithDraw = async (userId, data) => {
   const {
+    date,
     bankAccountId,
-    type,
     number,
     amount,
     agentDeduction,
@@ -50,6 +50,7 @@ exports.addWithDraw = async (userId, data) => {
     providerFees,
     note,
   } = data;
+  console.log(data);
 
   const bankAccount = await transactionServicesUtils.findBankAccount(
     bankAccountId
@@ -61,17 +62,15 @@ exports.addWithDraw = async (userId, data) => {
     totalProviderDeduction,
     totalAgentDeduction,
     profit,
+    providerRevenue,
   } = calcWithDraw(
     amount,
     providerFees,
     providerPercentage,
-    providerRevenue,
     agentDeduction,
     agentRevenue
   );
-
   const status = transactionServicesUtils.profitStatus(profit);
-
   // await checkBankAccountBalance(bankAccount, amountTotal);
 
   const { balanceBefore, balanceAfter } =
@@ -79,8 +78,9 @@ exports.addWithDraw = async (userId, data) => {
   await transactionServicesUtils.updateTreasury(treasury, profit);
 
   await transactionRepository.createOne({
-    type,
-    amount: amount.toFixed(2),
+    type: 'سحب',
+    date,
+    amount: Number(amount).toFixed(2),
     number,
     providerFees,
     providerPercentage,
@@ -124,19 +124,15 @@ exports.updateWithDraw = async (transactionId, data) => {
     bankAccountId
   );
 
-  const {
-    amountTotal,
-    totalProviderDeduction,
-    totalAgentDeduction,
-    profit,
-  } = calcWithDraw(
-    amount,
-    providerFees,
-    providerPercentage,
-    providerRevenue,
-    agentDeduction,
-    agentRevenue
-  );
+  const { amountTotal, totalProviderDeduction, totalAgentDeduction, profit } =
+    calcWithDraw(
+      amount,
+      providerFees,
+      providerPercentage,
+      providerRevenue,
+      agentDeduction,
+      agentRevenue
+    );
 
   const status = transactionServicesUtils.profitStatus(profit);
 
