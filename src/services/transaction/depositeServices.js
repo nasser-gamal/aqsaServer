@@ -27,6 +27,7 @@ exports.addDeposit = async (userId, data) => {
     providerRevenue,
     note,
   } = data;
+  console.log(date)
 
   const bankAccount = await transactionServicesUtils.findBankAccount(
     bankAccountId

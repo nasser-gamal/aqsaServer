@@ -75,7 +75,7 @@ const Transaction = sequelize.define('transaction', {
     defaultValue: true,
   },
   status: {
-    type: Sequelize.ENUM('خسارة', 'مكسب'),
+    type: Sequelize.ENUM('خسارة', 'مكسب', 'لا يوجد ربح'),
     allowNull: false,
   },
   balanceBefore: {
