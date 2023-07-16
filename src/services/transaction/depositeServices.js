@@ -81,6 +81,8 @@ exports.updateDeposite = async (transactionId, data) => {
     note,
   } = data;
 
+  console.log("data", data)
+
   // check if the Transaction is exists
   const transaction = await transactionServicesUtils.isTransactionExists({
     id: transactionId,
@@ -95,7 +97,7 @@ exports.updateDeposite = async (transactionId, data) => {
     providerFees,
     providerRevenue
   );
-
+    console.log("amoutnTotal", amountTotal)
   const status = transactionServicesUtils.profitStatus(profit);
 
   const treasury = await transactionServicesUtils.findTreasury();
@@ -103,7 +105,6 @@ exports.updateDeposite = async (transactionId, data) => {
   let { balanceAfter, treasuryAmount } =
     await transactionServicesUtils.updateTransactionInfo(
       transaction,
-      date,
       amount,
       profit,
       treasury
@@ -114,7 +115,7 @@ exports.updateDeposite = async (transactionId, data) => {
   await bankAccount.update({ balance: balanceAfter });
 
   await transactionRepository.updateOne(transactionId, {
-    amount: amount.toFixed(2),
+    amount: Number(amount).toFixed(2),
     number,
     providerFees,
     amountTotal,
@@ -123,6 +124,7 @@ exports.updateDeposite = async (transactionId, data) => {
     profit,
     balanceAfter,
     status,
+    date,
     note,
   });
 
