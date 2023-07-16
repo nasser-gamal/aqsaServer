@@ -11,6 +11,7 @@ const BadRequestError = require('../../utils/badRequestError.js');
 // };
 
 const calcWithDraw = (
+  isPercentage,
   amount,
   providerFees,
   providerPercentage,
@@ -19,7 +20,10 @@ const calcWithDraw = (
 ) => {
   // المخصوم م البنك
   let amountTotal = (+amount + +providerFees).toFixed(2);
-  let providerRevenue = (providerPercentage / 100) * amountTotal;
+
+  let providerRevenue = isPercentage
+    ? (providerPercentage / 100) * amountTotal
+    : providerPercentage;
   // المخصوم م المزود
   let totalProviderDeduction = (amountTotal - +providerRevenue).toFixed(2);
 
@@ -40,6 +44,7 @@ const calcWithDraw = (
 
 exports.addWithDraw = async (userId, data) => {
   const {
+    isPercentage,
     date,
     bankAccountId,
     number,
@@ -50,7 +55,6 @@ exports.addWithDraw = async (userId, data) => {
     providerFees,
     note,
   } = data;
-  console.log(data);
 
   const bankAccount = await transactionServicesUtils.findBankAccount(
     bankAccountId
@@ -64,6 +68,7 @@ exports.addWithDraw = async (userId, data) => {
     profit,
     providerRevenue,
   } = calcWithDraw(
+    isPercentage,
     amount,
     providerFees,
     providerPercentage,
@@ -74,16 +79,20 @@ exports.addWithDraw = async (userId, data) => {
   // await checkBankAccountBalance(bankAccount, amountTotal);
 
   const { balanceBefore, balanceAfter } =
-    await transactionServicesUtils.updateBankAccount(bankAccount, -amountTotal);
+    await transactionServicesUtils.updateBankAccount(
+      bankAccount,
+      -totalProviderDeduction
+    );
   await transactionServicesUtils.updateTreasury(treasury, profit);
 
   await transactionRepository.createOne({
     type: 'سحب',
     date,
+    isPercentage,
     amount: Number(amount).toFixed(2),
     number,
     providerFees,
-    providerPercentage,
+    providerPercentage: isPercentage && providerPercentage,
     providerRevenue,
     providerDeduction: totalProviderDeduction,
     amountTotal,

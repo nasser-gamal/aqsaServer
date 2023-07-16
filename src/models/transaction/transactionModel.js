@@ -34,6 +34,10 @@ const Transaction = sequelize.define('transaction', {
     type: Sequelize.DataTypes.FLOAT(16, 2),
     allowNull: false,
   },
+  isPercentage: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
+  },
   providerPercentage: {
     type: Sequelize.DataTypes.FLOAT(5, 2),
     allowNull: true,
