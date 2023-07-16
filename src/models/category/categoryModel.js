@@ -27,16 +27,6 @@ const Category = sequelize.define(
       allowNull: false,
       defaultValue: true,
     },
-    createdAt: {
-      type: Sequelize.DataTypes.DATE(),
-      allowNull: true,
-      defaultValue: new Date(),
-      // This way, the current date/time will be used to populate this column (at the moment of insertion)
-    },
-  },
-  {
-    timestamps: false,
-  }
 );
 
 module.exports = Category;
