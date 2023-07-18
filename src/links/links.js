@@ -111,6 +111,9 @@ const links = {
   inventory: {
     GET_PROFITES: '/profits',
   },
+  reports: {
+    DAILY_TRANSACTION: '/transactions/daily',
+  },
 };
 
 module.exports = links;

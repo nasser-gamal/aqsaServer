@@ -38,8 +38,16 @@ exports.deleteOne = async (transactionId) => {
   }
 };
 
-exports.findAll = async (whereClause, page, limit, order, sort) => {
+exports.findAll = async (
+  whereClause,
+  accountsClause,
+  page,
+  limit,
+  order,
+  sort
+) => {
   try {
+    console.log(accountsClause)
     const pageNumber = +page || 1;
     const itemPerPage = +limit || 2;
     const orderBy = order || 'createdAt';
@@ -54,6 +62,7 @@ exports.findAll = async (whereClause, page, limit, order, sort) => {
         // { model: User, attributes: ['userName', 'accountName'] },
         {
           model: BankAccount,
+          where:  accountsClause ,
           attributes: ['accountName', 'bankNumber', 'balance'],
           include: [{ model: Bank, attributes: ['id', 'bankName'] }],
         },

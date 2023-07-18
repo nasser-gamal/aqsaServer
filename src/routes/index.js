@@ -21,6 +21,7 @@ const withdrawRoutes = require('./transaction/withdrawRoutes.js');
 const transferRoutes = require('./transaction/transferRoutes.js');
 const commissionRoutes = require('./commisssion/commissionRoutes.js');
 const inventoryRoutes = require('./inventory/inventoryRoutes.js');
+const reportsRoutes = require('./Reports/reportsRoutes.js');
 
 // router.use('/links', systemMenuRoutes);
 // router.use('/pages', pagesRoutes);
@@ -42,5 +43,6 @@ router.use('/transaction/withdraw', withdrawRoutes);
 router.use('/transaction/transfer', transferRoutes);
 router.use('/commission', commissionRoutes);
 router.use('/inventory', inventoryRoutes);
+router.use('/reports', reportsRoutes);
 
 module.exports = router;

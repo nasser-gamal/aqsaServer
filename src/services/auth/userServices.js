@@ -8,7 +8,6 @@ const { checkResourceExists } = require('../../utils/checkResourceExists.js');
 const { sendSMSMessage } = require('../../utils/sms.js');
 const { Op } = require('sequelize');
 
-
 const isRoleExist = async (roleId) => {
   const role = await roleRepository.findById(roleId);
   return checkResourceExists(role, constants.ROLE_NOT_FOUND);
@@ -134,7 +133,7 @@ exports.updatePassword = async (userId) => {
   await userRepository.updateOne(userId, {
     password: hashPassword,
   });
- await sendSMSMessage(user.phoneNumber, message);
+  await sendSMSMessage(user.phoneNumber, message);
 
   // if (response.code !== 1901) {
   //   throw new BadRequestError(constants.SMS_ERROR);
@@ -164,8 +163,8 @@ exports.deleteUser = async (userId) => {
 };
 
 exports.getAllAdmins = async () => {
-  const users = await userRepository.findAll(
-    { name: 'admin' }
-  );
+  const users = await userRepository.findAll({
+    name: ['admin', 'superAdmin'],
+  });
   return { users };
 };
