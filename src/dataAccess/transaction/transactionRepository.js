@@ -47,7 +47,6 @@ exports.findAll = async (
   sort
 ) => {
   try {
-    console.log(accountsClause)
     const pageNumber = +page || 1;
     const itemPerPage = +limit || 2;
     const orderBy = order || 'createdAt';

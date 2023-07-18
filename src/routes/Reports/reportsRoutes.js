@@ -10,4 +10,8 @@ router
   .route(links.reports.DAILY_TRANSACTION)
   .get(reportsControllers.dailyReports);
 
+router
+  .route(links.reports.EXPORT_TRANSACTION)
+  .post(reportsControllers.exportExcel);
+
 module.exports = router;
