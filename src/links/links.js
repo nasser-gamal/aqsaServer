@@ -108,6 +108,9 @@ const links = {
   treasury: {
     GET_TREASURY: '/get',
   },
+  inventory: {
+    GET_PROFITES: '/profits',
+  },
 };
 
 module.exports = links;

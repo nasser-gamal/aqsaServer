@@ -38,7 +38,7 @@ exports.deleteOne = async (transactionId) => {
   }
 };
 
-exports.findAll = async (page, limit, order, sort, whereClause) => {
+exports.findAll = async (whereClause, page, limit, order, sort) => {
   try {
     const pageNumber = +page || 1;
     const itemPerPage = +limit || 2;

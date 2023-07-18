@@ -5,8 +5,18 @@ const treasuryRepository = require('../../dataAccess/treasury/treasuryRepository
 
 const constants = require('../../utils/constants.js');
 
-const calcDeposite = (amount, providerFees, providerRevenue) => {
+const calcDeposite = (
+  isPercentage,
+  amount,
+  providerFees,
+  providerPercentage
+) => {
   let amountTotal = Number(amount).toFixed(2);
+
+  let providerRevenue = isPercentage
+    ? (providerPercentage / 100) * amountTotal
+    : providerPercentage;
+
   let profit = (+providerRevenue - +providerFees).toFixed(2);
   let totalProviderDeduction = (amountTotal - profit).toFixed(2);
 
@@ -14,17 +24,19 @@ const calcDeposite = (amount, providerFees, providerRevenue) => {
     amountTotal,
     totalProviderDeduction,
     profit,
+    providerRevenue,
   };
 };
 
 exports.addDeposit = async (userId, data) => {
   const {
+    isPercentage,
     bankAccountId,
     date,
     number,
     amount,
     providerFees,
-    providerRevenue,
+    providerPercentage,
     note,
   } = data;
 
@@ -33,11 +45,8 @@ exports.addDeposit = async (userId, data) => {
   );
   const treasury = await transactionServicesUtils.findTreasury();
 
-  const { amountTotal, totalProviderDeduction, profit } = calcDeposite(
-    amount,
-    providerFees,
-    providerRevenue
-  );
+  const { amountTotal, totalProviderDeduction, profit, providerRevenue } =
+    calcDeposite(isPercentage, amount, providerFees, providerPercentage);
 
   const status = transactionServicesUtils.profitStatus(profit);
 
@@ -49,6 +58,7 @@ exports.addDeposit = async (userId, data) => {
   );
 
   await transactionRepository.createOne({
+    isPercentage,
     type: 'ايداع',
     amount: Number(amount).toFixed(2),
     number,
@@ -56,6 +66,7 @@ exports.addDeposit = async (userId, data) => {
     providerFees,
     amountTotal,
     providerRevenue,
+    providerPercentage: isPercentage && providerPercentage,
     providerDeduction: totalProviderDeduction,
     profit,
     balanceBefore,
@@ -71,15 +82,15 @@ exports.addDeposit = async (userId, data) => {
 
 exports.updateDeposite = async (transactionId, data) => {
   const {
+    isPercentage,
     bankAccountId,
     date,
     number,
     amount,
     providerFees,
-    providerRevenue,
+    providerPercentage,
     note,
   } = data;
-
 
   // check if the Transaction is exists
   const transaction = await transactionServicesUtils.isTransactionExists({
@@ -90,11 +101,8 @@ exports.updateDeposite = async (transactionId, data) => {
     bankAccountId
   );
 
-  const { amountTotal, totalProviderDeduction, profit } = calcDeposite(
-    amount,
-    providerFees,
-    providerRevenue
-  );
+  const { amountTotal, totalProviderDeduction, profit, providerRevenue } =
+    calcDeposite(isPercentage, amount, providerFees, providerPercentage);
   const status = transactionServicesUtils.profitStatus(profit);
 
   const treasury = await transactionServicesUtils.findTreasury();
@@ -112,11 +120,13 @@ exports.updateDeposite = async (transactionId, data) => {
   await bankAccount.update({ balance: balanceAfter });
 
   await transactionRepository.updateOne(transactionId, {
+    isPercentage,
     amount: Number(amount).toFixed(2),
     number,
     providerFees,
     amountTotal,
     providerRevenue,
+    providerPercentage: isPercentage && providerPercentage,
     providerDeduction: totalProviderDeduction,
     profit,
     balanceAfter,

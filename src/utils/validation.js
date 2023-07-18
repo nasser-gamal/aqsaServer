@@ -125,9 +125,7 @@ exports.depositeValidate = [
   body('number')
     .not()
     .isEmpty()
-    .withMessage('ادخل الرقم')
-    .isNumeric()
-    .withMessage('الرقم غير صالح'),
+    .withMessage('ادخل الرقم'),
   body('amount')
     .not()
     .isEmpty()
@@ -140,7 +138,7 @@ exports.depositeValidate = [
     .withMessage('ادخل رسوم المزود')
     .isNumeric()
     .withMessage('رسوم المزود يجب ان يكون رقم'),
-  body('providerRevenue')
+  body('providerPercentage')
     .not()
     .isEmpty()
     .withMessage('ادخل عائد المزود')
@@ -148,13 +146,12 @@ exports.depositeValidate = [
     .withMessage('عائد المزود يجب ان تكون رقم'),
 ];
 exports.withDrawValidate = [
+  body('isTotalRevenue').not().isEmpty().withMessage('ادخل طريقة حساب الخصم'),
   body('bankAccountId').not().isEmpty().withMessage('اختر الحساب'),
   body('number')
     .not()
     .isEmpty()
     .withMessage('ادخل الرقم')
-    .isNumeric()
-    .withMessage('الرقم غير صالح'),
   body('amount')
     .not()
     .isEmpty()
