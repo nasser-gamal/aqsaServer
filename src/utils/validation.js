@@ -140,7 +140,7 @@ exports.depositeValidate = [
     .withMessage('ادخل رسوم المزود')
     .isNumeric()
     .withMessage('رسوم المزود يجب ان يكون رقم'),
-  body('providerRevenue')
+  body('providerPercentage')
     .not()
     .isEmpty()
     .withMessage('ادخل عائد المزود')
