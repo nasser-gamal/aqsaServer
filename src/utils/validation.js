@@ -151,7 +151,7 @@ exports.withDrawValidate = [
   body('number')
     .not()
     .isEmpty()
-    .withMessage('ادخل الرقم')
+    .withMessage('ادخل الرقم'),
   body('amount')
     .not()
     .isEmpty()
