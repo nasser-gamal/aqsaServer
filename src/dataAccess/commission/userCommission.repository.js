@@ -48,55 +48,52 @@ exports.deleteOne = async (commissionId) => {
 };
 
 exports.findAll = async (
-  // whereClause,
-  commissionQuery,
-  page,
-  limit,
-  order,
-  sort
+  commissionQuery
+  // page,
+  // limit,
+  // order,
+  // sort
 ) => {
   try {
-    const pageNumber = +page || 1;
-    const itemPerPage = +limit || 1000;
-    const orderBy = order || 'createdAt';
-    const sortBy = sort || 'DESC';
+    // const pageNumber = +page || 1;
+    // const itemPerPage = +limit || 1000;
+    // const orderBy = order || 'createdAt';
+    // const sortBy = sort || 'DESC';
 
     const commissions = await UserCommission.findAndCountAll({
-      // where: commissionQuery,
-      order: [[orderBy, sortBy]],
-      limit: itemPerPage,
-      offset: (pageNumber - 1) * itemPerPage,
+      where: commissionQuery,
+      // order: [[orderBy, sortBy]],
+      // limit: itemPerPage,
+      // offset: (pageNumber - 1) * itemPerPage,
 
       // attributes: { exclude: ['createdBy', 'agentId'] },
       // include: [
-      //   {
-      //     model: User,
-      //     as: 'creator',
-      //     attributes: ['id', 'userName', 'accountName'],
-      //   },
-      //   {
-      //     model: User,
-      //     where: whereClause,
-      //     as: 'agent',
-      //     attributes: { exclude: ['password'] },
-      //   },
-      //   {
-      //     model: Segment,
-      //     as: 'segment',
-      //     attributes: ['id', 'title', 'start', 'end', 'percentage'],
-      //     include: [
-      //       {
-      //         model: Category,
-      //         as: 'service',
-      //         attributes: ['id', 'name'],
-      //       },
-      //     ],
-      //   },
+      //   // {
+      //   //   model: User,
+      //   //   as: 'creator',
+      //   //   attributes: ['id', 'userName', 'accountName'],
+      //   // },
+      //   // {
+      //   //   model: User,
+      //   //   where: whereClause,
+      //   //   as: 'agent',
+      //   //   attributes: {
+      //   //     exclude: [
+      //   //       'password',
+      //   //       'resetPasswordCode',
+      //   //       'passwordCodeExpiration',
+      //   //       'createdAt',
+      //   //       'updatedAt',
+      //   //       'roleId',
+      //   //       'isActive',
+      //   //     ],
+      //   //   },
+      //   // },
       // ],
     });
     return {
       commissions: commissions.rows,
-      pagination: pagination(pageNumber, itemPerPage, commissions.count),
+      // pagination: pagination(pageNumber, itemPerPage, commissions.count),
     };
   } catch (err) {
     throw new Error(err);
@@ -126,11 +123,7 @@ exports.findById = async (commissionId) => {
   }
 };
 
-exports.findOne = async (
-  commissionQuery,
-  whereClause,
- 
-) => {
+exports.findOne = async (commissionQuery, whereClause) => {
   try {
     const userCommission = await UserCommission.findOne({
       where: commissionQuery,

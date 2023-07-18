@@ -44,6 +44,7 @@ const calcWithDraw = (
 
 exports.addWithDraw = async (userId, data) => {
   const {
+    isTotalRevenue,
     isPercentage,
     date,
     bankAccountId,
@@ -81,12 +82,12 @@ exports.addWithDraw = async (userId, data) => {
   const { balanceBefore, balanceAfter } =
     await transactionServicesUtils.updateBankAccount(
       bankAccount,
-      -totalProviderDeduction
+      isTotalRevenue ? -amountTotal : -totalProviderDeduction
     );
-    await transactionServicesUtils.updateTreasury(
-      treasury,
-      +treasury.amountTotal + +profit
-    );
+  await transactionServicesUtils.updateTreasury(
+    treasury,
+    +treasury.amountTotal + +profit
+  );
 
   await transactionRepository.createOne({
     type: 'سحب',

@@ -148,6 +148,7 @@ exports.depositeValidate = [
     .withMessage('عائد المزود يجب ان تكون رقم'),
 ];
 exports.withDrawValidate = [
+  body('isTotalRevenue').not().isEmpty().withMessage('ادخل طريقة حساب الخصم'),
   body('bankAccountId').not().isEmpty().withMessage('اختر الحساب'),
   body('number')
     .not()

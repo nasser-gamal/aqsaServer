@@ -48,11 +48,11 @@ exports.getAllDeposites = async (req, res, next) => {
 
     const { transactions, pagination } =
       await transactionServices.findAllTransactions(
+        whereClause,
         page,
         limit,
         order,
         sort,
-        whereClause
       );
     return res.status(200).json({ transactions, pagination });
   } catch (err) {

@@ -27,6 +27,7 @@ const constants = {
   CATEGORY_NOT_FOUND: 'الخدمة غير موجودة',
   SEGEMNT_NOT_FOUND: 'الشريحة غير موجودة',
   COMMISSION_NOT_FOUND: 'العمولة غير موجودة',
+  PROFIT_NOT_EXIST: 'لا يوجد ارباح في هذه الفترة',
 
   BANK_ACCOUNT_BALANCE_NOT_ENOUGH: 'رصيد الحساب ليس كافي لاجراء العملية',
 
