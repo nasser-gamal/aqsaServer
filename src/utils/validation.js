@@ -125,9 +125,7 @@ exports.depositeValidate = [
   body('number')
     .not()
     .isEmpty()
-    .withMessage('ادخل الرقم')
-    .isNumeric()
-    .withMessage('الرقم غير صالح'),
+    .withMessage('ادخل الرقم'),
   body('amount')
     .not()
     .isEmpty()
@@ -154,8 +152,6 @@ exports.withDrawValidate = [
     .not()
     .isEmpty()
     .withMessage('ادخل الرقم')
-    .isNumeric()
-    .withMessage('الرقم غير صالح'),
   body('amount')
     .not()
     .isEmpty()
