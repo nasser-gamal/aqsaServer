@@ -41,7 +41,7 @@ exports.deleteOne = async (transferId) => {
 exports.findAll = async (page, limit, order, sort, whereClause) => {
   try {
     const pageNumber = +page || 1;
-    const itemPerPage = +limit || 2;
+    const itemPerPage = +limit || 100000;
     const orderBy = order || 'createdAt';
     const sortBy = sort || 'DESC';
 

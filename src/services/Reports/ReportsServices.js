@@ -21,7 +21,8 @@ exports.dailyReports = async (query) => {
   return transactions;
 };
 
-exports.exportExcel = async (query, res) => {
+// reports.services.js
+exports.exportExcel = async (query) => {
   const { startDate, endDate, bankNumber } = query;
 
   const nextDay = new Date(endDate);
@@ -37,25 +38,30 @@ exports.exportExcel = async (query, res) => {
     bankNumber,
   });
 
+  console.log('----------------------------', transactions)
+
   const workbook = new Excel.Workbook();
+
   const worksheet = workbook.addWorksheet('sheet 1');
 
   worksheet.columns = [
-    // { header: 'نوع العملية', key: 'type', width: 10 },
-    // { header: 'تاريخ العملية', key: 'date', width: 20 },
-    // { header: 'رصيد قبل', key: 'balanceBefore', width: 15 },
-    // { header: 'رصيد بعد', key: 'balanceAfter', width: 15 },
-    // { header: 'القيمة', key: 'amountTotal', width: 15 },
-    { header: 'القيمة', key: 'name' },
+    { header: 'نوع العملية', key: 'type', width: '10' },
+    { header: 'تاريخ العملية', key: 'date', width: '20' },
+    { header: 'رصيد قبل', key: 'balanceBefore', width: '15' },
+    { header: 'رصيد بعد', key: 'balanceAfter', width: '15' },
+    { header: 'القيمة', key: 'amountTotal', width: '15' },
   ];
 
-  worksheet.addRow({
-    // type: transaction.type,
-    // date: transaction.createdAt,
-    // balanceBefore: transaction.balanceBefore,
-    // balanceAfter: transaction.balanceAfter,
-    // amountTotal: transaction.amountTotal,
-    name: 'nasser',
+  await transactions.map((transaction, i) => {
+    return worksheet.addRows([
+      {
+        type: transaction.type,
+        date: transaction.createdAt,
+        balanceBefore: transaction.balanceBefore,
+        balanceAfter: transaction.balanceAfter,
+        amountTotal: transaction.amountTotal,
+      },
+    ]);
   });
 
   return workbook;

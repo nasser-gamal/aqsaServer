@@ -12,8 +12,8 @@ router
 
 router
   .route(links.reports.EXPORT_TRANSACTION)
-  .post(
-    // auth.isAuth,
+  .get(
+    auth.isAuth,
     // auth.checkUserRole(['superAdmin', 'admin']),
     reportsControllers.exportExcel
   );
