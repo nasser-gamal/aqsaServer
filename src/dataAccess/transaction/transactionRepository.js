@@ -46,6 +46,7 @@ exports.findAll = async (
   order,
   sort
 ) => {
+  try {
     const pageNumber = +page || 1;
     const itemPerPage = +limit || 2;
     const orderBy = order || 'createdAt';
@@ -71,7 +72,9 @@ exports.findAll = async (
       transactions: transactions.rows,
       pagination: pagination(pageNumber, itemPerPage, transactions.count),
     };
-
+  } catch (err) {
+    throw new Error(err);
+  }
 };
 
 exports.findById = async (transactionId) => {
