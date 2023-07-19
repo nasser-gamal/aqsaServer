@@ -12,6 +12,10 @@ router
 
 router
   .route(links.reports.EXPORT_TRANSACTION)
-  .post(reportsControllers.exportExcel);
+  .post(
+    // auth.isAuth,
+    // auth.checkUserRole(['superAdmin', 'admin']),
+    reportsControllers.exportExcel
+  );
 
 module.exports = router;
