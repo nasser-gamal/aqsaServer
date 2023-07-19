@@ -67,12 +67,29 @@ const Transaction = sequelize.define('transaction', {
     type: Sequelize.DataTypes.FLOAT(16, 2),
     allowNull: true,
   },
+  additionalFees: {
+    type: Sequelize.DataTypes.FLOAT(16, 2),
+    allowNull: true,
+  },
+  additionalRevenue: {
+    type: Sequelize.DataTypes.FLOAT(16, 2),
+    allowNull: true,
+  },
   // الربح
   profit: {
     type: Sequelize.DataTypes.FLOAT(16, 2),
     allowNull: false,
   },
 
+  balanceBefore: {
+    type: Sequelize.FLOAT(16, 2),
+    allowNull: false,
+  },
+  balanceAfter: {
+    type: Sequelize.FLOAT(16, 2),
+    allowNull: false,
+  },
+  
   isActive: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
@@ -80,14 +97,6 @@ const Transaction = sequelize.define('transaction', {
   },
   status: {
     type: Sequelize.ENUM('خسارة', 'مكسب', 'لا يوجد ربح'),
-    allowNull: false,
-  },
-  balanceBefore: {
-    type: Sequelize.FLOAT(16, 2),
-    allowNull: false,
-  },
-  balanceAfter: {
-    type: Sequelize.FLOAT(16, 2),
     allowNull: false,
   },
   note: {

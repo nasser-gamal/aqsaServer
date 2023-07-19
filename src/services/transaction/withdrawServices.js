@@ -16,7 +16,9 @@ const calcWithDraw = (
   providerFees,
   providerPercentage,
   agentDeduction,
-  agentRevenue
+  agentRevenue,
+  additionalFees,
+  additionalRevenue
 ) => {
   // المخصوم م البنك
   let amountTotal = (+amount + +providerFees).toFixed(2);
@@ -25,13 +27,21 @@ const calcWithDraw = (
     ? (providerPercentage / 100) * amountTotal
     : providerPercentage;
   // المخصوم م المزود
-  let totalProviderDeduction = (amountTotal - +providerRevenue).toFixed(2);
+  let totalProviderDeduction = (
+    +amountTotal +
+    +additionalFees -
+    +providerRevenue
+  ).toFixed(2);
 
   // المخصوم م المركز
   let totalAgentDeduction = (+agentDeduction - +agentRevenue).toFixed(2);
 
   // الربح
-  let profit = (totalAgentDeduction - totalProviderDeduction).toFixed(2);
+  let profit = (
+    totalAgentDeduction -
+    totalProviderDeduction +
+    +additionalRevenue
+  ).toFixed(2);
 
   return {
     amountTotal,
@@ -54,6 +64,8 @@ exports.addWithDraw = async (userId, data) => {
     agentRevenue,
     providerPercentage,
     providerFees,
+    additionalFees,
+    additionalRevenue,
     note,
   } = data;
 
@@ -74,7 +86,9 @@ exports.addWithDraw = async (userId, data) => {
     providerFees,
     providerPercentage,
     agentDeduction,
-    agentRevenue
+    agentRevenue,
+    additionalFees,
+    additionalRevenue
   );
   const status = transactionServicesUtils.profitStatus(profit);
   // await checkBankAccountBalance(bankAccount, amountTotal);
@@ -106,6 +120,8 @@ exports.addWithDraw = async (userId, data) => {
     profit,
     balanceBefore,
     balanceAfter,
+    additionalFees,
+    additionalRevenue,
     status,
     createdBy: userId,
     bankAccountId,
@@ -117,6 +133,7 @@ exports.addWithDraw = async (userId, data) => {
 
 exports.updateWithDraw = async (transactionId, data) => {
   const {
+    isTotalRevenue,
     isPercentage,
     bankAccountId,
     number,
@@ -125,6 +142,8 @@ exports.updateWithDraw = async (transactionId, data) => {
     agentRevenue,
     providerPercentage,
     providerFees,
+    additionalFees,
+    additionalRevenue,
     note,
   } = data;
 
@@ -149,8 +168,13 @@ exports.updateWithDraw = async (transactionId, data) => {
     providerFees,
     providerPercentage,
     agentDeduction,
-    agentRevenue
+    agentRevenue,
+    additionalFees,
+    additionalRevenue
   );
+  console.log("amountTotal", amountTotal)
+  console.log("totalProviderDeduction", totalProviderDeduction)
+  console.log("totalAgentDeduction", totalAgentDeduction)
 
   const status = transactionServicesUtils.profitStatus(profit);
 
@@ -161,15 +185,18 @@ exports.updateWithDraw = async (transactionId, data) => {
       transaction,
       amountTotal,
       profit,
-      treasury
+      treasury,
+      isTotalRevenue,
+      totalProviderDeduction
     );
 
-  treasury,
-    await transactionServicesUtils.updateTreasury(treasury, treasuryAmount);
+  // treasury,
+  //   await transactionServicesUtils.updateTreasury(treasury, treasuryAmount);
   await bankAccount.update({ balance: balanceAfter });
 
   await transaction.update({
     amount: Number(amount).toFixed(2),
+    isPercentage,
     number,
     providerFees,
     providerPercentage,
@@ -180,6 +207,8 @@ exports.updateWithDraw = async (transactionId, data) => {
     agentRevenue,
     agentTotalDeduction: totalAgentDeduction,
     profit,
+    additionalFees,
+    additionalRevenue,
     balanceAfter,
     status,
     bankAccountId,

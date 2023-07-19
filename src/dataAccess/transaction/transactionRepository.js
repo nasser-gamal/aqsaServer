@@ -54,7 +54,7 @@ exports.findAll = async (
 
     const transactions = await Transaction.findAndCountAll({
       where: whereClause,
-      // order: [[orderBy, sortBy]],
+      order: [[orderBy, sortBy]],
       // limit: itemPerPage,
       // offset: (pageNumber - 1) * itemPerPage,
       include: [

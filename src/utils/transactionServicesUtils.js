@@ -51,17 +51,21 @@ exports.profitStatus = (profit) => {
   return status;
 };
 
-
 exports.updateTransactionInfo = async (
   transaction,
   amount,
   profit,
-  treasury
+  treasury,
+  isTotalRevenue,
+  totalProviderDeduction
 ) => {
-  let more = +amount - transaction.amountTotal;
-  let balanceAfter = +transaction.balanceAfter + more;
+  let more = isTotalRevenue
+    ? +amount - transaction.amountTotal
+    : +totalProviderDeduction - +transaction.providerDeduction;
+  let balanceAfter = +transaction.balanceAfter - more;
   let newProfit = +profit - +transaction.profit;
   let treasuryAmount = +treasury.amountTotal + +newProfit;
+
 
   return { balanceAfter, treasuryAmount };
 };

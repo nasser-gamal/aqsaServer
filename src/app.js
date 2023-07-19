@@ -38,7 +38,6 @@ app.use('/uploads', express.static('uploads'));
 app.use(cors(corsOptions));
 app.use(morgan('tiny'));
 
-
 // app.use(function (req, res, next) {
 //   res.header('Access-Control-Allow-Origin', process.env.CLIENT_URL)
 //   res.header(
@@ -52,7 +51,6 @@ app.use(morgan('tiny'));
 //   res.setHeader('Access-Control-Allow-Credentials', 'true');
 //   next()
 // })
-
 
 User.belongsTo(Role);
 Role.hasMany(User);
