@@ -45,7 +45,7 @@ exports.exportExcel = async (req, res, next) => {
       { header: 'رصيد قبل', key: 'balanceBefore', width: '15' },
       { header: 'القيمة', key: 'amountTotal', width: '15' },
       { header: 'الرسوم', key: 'providerFees', width: '15' },
-      { header: 'ملحوظة', key: 'note', width: '15' },
+      { header: 'ملحوظة', key: 'note', width: '70' },
       { header: 'رصيد بعد', key: 'balanceAfter', width: '15' },
     ];
 
