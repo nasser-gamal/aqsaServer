@@ -97,6 +97,7 @@ exports.exportExcel = async (query) => {
     withdraw: totalWithdraw.toFixed(2), // Assuming you have already calculated totalWithdraw
     note: '',
     balanceAfter: '',
+    creater: '',
   });
 
   worksheet.eachRow((row) => {
