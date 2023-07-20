@@ -2,7 +2,7 @@ const { Op } = require('sequelize');
 const transactionRepository = require('../../dataAccess/transaction/transactionRepository');
 const Excel = require('exceljs');
 
-exports.dailyReports = async (query) => {
+exports.userReports = async (query) => {
   const { startDate, endDate, bankNumber } = query;
 
   const nextDay = new Date(endDate);
@@ -30,7 +30,36 @@ exports.dailyReports = async (query) => {
     return acc + transaction.profit;
   }, 0);
 
-  return { transactions, totalDepoite, totalWithdraw , totalProfit};
+  return { transactions, totalDepoite, totalWithdraw, totalProfit };
+};
+
+exports.dailyReports = async (query) => {
+  const { date } = query;
+
+  const nextDay = new Date(date);
+  nextDay.setDate(nextDay.getDate() + 1);
+
+  const whereClause = {
+    createdAt: {
+      [Op.between]: [date, nextDay.toISOString().slice(0, 10)],
+    },
+  };
+
+  const transactions = await transactionRepository.findAll(whereClause);
+
+  const totalDepoite = transactions.transactions.reduce((acc, transaction) => {
+    return acc + transaction.amountTotal;
+  }, 0);
+
+  const totalWithdraw = transactions.transactions.reduce((acc, transaction) => {
+    return acc + transaction.amountTotal;
+  }, 0);
+
+  const totalProfit = transactions.transactions.reduce((acc, transaction) => {
+    return acc + transaction.profit;
+  }, 0);
+
+  return { transactions, totalDepoite, totalWithdraw, totalProfit };
 };
 
 // reports.services.js

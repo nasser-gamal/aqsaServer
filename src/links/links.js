@@ -112,6 +112,7 @@ const links = {
     GET_PROFITES: '/profits',
   },
   reports: {
+    USER_TRANSACTION: '/transactions/user',
     DAILY_TRANSACTION: '/transactions/daily',
     EXPORT_TRANSACTION: '/transactions/export/excel',
   },

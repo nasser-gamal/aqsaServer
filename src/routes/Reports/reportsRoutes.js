@@ -7,6 +7,13 @@ const links = require('../../links/links.js');
 const auth = require('../../middlewares/auth.js');
 
 router
+  .route(links.reports.USER_TRANSACTION)
+  .get(
+    auth.isAuth,
+    auth.checkUserRole(['superAdmin', 'admin']),
+    reportsControllers.userReports
+  );
+router
   .route(links.reports.DAILY_TRANSACTION)
   .get(
     auth.isAuth,

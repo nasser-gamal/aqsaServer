@@ -3,6 +3,21 @@ const { Op } = require('sequelize');
 const transactionRepository = require('../../dataAccess/transaction/transactionRepository');
 const excel = require('exceljs');
 
+exports.userReports = async (req, res, next) => {
+  try {
+    const query = req.query;
+
+    const { transactions, totalDepoite, totalWithdraw, totalProfit } =
+      await ReportsServices.userReports(query);
+
+    return res
+      .status(200)
+      .json({ transactions, totalDepoite, totalWithdraw, totalProfit });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.dailyReports = async (req, res, next) => {
   try {
     const query = req.query;
