@@ -172,9 +172,6 @@ exports.updateWithDraw = async (transactionId, data) => {
     additionalFees,
     additionalRevenue
   );
-  console.log("amountTotal", amountTotal)
-  console.log("totalProviderDeduction", totalProviderDeduction)
-  console.log("totalAgentDeduction", totalAgentDeduction)
 
   const status = transactionServicesUtils.profitStatus(profit);
 

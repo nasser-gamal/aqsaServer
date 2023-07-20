@@ -26,7 +26,11 @@ exports.dailyReports = async (query) => {
     return acc + transaction.amountTotal;
   }, 0);
 
-  return transactions;
+  const totalProfit = transactions.transactions.reduce((acc, transaction) => {
+    return acc + transaction.profit;
+  }, 0);
+
+  return { transactions, totalDepoite, totalWithdraw , totalProfit};
 };
 
 // reports.services.js
