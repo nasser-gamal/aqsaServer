@@ -58,10 +58,10 @@ exports.findAll = async (
       // limit: itemPerPage,
       // offset: (pageNumber - 1) * itemPerPage,
       include: [
-        // { model: User, attributes: ['userName', 'accountName'] },
+        { model: User, as: 'creator', attributes: ['userName', 'accountName'] },
         {
           model: BankAccount,
-          where:  accountsClause ,
+          where: accountsClause,
           attributes: ['accountName', 'bankNumber', 'balance'],
           include: [{ model: Bank, attributes: ['id', 'bankName'] }],
         },

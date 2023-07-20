@@ -68,31 +68,30 @@ exports.exportExcel = async (query) => {
 
   worksheet.columns = [
     { header: 'التاريخ', key: 'date', width: '20' },
-    { header: 'نوع العملية', key: 'type', width: '15' },
     { header: 'رصيد قبل', key: 'balanceBefore', width: '15' },
     { header: 'ايداع', key: 'deposite', width: '15' },
     { header: 'سحب', key: 'withdraw', width: '15' },
     { header: 'ملحوظة', key: 'note', width: '80' },
     { header: 'رصيد بعد', key: 'balanceAfter', width: '15' },
+    { header: 'بواسطة', key: 'creater', width: '20' },
   ];
 
   await transactions.map((transaction, i) => {
     return worksheet.addRows([
       {
         date: transaction.createdAt,
-        type: transaction.type,
         balanceBefore: transaction.balanceBefore,
         deposite: transaction.type === 'ايداع' ? transaction.amountTotal : 0,
         withdraw: transaction.type === 'سحب' ? transaction.amountTotal : 0,
         note: transaction.note || '-',
         balanceAfter: transaction.balanceAfter,
+        creater: transaction.creator.userName,
       },
     ]);
   });
 
   worksheet.addRow({
     date: 'الإجمالي',
-    type: '',
     balanceBefore: '',
     deposite: totalDepoite.toFixed(2), // Assuming you have already calculated totalDepoite
     withdraw: totalWithdraw.toFixed(2), // Assuming you have already calculated totalWithdraw
