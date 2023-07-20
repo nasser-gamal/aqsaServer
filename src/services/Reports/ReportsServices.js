@@ -18,7 +18,15 @@ exports.dailyReports = async (query) => {
     bankNumber,
   });
 
-  return transactions;
+  const totalDepoite = transactions.reduce((acc, transaction) => {
+    return acc + transaction.amountTotal;
+  }, 0);
+
+  const totalWithdraw = transactions.reduce((acc, transaction) => {
+    return acc + transaction.amountTotal;
+  }, 0);
+
+  return {transactions, totalDepoite, totalWithdraw};
 };
 
 // reports.services.js
@@ -86,8 +94,8 @@ exports.exportExcel = async (query) => {
     date: 'الإجمالي',
     type: '',
     balanceBefore: '',
-    deposite: totalDepoite, // Assuming you have already calculated totalDepoite
-    withdraw: totalWithdraw, // Assuming you have already calculated totalWithdraw
+    deposite: totalDepoite.toFixed(2), // Assuming you have already calculated totalDepoite
+    withdraw: totalWithdraw.toFixed(2), // Assuming you have already calculated totalWithdraw
     note: '',
     balanceAfter: '',
   });
