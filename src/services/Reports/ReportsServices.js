@@ -129,6 +129,8 @@ exports.exportExcel = async (query) => {
       fgColor: { argb: '296f93' }, // Replace '296f93' with your desired color code for the total row
     };
   });
+  
+  worksheet.rowCount = transactions.length + 1; // Adding 1 for the total row
 
   return workbook;
 };
