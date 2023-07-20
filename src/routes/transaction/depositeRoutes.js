@@ -10,7 +10,6 @@ router
   .route(links.transaction.CREATE_TRANSACTION)
   .post(
      auth.isAuth,
-    auth.isAuth,
     validate.depositeValidate,
     validate.validateInputs,
     depositeControllers.addDepsite

@@ -18,13 +18,13 @@ exports.dailyReports = async (query) => {
     bankNumber,
   });
 
-  // const totalDepoite = transactions.reduce((acc, transaction) => {
-  //   return acc + transaction.amountTotal;
-  // }, 0);
+  const totalDepoite = transactions.transactions.reduce((acc, transaction) => {
+    return acc + transaction.amountTotal;
+  }, 0);
 
-  // const totalWithdraw = transactions.reduce((acc, transaction) => {
-  //   return acc + transaction.amountTotal;
-  // }, 0);
+  const totalWithdraw = transactions.transactions.reduce((acc, transaction) => {
+    return acc + transaction.amountTotal;
+  }, 0);
 
   return transactions;
 };
@@ -42,9 +42,16 @@ exports.exportExcel = async (query) => {
     },
   };
 
-  const { transactions } = await transactionRepository.findAll(whereClause, {
-    bankNumber,
-  });
+  const { transactions } = await transactionRepository.findAll(
+    whereClause,
+    {
+      bankNumber,
+    },
+    1,
+    1000,
+    'createdAt',
+    'ASC'
+  );
 
   const totalDepoite = transactions
     .filter((transaction) => {
@@ -129,7 +136,7 @@ exports.exportExcel = async (query) => {
       fgColor: { argb: '296f93' }, // Replace '296f93' with your desired color code for the total row
     };
   });
-  
+
   worksheet.rowCount = transactions.length + 1; // Adding 1 for the total row
 
   return workbook;
