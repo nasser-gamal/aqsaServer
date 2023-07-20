@@ -45,7 +45,7 @@ exports.exportExcel = async (req, res, next) => {
       { header: 'رصيد قبل', key: 'balanceBefore', width: '15' },
       { header: 'القيمة', key: 'amountTotal', width: '15' },
       { header: 'الرسوم', key: 'providerFees', width: '15' },
-      { header: 'ملحوظة', key: 'note', width: '1000' },
+      { header: 'ملحوظة', key: 'note', width: '80' },
       { header: 'رصيد بعد', key: 'balanceAfter', width: '15' },
     ];
 
@@ -62,10 +62,9 @@ exports.exportExcel = async (req, res, next) => {
         },
       ]);
     });
-
-    // Apply RTL text direction to each cell containing RTL text
     worksheet.eachRow((row) => {
       row.eachCell((cell) => {
+        cell.font = { bold: true };
         cell.alignment = {
           textRotation: 180,
           vertical: 'middle',
@@ -73,6 +72,7 @@ exports.exportExcel = async (req, res, next) => {
         };
       });
     });
+  
 
     res.setHeader(
       'Content-Type',
