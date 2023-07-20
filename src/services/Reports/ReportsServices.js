@@ -38,30 +38,55 @@ exports.exportExcel = async (query) => {
     bankNumber,
   });
 
-  console.log('----------------------------', transactions)
+  console.log('----------------------------', transactions);
 
   const workbook = new Excel.Workbook();
 
-  const worksheet = workbook.addWorksheet('sheet 1');
+  const worksheet = workbook.addWorksheet('sheet 1', { rightToLeft: true });
 
   worksheet.columns = [
-    { header: 'نوع العملية', key: 'type', width: '10' },
-    { header: 'تاريخ العملية', key: 'date', width: '20' },
+    { header: 'التاريخ', key: 'date', width: '20' },
+    { header: 'نوع العملية', key: 'type', width: '15' },
     { header: 'رصيد قبل', key: 'balanceBefore', width: '15' },
+    { header: 'اجمالي القيمة', key: 'amountTotal', width: '15' },
+    // { header: 'الرسوم', key: 'providerFees', width: '15' },
+    { header: 'ملحوظة', key: 'note', width: '80' },
     { header: 'رصيد بعد', key: 'balanceAfter', width: '15' },
-    { header: 'القيمة', key: 'amountTotal', width: '15' },
   ];
 
   await transactions.map((transaction, i) => {
     return worksheet.addRows([
       {
-        type: transaction.type,
         date: transaction.createdAt,
+        type: transaction.type,
         balanceBefore: transaction.balanceBefore,
-        balanceAfter: transaction.balanceAfter,
         amountTotal: transaction.amountTotal,
+        // providerFees: transaction.providerFees,
+        note: transaction.note || '-',
+        balanceAfter: transaction.balanceAfter,
       },
     ]);
+  });
+
+  worksheet.eachRow((row) => {
+    row.eachCell((cell) => {
+      cell.font = { bold: true };
+      cell.alignment = {
+        textRotation: 180,
+        vertical: 'middle',
+        horizontal: 'center',
+      };
+    });
+  });
+
+  const headerRow = worksheet.getRow(1);
+  headerRow.eachCell((cell) => {
+    cell.font = { bold: true, size: 14, color: { argb: '000000' } };
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: '296f93' }, // Replace 'FFFF0000' with your desired color code
+    };
   });
 
   return workbook;
