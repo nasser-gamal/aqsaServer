@@ -18,15 +18,15 @@ exports.dailyReports = async (query) => {
     bankNumber,
   });
 
-  const totalDepoite = transactions.reduce((acc, transaction) => {
-    return acc + transaction.amountTotal;
-  }, 0);
+  // const totalDepoite = transactions.reduce((acc, transaction) => {
+  //   return acc + transaction.amountTotal;
+  // }, 0);
 
-  const totalWithdraw = transactions.reduce((acc, transaction) => {
-    return acc + transaction.amountTotal;
-  }, 0);
+  // const totalWithdraw = transactions.reduce((acc, transaction) => {
+  //   return acc + transaction.amountTotal;
+  // }, 0);
 
-  return {transactions, totalDepoite, totalWithdraw};
+  return transactions;
 };
 
 // reports.services.js
