@@ -38,7 +38,21 @@ exports.exportExcel = async (query) => {
     bankNumber,
   });
 
-  console.log('----------------------------', transactions);
+  const totalDepoite = transactions
+    .filter((transaction) => {
+      return transaction.type === 'ايداع';
+    })
+    .reduce((acc, transaction) => {
+      return acc + transaction.amountTotal;
+    }, 0);
+
+  const totalWithdraw = transactions
+    .filter((transaction) => {
+      return transaction.type !== 'ايداع';
+    })
+    .reduce((acc, transaction) => {
+      return acc + transaction.amountTotal;
+    }, 0);
 
   const workbook = new Excel.Workbook();
 
@@ -48,8 +62,8 @@ exports.exportExcel = async (query) => {
     { header: 'التاريخ', key: 'date', width: '20' },
     { header: 'نوع العملية', key: 'type', width: '15' },
     { header: 'رصيد قبل', key: 'balanceBefore', width: '15' },
-    { header: 'اجمالي القيمة', key: 'amountTotal', width: '15' },
-    // { header: 'الرسوم', key: 'providerFees', width: '15' },
+    { header: 'ايداع', key: 'deposite', width: '15' },
+    { header: 'سحب', key: 'withdraw', width: '15' },
     { header: 'ملحوظة', key: 'note', width: '80' },
     { header: 'رصيد بعد', key: 'balanceAfter', width: '15' },
   ];
@@ -60,12 +74,22 @@ exports.exportExcel = async (query) => {
         date: transaction.createdAt,
         type: transaction.type,
         balanceBefore: transaction.balanceBefore,
-        amountTotal: transaction.amountTotal,
-        // providerFees: transaction.providerFees,
+        deposite: transaction.type === 'ايداع' ? transaction.amountTotal : 0,
+        withdraw: transaction.type === 'سحب' ? transaction.amountTotal : 0,
         note: transaction.note || '-',
         balanceAfter: transaction.balanceAfter,
       },
     ]);
+  });
+
+  worksheet.addRow({
+    date: 'الإجمالي',
+    type: '',
+    balanceBefore: '',
+    deposite: totalDepoite, // Assuming you have already calculated totalDepoite
+    withdraw: totalWithdraw, // Assuming you have already calculated totalWithdraw
+    note: '',
+    balanceAfter: '',
   });
 
   worksheet.eachRow((row) => {
@@ -86,6 +110,15 @@ exports.exportExcel = async (query) => {
       type: 'pattern',
       pattern: 'solid',
       fgColor: { argb: '296f93' }, // Replace 'FFFF0000' with your desired color code
+    };
+  });
+
+  const totalRow = worksheet.lastRow;
+  totalRow.eachCell((cell) => {
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: '296f93' }, // Replace '296f93' with your desired color code for the total row
     };
   });
 
