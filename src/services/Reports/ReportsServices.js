@@ -18,46 +18,62 @@ exports.userReports = async (query) => {
     bankNumber,
   });
 
-  const totalDepoite = transactions.transactions.reduce((acc, transaction) => {
-    return acc + transaction.amountTotal;
-  }, 0);
+  const totalDepoite = transactions.transactions
+    .filter((transaction) => {
+      return transaction.type === 'ايداع';
+    })
+    .reduce((acc, transaction) => {
+      return acc + transaction.amountTotal;
+    }, 0).toFixed(2)
 
-  const totalWithdraw = transactions.transactions.reduce((acc, transaction) => {
-    return acc + transaction.amountTotal;
-  }, 0);
+  const totalWithdraw = transactions.transactions
+    .filter((transaction) => {
+      return transaction.type !== 'ايداع';
+    })
+    .reduce((acc, transaction) => {
+      return acc + transaction.amountTotal;
+    }, 0).toFixed(2)
 
   const totalProfit = transactions.transactions.reduce((acc, transaction) => {
     return acc + transaction.profit;
-  }, 0);
+  }, 0).toFixed(2)
 
   return { transactions, totalDepoite, totalWithdraw, totalProfit };
 };
 
 exports.dailyReports = async (query) => {
-  const { date } = query;
+  const { startDate, endDate } = query;
 
-  const nextDay = new Date(date);
+  const nextDay = new Date(endDate);
   nextDay.setDate(nextDay.getDate() + 1);
 
   const whereClause = {
     createdAt: {
-      [Op.between]: [date, nextDay.toISOString().slice(0, 10)],
+      [Op.between]: [startDate, nextDay.toISOString().slice(0, 10)],
     },
   };
 
   const transactions = await transactionRepository.findAll(whereClause);
 
-  const totalDepoite = transactions.transactions.reduce((acc, transaction) => {
-    return acc + transaction.amountTotal;
-  }, 0);
+  const totalDepoite = transactions.transactions
+    .filter((transaction) => {
+      return transaction.type === 'ايداع';
+    })
+    .reduce((acc, transaction) => {
+      return acc + transaction.amountTotal;
+    }, 0).toFixed(2)
 
-  const totalWithdraw = transactions.transactions.reduce((acc, transaction) => {
-    return acc + transaction.amountTotal;
-  }, 0);
+  const totalWithdraw = transactions.transactions
+    .filter((transaction) => {
+      return transaction.type !== 'ايداع';
+    })
+    .reduce((acc, transaction) => {
+      return acc + transaction.amountTotal;
+    }, 0).toFixed(2)
 
   const totalProfit = transactions.transactions.reduce((acc, transaction) => {
     return acc + transaction.profit;
-  }, 0);
+  }, 0).toFixed(2)
 
   return { transactions, totalDepoite, totalWithdraw, totalProfit };
 };
@@ -92,7 +108,7 @@ exports.exportExcel = async (query) => {
     })
     .reduce((acc, transaction) => {
       return acc + transaction.amountTotal;
-    }, 0);
+    }, 0).toFixed(2)
 
   const totalWithdraw = transactions
     .filter((transaction) => {
@@ -100,7 +116,7 @@ exports.exportExcel = async (query) => {
     })
     .reduce((acc, transaction) => {
       return acc + transaction.amountTotal;
-    }, 0);
+    }, 0).toFixed(2)
 
   const workbook = new Excel.Workbook();
 
