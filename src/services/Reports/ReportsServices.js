@@ -108,7 +108,7 @@ exports.exportExcel = async (query) => {
     })
     .reduce((acc, transaction) => {
       return acc + transaction.amountTotal;
-    }, 0).toFixed(2)
+    }, 0)
 
   const totalWithdraw = transactions
     .filter((transaction) => {
@@ -116,7 +116,7 @@ exports.exportExcel = async (query) => {
     })
     .reduce((acc, transaction) => {
       return acc + transaction.amountTotal;
-    }, 0).toFixed(2)
+    }, 0)
 
   const workbook = new Excel.Workbook();
 
