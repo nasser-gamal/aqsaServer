@@ -112,7 +112,9 @@ exports.updateDeposite = async (transactionId, data) => {
       transaction,
       amount,
       profit,
-      treasury
+      treasury,
+      isTotalRevenue = true,
+      totalProviderDeduction
     );
 
   treasury,
