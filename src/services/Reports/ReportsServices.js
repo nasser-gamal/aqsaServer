@@ -24,7 +24,8 @@ exports.userReports = async (query) => {
     })
     .reduce((acc, transaction) => {
       return acc + transaction.amountTotal;
-    }, 0).toFixed(2)
+    }, 0)
+    .toFixed(2);
 
   const totalWithdraw = transactions.transactions
     .filter((transaction) => {
@@ -32,11 +33,14 @@ exports.userReports = async (query) => {
     })
     .reduce((acc, transaction) => {
       return acc + transaction.amountTotal;
-    }, 0).toFixed(2)
+    }, 0)
+    .toFixed(2);
 
-  const totalProfit = transactions.transactions.reduce((acc, transaction) => {
-    return acc + transaction.profit;
-  }, 0).toFixed(2)
+  const totalProfit = transactions.transactions
+    .reduce((acc, transaction) => {
+      return acc + transaction.profit;
+    }, 0)
+    .toFixed(2);
 
   return { transactions, totalDepoite, totalWithdraw, totalProfit };
 };
@@ -61,7 +65,8 @@ exports.dailyReports = async (query) => {
     })
     .reduce((acc, transaction) => {
       return acc + transaction.amountTotal;
-    }, 0).toFixed(2)
+    }, 0)
+    .toFixed(2);
 
   const totalWithdraw = transactions.transactions
     .filter((transaction) => {
@@ -69,16 +74,71 @@ exports.dailyReports = async (query) => {
     })
     .reduce((acc, transaction) => {
       return acc + transaction.amountTotal;
-    }, 0).toFixed(2)
+    }, 0)
+    .toFixed(2);
 
-  const totalProfit = transactions.transactions.reduce((acc, transaction) => {
-    return acc + transaction.profit;
-  }, 0).toFixed(2)
+  const totalProfit = transactions.transactions
+    .reduce((acc, transaction) => {
+      return acc + transaction.profit;
+    }, 0)
+    .toFixed(2);
 
   return { transactions, totalDepoite, totalWithdraw, totalProfit };
 };
 
-// reports.services.js
+exports.userReports = async (query) => {
+  const { startDate, endDate, userId } = query;
+
+  const nextDay = new Date(endDate);
+  nextDay.setDate(nextDay.getDate() + 1);
+
+  const whereClause = {
+    createdAt: {
+      [Op.between]: [startDate, nextDay.toISOString().slice(0, 10)],
+    },
+  };
+
+  const userClause = {
+    id: userId,
+  };
+
+  const transactions = await transactionRepository.findAll(
+    whereClause,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    userClause
+  );
+
+  const totalDepoite = transactions.transactions
+    .filter((transaction) => {
+      return transaction.type === 'ايداع';
+    })
+    .reduce((acc, transaction) => {
+      return acc + transaction.amountTotal;
+    }, 0)
+    .toFixed(2);
+
+  const totalWithdraw = transactions.transactions
+    .filter((transaction) => {
+      return transaction.type !== 'ايداع';
+    })
+    .reduce((acc, transaction) => {
+      return acc + transaction.amountTotal;
+    }, 0)
+    .toFixed(2);
+
+  const totalProfit = transactions.transactions
+    .reduce((acc, transaction) => {
+      return acc + transaction.profit;
+    }, 0)
+    .toFixed(2);
+
+  return { transactions, totalDepoite, totalWithdraw, totalProfit };
+};
+
 exports.exportExcel = async (query) => {
   const { startDate, endDate, bankNumber } = query;
 
@@ -108,7 +168,7 @@ exports.exportExcel = async (query) => {
     })
     .reduce((acc, transaction) => {
       return acc + transaction.amountTotal;
-    }, 0)
+    }, 0);
 
   const totalWithdraw = transactions
     .filter((transaction) => {
@@ -116,7 +176,7 @@ exports.exportExcel = async (query) => {
     })
     .reduce((acc, transaction) => {
       return acc + transaction.amountTotal;
-    }, 0)
+    }, 0);
 
   const workbook = new Excel.Workbook();
 

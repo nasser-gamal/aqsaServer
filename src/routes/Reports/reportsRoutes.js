@@ -22,10 +22,18 @@ router
   );
 
 router
+  .route(links.reports.EMPLOY_TRANSACTION)
+  .get(
+    auth.isAuth,
+    auth.checkUserRole(['superAdmin', 'admin']),
+    reportsControllers.userReports
+  );
+
+router
   .route(links.reports.EXPORT_TRANSACTION)
   .get(
     auth.isAuth,
-    auth.checkUserRole(['superAdmin']),
+    auth.checkUserRole(['superAdmin', 'admin']),
     reportsControllers.exportExcel
   );
 

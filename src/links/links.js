@@ -113,6 +113,7 @@ const links = {
   },
   reports: {
     USER_TRANSACTION: '/transactions/user',
+    EMPLOY_TRANSACTION: '/transactions/employ',
     DAILY_TRANSACTION: '/transactions/daily',
     EXPORT_TRANSACTION: '/transactions/export/excel',
   },

@@ -33,6 +33,21 @@ exports.dailyReports = async (req, res, next) => {
   }
 };
 
+exports.userReports = async (req, res, next) => {
+  try {
+    const query = req.query;
+
+    const { transactions, totalDepoite, totalWithdraw, totalProfit } =
+      await ReportsServices.userReports(query);
+
+    return res
+      .status(200)
+      .json({ transactions, totalDepoite, totalWithdraw, totalProfit });
+  } catch (err) {
+    next(err);
+  }
+};
+
 // reports.controllers.js
 exports.exportExcel = async (req, res, next) => {
   try {

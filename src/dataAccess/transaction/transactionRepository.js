@@ -44,7 +44,8 @@ exports.findAll = async (
   page,
   limit,
   order,
-  sort
+  sort,
+  userClause,
 ) => {
   try {
     const pageNumber = +page || 1;
@@ -58,7 +59,12 @@ exports.findAll = async (
       // limit: itemPerPage,
       // offset: (pageNumber - 1) * itemPerPage,
       include: [
-        { model: User, as: 'creator', attributes: ['userName', 'accountName'] },
+        {
+          model: User,
+          as: 'creator',
+          where: userClause,
+          attributes: ['userName', 'accountName'],
+        },
         {
           model: BankAccount,
           where: accountsClause,
