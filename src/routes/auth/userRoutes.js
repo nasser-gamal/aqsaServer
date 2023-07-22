@@ -11,7 +11,7 @@ router
   .route(links.user.GET_USERS)
   .get(
     auth.isAuth,
-    auth.checkUserRole(['superAdmin']),
+    auth.checkUserRole(['superAdmin', 'admin']),
     userControllers.getAllAdmins
   );
 
