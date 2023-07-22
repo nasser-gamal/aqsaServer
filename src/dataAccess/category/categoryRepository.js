@@ -1,8 +1,6 @@
 const Category = require('../../models/category/categoryModel');
 const { pagination } = require('../../utils/pagination');
 
-
-
 exports.createOne = async (data) => {
   try {
     const category = await Category.create(data);
@@ -37,10 +35,10 @@ exports.deleteOne = async (categoryId) => {
   }
 };
 
-exports.findAll = async (page, limit, order, sort, whereClause) => {
+exports.findAll = async (whereClause, page, limit, order, sort) => {
   try {
     const pageNumber = +page || 1;
-    const itemPerPage = +limit || 100;
+    const itemPerPage = +limit || 10;
     const orderBy = order || 'createdAt';
     const sortBy = sort || 'ASC';
 

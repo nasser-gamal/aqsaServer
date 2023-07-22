@@ -25,7 +25,6 @@ exports.createCategory = async (userId, data) => {
     createdBy: userId,
   });
 
-
   return { message: constants.CREATE_CATEGORY_SUCCESS };
 };
 
@@ -63,8 +62,16 @@ exports.deleteCategory = async (categoryId) => {
   return { message: constants.DELETE_CATEGORY_SUCCESS };
 };
 
-exports.findAllCategories = async () => {
-  const categories = await categoryRepository.findAll();
+exports.findAllCategories = async (query) => {
+  const { page, limit, order, sort } = query;
+
+  const categories = await categoryRepository.findAll(
+    undefined,
+    page,
+    limit,
+    order,
+    sort
+  );
   return { categories };
 };
 

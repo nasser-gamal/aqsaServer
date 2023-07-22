@@ -9,8 +9,8 @@ const auth = require('../../middlewares/auth.js');
 router
   .route(links.category.GET_CATEGORYS)
   .get(
-    auth.isAuth,
-    auth.checkUserRole(['superAdmin', 'admin']),
+    // auth.isAuth,
+    // auth.checkUserRole(['superAdmin', 'admin']),
     categoryControllers.getAllCategorys
   );
 

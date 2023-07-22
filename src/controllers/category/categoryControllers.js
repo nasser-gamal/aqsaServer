@@ -35,7 +35,8 @@ exports.deleteCategory = async (req, res, next) => {
 
 exports.getAllCategorys = async (req, res, next) => {
   try {
-    const { categories } = await categoryServices.findAllCategories();
+    const query = req.query;
+    const { categories } = await categoryServices.findAllCategories(query);
     return res.status(200).json(categories);
   } catch (err) {
     return next(err);
