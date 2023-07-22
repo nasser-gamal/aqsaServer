@@ -86,7 +86,7 @@ exports.dailyReports = async (query) => {
   return { transactions, totalDepoite, totalWithdraw, totalProfit };
 };
 
-exports.userReports = async (query) => {
+exports.employReports = async (query) => {
   const { startDate, endDate, userId } = query;
 
   const nextDay = new Date(endDate);

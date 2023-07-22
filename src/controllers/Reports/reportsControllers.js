@@ -33,12 +33,12 @@ exports.dailyReports = async (req, res, next) => {
   }
 };
 
-exports.userReports = async (req, res, next) => {
+exports.employReports = async (req, res, next) => {
   try {
     const query = req.query;
 
     const { transactions, totalDepoite, totalWithdraw, totalProfit } =
-      await ReportsServices.userReports(query);
+      await ReportsServices.employReports(query);
 
     return res
       .status(200)

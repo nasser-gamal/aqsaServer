@@ -26,7 +26,7 @@ router
   .get(
     auth.isAuth,
     auth.checkUserRole(['superAdmin', 'admin']),
-    reportsControllers.userReports
+    reportsControllers.employReports
   );
 
 router
