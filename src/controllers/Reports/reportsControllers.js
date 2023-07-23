@@ -1,4 +1,4 @@
-const ReportsServices = require('../../services/Reports/ReportsServices');
+const ReportsServices = require('../../services/Reports/reportsServices');
 const { Op } = require('sequelize');
 const transactionRepository = require('../../dataAccess/transaction/transactionRepository');
 const excel = require('exceljs');

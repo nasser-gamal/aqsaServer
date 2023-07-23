@@ -14,9 +14,16 @@ exports.userReports = async (query) => {
     },
   };
 
-  const transactions = await transactionRepository.findAll(whereClause, {
-    bankNumber,
-  });
+  const transactions = await transactionRepository.findAll(
+    whereClause,
+    {
+      bankNumber,
+    },
+    undefined,
+    undefined,
+    'createdAt',
+    'ASC'
+  );
 
   const totalDepoite = transactions.transactions
     .filter((transaction) => {
@@ -57,7 +64,14 @@ exports.dailyReports = async (query) => {
     },
   };
 
-  const transactions = await transactionRepository.findAll(whereClause);
+  const transactions = await transactionRepository.findAll(
+    whereClause,
+    undefined,
+    undefined,
+    undefined,
+    'createdAt',
+    'ASC'
+  );
 
   const totalDepoite = transactions.transactions
     .filter((transaction) => {
@@ -107,8 +121,8 @@ exports.employReports = async (query) => {
     undefined,
     undefined,
     undefined,
-    undefined,
-    undefined,
+    'createdAt',
+    'ASC',
     userClause
   );
 
