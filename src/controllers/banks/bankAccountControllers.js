@@ -1,6 +1,5 @@
 const bankAccountServices = require('../../services/banks/bankAccountServices');
 
-
 exports.createBankAccount = async (req, res, next) => {
   try {
     const data = req.body;
@@ -18,9 +17,12 @@ exports.updateBankAccount = async (req, res, next) => {
     const { bankAccountId } = req.params;
     const data = req.body;
 
-    const { message } = await bankAccountServices.updateBankAccount(bankAccountId, {
-      ...data,
-    });
+    const { message } = await bankAccountServices.updateBankAccount(
+      bankAccountId,
+      {
+        ...data,
+      }
+    );
 
     return res.status(201).send({ message });
   } catch (err) {
@@ -32,7 +34,9 @@ exports.deleteBankAccount = async (req, res, next) => {
   try {
     const { bankAccountId } = req.params;
 
-    const { message } = await bankAccountServices.deleteBankAccount(bankAccountId);
+    const { message } = await bankAccountServices.deleteBankAccount(
+      bankAccountId
+    );
     return res.status(201).send({ message });
   } catch (err) {
     return next(err);
@@ -41,9 +45,11 @@ exports.deleteBankAccount = async (req, res, next) => {
 
 exports.getAllBankAccounts = async (req, res, next) => {
   try {
-    const bankAccounts = await bankAccountServices.getAllBankAccounts();
+    const query = req.query;
+    const { bankAccounts, pagination } =
+      await bankAccountServices.getAllBankAccounts(query);
 
-    return res.status(200).send(bankAccounts);
+    return res.status(200).send({ bankAccounts, pagination });
   } catch (err) {
     return next(err);
   }

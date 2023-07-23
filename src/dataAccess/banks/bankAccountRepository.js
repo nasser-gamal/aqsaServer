@@ -1,5 +1,6 @@
 const BankAccount = require('../../models/banks/bankAccountModel');
 const Bank = require('../../models/banks/bankModel');
+const { pagination } = require('../../utils/pagination');
 
 exports.createOne = async (data) => {
   try {
@@ -44,14 +45,25 @@ exports.findById = async (bankAccountId) => {
   }
 };
 
-exports.findAll = async (query) => {
+exports.findAll = async (whereClause, page, limit, order, sort) => {
   try {
-    const bankAccounts = await BankAccount.findAll({
-      where: query,
+    const pageNumber = +page || 1;
+    const itemPerPage = +limit || 10;
+    const orderBy = order || 'createdAt';
+    const sortBy = sort || 'ASC';
+
+    const bankAccounts = await BankAccount.findAndCountAll({
+      where: whereClause,
       attributes: { exclude: ['bankId'] },
       include: [{ model: Bank }],
+      order: [[orderBy, sortBy]],
+      limit: itemPerPage,
+      offset: (pageNumber - 1) * itemPerPage,
     });
-    return bankAccounts;
+    return {
+      bankAccounts: bankAccounts.rows,
+      pagination: pagination(pageNumber, itemPerPage, bankAccounts.count),
+    };
   } catch (err) {
     throw new Error(err);
   }

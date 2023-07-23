@@ -3,7 +3,7 @@ const transactionRepository = require('../../dataAccess/transaction/transactionR
 const Excel = require('exceljs');
 
 exports.userReports = async (query) => {
-  const { startDate, endDate, bankNumber } = query;
+  const { startDate, endDate, bankNumber, page, limit, order, sort } = query;
 
   const nextDay = new Date(endDate);
   nextDay.setDate(nextDay.getDate() + 1);
@@ -19,10 +19,10 @@ exports.userReports = async (query) => {
     {
       bankNumber,
     },
-    undefined,
-    undefined,
-    'createdAt',
-    'ASC'
+    page,
+    limit,
+    order,
+    sort
   );
 
   const totalDepoite = transactions.transactions
@@ -53,7 +53,7 @@ exports.userReports = async (query) => {
 };
 
 exports.dailyReports = async (query) => {
-  const { startDate, endDate } = query;
+  const { startDate, endDate, page, limit, order, sort } = query;
 
   const nextDay = new Date(endDate);
   nextDay.setDate(nextDay.getDate() + 1);
@@ -67,10 +67,10 @@ exports.dailyReports = async (query) => {
   const transactions = await transactionRepository.findAll(
     whereClause,
     undefined,
-    undefined,
-    undefined,
-    'createdAt',
-    'ASC'
+    page,
+    limit,
+    order,
+    sort
   );
 
   const totalDepoite = transactions.transactions
@@ -101,7 +101,7 @@ exports.dailyReports = async (query) => {
 };
 
 exports.employReports = async (query) => {
-  const { startDate, endDate, userId } = query;
+  const { startDate, endDate, userId, page, limit, order, sort } = query;
 
   const nextDay = new Date(endDate);
   nextDay.setDate(nextDay.getDate() + 1);
@@ -119,10 +119,10 @@ exports.employReports = async (query) => {
   const transactions = await transactionRepository.findAll(
     whereClause,
     undefined,
-    undefined,
-    undefined,
-    'createdAt',
-    'ASC',
+    page,
+    limit,
+    order,
+    sort,
     userClause
   );
 

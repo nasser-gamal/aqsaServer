@@ -37,7 +37,8 @@ exports.deleteSegment = async (req, res, next) => {
 
 exports.getAllSegments = async (req, res, next) => {
   try {
-    const { segments } = await segmentServices.findAllSegments();
+    const query = req.query;
+    const { segments } = await segmentServices.findAllSegments(query);
     return res.status(200).json(segments);
   } catch (err) {
     return next(err);

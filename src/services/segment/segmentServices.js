@@ -7,7 +7,6 @@ const constants = require('../../utils/constants.js');
 
 const { Op } = require('sequelize');
 
-
 const isCategoryExist = async (serviceId) => {
   const category = await categoryRepository.findById(serviceId);
   return checkResourceExists(category, constants.CATEGORY_NOT_FOUND);
@@ -58,7 +57,6 @@ exports.updateSegment = async (segmentId, data) => {
   };
   const existSegment = await isSegmentExist(query);
 
-
   if (existSegment) {
     throw new BadRequestError(constants.SEGMENT_EXIST);
   }
@@ -84,8 +82,15 @@ exports.deleteSegment = async (segmentId) => {
   return { message: constants.DELETE_SEGMENT_SUCCESS };
 };
 
-exports.findAllSegments = async () => {
-  const segments = await segmentsRepository.findAll();
+exports.findAllSegments = async (query) => {
+  const { page, limit, order, sort } = query;
+  const segments = await segmentsRepository.findAll(
+    undefined,
+    page,
+    limit,
+    order,
+    sort
+  );
   return { segments };
 };
 

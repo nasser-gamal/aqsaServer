@@ -6,7 +6,6 @@ const constants = require('../../utils/constants.js');
 const { checkResourceExists } = require('../../utils/checkResourceExists.js');
 const { Op } = require('sequelize');
 
-
 const isBankExist = async (bankId) => {
   const bank = await bankRepository.findById(bankId);
   return checkResourceExists(bank, constants.BANK_NOT_FOUND);
@@ -77,9 +76,17 @@ exports.deleteBankAccount = async (bankAccountId) => {
   return { message: constants.DELETE_BANK_ACCOUNT_SUCCESS };
 };
 
-exports.getAllBankAccounts = async () => {
-  const bankAccounts = await bankAccountRepository.findAll();
-  return { bankAccounts };
+exports.getAllBankAccounts = async (query) => {
+  const { page, limit, order, sort } = query;
+
+  const { bankAccounts, pagination } = await bankAccountRepository.findAll(
+    undefined,
+    page,
+    limit,
+    order,
+    sort
+  );
+  return { bankAccounts, pagination };
 };
 
 exports.getBankAccount = async (bankAccountId) => {

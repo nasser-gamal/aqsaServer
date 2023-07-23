@@ -49,15 +49,15 @@ exports.findAll = async (
 ) => {
   try {
     const pageNumber = +page || 1;
-    const itemPerPage = +limit || 2;
+    const itemPerPage = +limit || 10;
     const orderBy = order || 'createdAt';
-    const sortBy = sort || 'DESC';
+    const sortBy = sort || 'ASC';
 
     const transactions = await Transaction.findAndCountAll({
       where: whereClause,
       order: [[orderBy, sortBy]],
-      // limit: itemPerPage,
-      // offset: (pageNumber - 1) * itemPerPage,
+      limit: itemPerPage,
+      offset: (pageNumber - 1) * itemPerPage,
       include: [
         {
           model: User,

@@ -1,6 +1,4 @@
-const transferServices = require('../../services/transaction/transferServices')
-
-
+const transferServices = require('../../services/transaction/transferServices');
 
 exports.addTransfer = async (req, res, next) => {
   try {
@@ -40,7 +38,10 @@ exports.deleteTransfer = async (req, res, next) => {
 
 exports.getAllTransfers = async (req, res, next) => {
   try {
-    const { transfers, pagination } = await transferServices.findAllTransfers();
+    const query = req.query;
+    const { transfers, pagination } = await transferServices.findAllTransfers(
+      query
+    );
     return res.status(200).json({ transfers, pagination });
   } catch (err) {
     return next(err);

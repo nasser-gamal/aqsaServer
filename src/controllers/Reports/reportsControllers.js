@@ -1,14 +1,11 @@
-const ReportsServices = require('../../services/Reports/reportsServices');
-const { Op } = require('sequelize');
-const transactionRepository = require('../../dataAccess/transaction/transactionRepository');
-const excel = require('exceljs');
+const reportsServices = require('../../services/reports/ReportsServices');
 
 exports.userReports = async (req, res, next) => {
   try {
     const query = req.query;
 
     const { transactions, totalDepoite, totalWithdraw, totalProfit } =
-      await ReportsServices.userReports(query);
+      await reportsServices.userReports(query);
 
     return res
       .status(200)
@@ -23,7 +20,7 @@ exports.dailyReports = async (req, res, next) => {
     const query = req.query;
 
     const { transactions, totalDepoite, totalWithdraw, totalProfit } =
-      await ReportsServices.dailyReports(query);
+      await reportsServices.dailyReports(query);
 
     return res
       .status(200)
@@ -38,7 +35,7 @@ exports.employReports = async (req, res, next) => {
     const query = req.query;
 
     const { transactions, totalDepoite, totalWithdraw, totalProfit } =
-      await ReportsServices.employReports(query);
+      await reportsServices.employReports(query);
 
     return res
       .status(200)
@@ -53,7 +50,7 @@ exports.exportExcel = async (req, res, next) => {
   try {
     const query = req.query;
 
-    const workbook = await ReportsServices.exportExcel(query);
+    const workbook = await reportsServices.exportExcel(query);
     res.setHeader(
       'Content-Type',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'

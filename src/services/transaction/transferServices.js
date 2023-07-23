@@ -122,8 +122,16 @@ exports.deleteTransfer = async (transactionId) => {
   return { message: constants.DELETE_TRANSACTION_SUCCESS };
 };
 
-exports.findAllTransfers = async () => {
-  const { transfers, pagination } = await transferRepository.findAll();
+exports.findAllTransfers = async (query) => {
+  const { page, limit, order, sort } = query;
+
+  const { transfers, pagination } = await transferRepository.findAll(
+    undefined,
+    page,
+    limit,
+    order,
+    sort
+  );
   return { transfers, pagination };
 };
 

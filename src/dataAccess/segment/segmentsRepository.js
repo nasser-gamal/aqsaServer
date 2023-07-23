@@ -37,11 +37,11 @@ exports.deleteOne = async (segmentId) => {
   }
 };
 
-exports.findAll = async (page, limit, order, sort, whereClause) => {
+exports.findAll = async (whereClause, page, limit, order, sort) => {
   try {
     const pageNumber = +page || 1;
-    const itemPerPage = +limit || 10000;
-    const orderBy = order || 'id';
+    const itemPerPage = +limit || 10;
+    const orderBy = order || 'createdAt';
     const sortBy = sort || 'ASC';
 
     const segments = await Segment.findAndCountAll({

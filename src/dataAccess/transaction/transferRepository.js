@@ -38,10 +38,10 @@ exports.deleteOne = async (transferId) => {
   }
 };
 
-exports.findAll = async (page, limit, order, sort, whereClause) => {
+exports.findAll = async (whereClause, page, limit, order, sort) => {
   try {
     const pageNumber = +page || 1;
-    const itemPerPage = +limit || 100000;
+    const itemPerPage = +limit || 10;
     const orderBy = order || 'createdAt';
     const sortBy = sort || 'DESC';
 
