@@ -42,6 +42,8 @@ exports.findAll = async (whereClause, page, limit, order, sort) => {
     const orderBy = order || 'createdAt';
     const sortBy = sort || 'ASC';
 
+   
+
     const categories = await Category.findAndCountAll({
       where: whereClause,
       order: [[orderBy, sortBy]],
