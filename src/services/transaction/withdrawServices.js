@@ -175,21 +175,18 @@ exports.updateWithDraw = async (transactionId, data) => {
 
   const status = transactionServicesUtils.profitStatus(profit);
 
-  const treasury = await transactionServicesUtils.findTreasury();
 
-  let { balanceAfter, treasuryAmount } =
+  let { balanceAfter, bankBalance } =
     await transactionServicesUtils.updateTransactionInfo(
       transaction,
       amountTotal,
       profit,
-      treasury,
       isTotalRevenue,
-      totalProviderDeduction
+      totalProviderDeduction,
+      bankAccount
     );
 
-  // treasury,
-  //   await transactionServicesUtils.updateTreasury(treasury, treasuryAmount);
-  await bankAccount.update({ balance: balanceAfter });
+    await bankAccount.update({ balance: bankBalance });
 
   await transaction.update({
     amount: Number(amount).toFixed(2),

@@ -55,17 +55,15 @@ exports.updateTransactionInfo = async (
   transaction,
   amount,
   profit,
-  treasury,
   isTotalRevenue,
-  totalProviderDeduction
+  totalProviderDeduction,
+  bankAccount
 ) => {
   let more = isTotalRevenue
-    ? +amount - transaction.amountTotal
+    ? transaction.amountTotal - +amount  
     : +totalProviderDeduction - +transaction.providerDeduction;
   let balanceAfter = +transaction.balanceAfter - more;
-  let newProfit = +profit - +transaction.profit;
-  let treasuryAmount = +treasury.amountTotal + +newProfit;
+  bankBalance = +bankAccount.balance - more;
 
-
-  return { balanceAfter, treasuryAmount };
+  return { balanceAfter, bankBalance };
 };

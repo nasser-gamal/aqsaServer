@@ -105,21 +105,18 @@ exports.updateDeposite = async (transactionId, data) => {
     calcDeposite(isPercentage, amount, providerFees, providerPercentage);
   const status = transactionServicesUtils.profitStatus(profit);
 
-  const treasury = await transactionServicesUtils.findTreasury();
-
-  let { balanceAfter, treasuryAmount } =
+  let { balanceAfter, bankBalance } =
     await transactionServicesUtils.updateTransactionInfo(
       transaction,
       amount,
       profit,
-      treasury,
       isTotalRevenue = true,
-      totalProviderDeduction
+      totalProviderDeduction,
+      bankAccount
     );
 
-  treasury,
-    await transactionServicesUtils.updateTreasury(treasury, treasuryAmount);
-  await bankAccount.update({ balance: balanceAfter });
+
+  await bankAccount.update({ balance: bankBalance });
 
   await transactionRepository.updateOne(transactionId, {
     isPercentage,
