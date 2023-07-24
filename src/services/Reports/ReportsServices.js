@@ -3,7 +3,7 @@ const transactionRepository = require('../../dataAccess/transaction/transactionR
 const Excel = require('exceljs');
 
 exports.userReports = async (query) => {
-  const { startDate, endDate, bankNumber, page, limit, order, sort } = query;
+  const { startDate, endDate, bankAccountId, page, limit, order, sort } = query;
 
   const nextDay = new Date(endDate);
   nextDay.setDate(nextDay.getDate() + 1);
@@ -17,7 +17,7 @@ exports.userReports = async (query) => {
   const transactions = await transactionRepository.findAll(
     whereClause,
     {
-      bankNumber,
+      id: bankAccountId,
     },
     page,
     limit,
@@ -154,7 +154,7 @@ exports.employReports = async (query) => {
 };
 
 exports.exportExcel = async (query) => {
-  const { startDate, endDate, bankNumber } = query;
+  const { startDate, endDate, bankAccountId } = query;
 
   const nextDay = new Date(endDate);
   nextDay.setDate(nextDay.getDate() + 1);
@@ -168,7 +168,7 @@ exports.exportExcel = async (query) => {
   const { transactions } = await transactionRepository.findAll(
     whereClause,
     {
-      bankNumber,
+      id: bankAccountId,
     },
     1,
     1000,
