@@ -1,8 +1,8 @@
 
 
 const userRepository = require('../dataAccess/auth/userRepository.js')
-const jwt = require('jsonwebtoken')
-const constants = require('../utils/constants.js')
+const constants = require('../utils/constants.js');
+const BadRequestError = require('../utils/badRequestError.js');
 
 exports.checkPassword = async (req, res, next) => {
   try {
