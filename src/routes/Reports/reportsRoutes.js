@@ -11,7 +11,7 @@ router
   .get(
     auth.isAuth,
     auth.checkUserRole(['superAdmin', 'admin']),
-    reportsControllers.userReports
+    reportsControllers.bankAccountReports
   );
 router
   .route(links.reports.DAILY_TRANSACTION)
@@ -21,6 +21,7 @@ router
     reportsControllers.dailyReports
   );
 
+
 router
   .route(links.reports.EMPLOY_TRANSACTION)
   .get(
@@ -29,12 +30,30 @@ router
     reportsControllers.employReports
   );
 
+
+  
 router
-  .route(links.reports.EXPORT_TRANSACTION)
+.route(links.reports.EXPORT_DAILY_TRANSACTION)
+.get(
+  auth.isAuth,
+  auth.checkUserRole(['superAdmin', 'admin']),
+  reportsControllers.exportDailyReports
+);
+
+router
+  .route(links.reports.EXPORT_BANK_TRANSACTION)
   .get(
     auth.isAuth,
     auth.checkUserRole(['superAdmin', 'admin']),
-    reportsControllers.exportExcel
+    reportsControllers.exportBankAccountReports
+  );
+
+router
+  .route(links.reports.EXPORT_EMPLOY_TRANSACTION)
+  .get(
+    auth.isAuth,
+    auth.checkUserRole(['superAdmin', 'admin']),
+    reportsControllers.exportEmployReport
   );
 
 module.exports = router;

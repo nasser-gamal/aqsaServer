@@ -38,17 +38,19 @@ exports.deleteOne = async (categoryId) => {
 exports.findAll = async (whereClause, page, limit, order, sort) => {
   try {
     const pageNumber = +page || 1;
-    const itemPerPage = +limit || 10;
+    const itemPerPage = +limit;
     const orderBy = order || 'createdAt';
     const sortBy = sort || 'ASC';
 
-   
+    let options;
+    if (page && limit) {
+      options = { limit: itemPerPage, offset: (pageNumber - 1) * itemPerPage };
+    }
 
     const categories = await Category.findAndCountAll({
       where: whereClause,
+      ...options,
       order: [[orderBy, sortBy]],
-      limit: itemPerPage,
-      offset: (pageNumber - 1) * itemPerPage,
     });
 
     return {

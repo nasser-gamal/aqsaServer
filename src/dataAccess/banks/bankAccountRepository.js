@@ -52,13 +52,20 @@ exports.findAll = async (whereClause, page, limit, order, sort) => {
     const orderBy = order || 'createdAt';
     const sortBy = sort || 'ASC';
 
+    let options;
+    if (page && limit) {
+      options = {
+        limit: itemPerPage,
+        offset: (pageNumber - 1) * itemPerPage,
+      };
+    }
+
     const bankAccounts = await BankAccount.findAndCountAll({
       where: whereClause,
       attributes: { exclude: ['bankId'] },
       include: [{ model: Bank }],
       order: [[orderBy, sortBy]],
-      limit: itemPerPage,
-      offset: (pageNumber - 1) * itemPerPage,
+      ...options,
     });
     return {
       bankAccounts: bankAccounts.rows,

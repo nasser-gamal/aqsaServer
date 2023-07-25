@@ -45,7 +45,7 @@ exports.findAll = async (
   limit,
   order,
   sort,
-  userClause,
+  userClause
 ) => {
   try {
     const pageNumber = +page || 1;
@@ -53,11 +53,18 @@ exports.findAll = async (
     const orderBy = order || 'createdAt';
     const sortBy = sort || 'ASC';
 
+    let options;
+    if (page && limit) {
+      options = {
+        limit: itemPerPage,
+        offset: (pageNumber - 1) * itemPerPage,
+      };
+    }
+
     const transactions = await Transaction.findAndCountAll({
       where: whereClause,
       order: [[orderBy, sortBy]],
-      limit: itemPerPage,
-      offset: (pageNumber - 1) * itemPerPage,
+      ...options,
       include: [
         {
           model: User,

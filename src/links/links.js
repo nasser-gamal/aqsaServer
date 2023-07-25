@@ -115,7 +115,9 @@ const links = {
     USER_TRANSACTION: '/transactions/user',
     EMPLOY_TRANSACTION: '/transactions/employ',
     DAILY_TRANSACTION: '/transactions/daily',
-    EXPORT_TRANSACTION: '/transactions/export/excel',
+    EXPORT_DAILY_TRANSACTION: '/transactions/daily/excel',
+    EXPORT_BANK_TRANSACTION: '/transactions/bankAccount/excel',
+    EXPORT_EMPLOY_TRANSACTION: '/transactions/employ/excel',
   },
 };
 
