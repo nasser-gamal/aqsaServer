@@ -13,6 +13,7 @@ exports.pagination = (pageNumber, itemPerPage, totalCount) => {
     nextThreePage: pageNumber + 3,
     previousPage: pageNumber - 1,
     currentPage: pageNumber,
+    lastPage: Math.ceil(totalCount / itemPerPage),
     hasNextPage,
     hasNextTwoPage,
     hasNextThreePage,
