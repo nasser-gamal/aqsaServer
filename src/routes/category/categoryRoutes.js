@@ -5,12 +5,14 @@ const categoryControllers = require('../../controllers/category/categoryControll
 const links = require('../../links/links.js');
 const validate = require('../../utils/validation.js');
 const auth = require('../../middlewares/auth.js');
+const { checkActive } = require('../../middlewares/checkActive.js');
 
 router
   .route(links.category.GET_CATEGORYS)
   .get(
-    // auth.isAuth,
-    // auth.checkUserRole(['superAdmin', 'admin']),
+    auth.isAuth,
+    checkActive,
+    auth.checkUserRole(['superAdmin', 'admin']),
     categoryControllers.getAllCategorys
   );
 
@@ -18,6 +20,7 @@ router
   .route(links.category.GET_CATEGORY)
   .get(
     auth.isAuth,
+    checkActive,
     auth.checkUserRole(['superAdmin', 'admin']),
     categoryControllers.getCategory
   );
@@ -26,6 +29,7 @@ router
   .route(links.category.CREATE_CATEGORY)
   .post(
     auth.isAuth,
+    checkActive,
     auth.checkUserRole(['superAdmin', 'admin']),
     validate.categoryValidate,
     validate.validateInputs,
@@ -36,6 +40,7 @@ router
   .route(links.category.UPDATE_CATEGORY)
   .put(
     auth.isAuth,
+    checkActive,
     auth.checkUserRole(['superAdmin', 'admin']),
     validate.categoryValidate,
     validate.validateInputs,
@@ -46,6 +51,7 @@ router
   .route(links.category.DELETE_CATEGORY)
   .delete(
     auth.isAuth,
+    checkActive,
     auth.checkUserRole(['superAdmin', 'admin']),
     categoryControllers.deleteCategory
   );

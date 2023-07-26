@@ -5,11 +5,14 @@ const depositeControllers = require('../../controllers/transaction/depositeContr
 const links = require('../../links/links.js');
 const validate = require('../../utils/validation.js');
 const auth = require('../../middlewares/auth.js');
+const { checkActive } = require('../../middlewares/checkActive.js');
 
 router
   .route(links.transaction.CREATE_TRANSACTION)
   .post(
-     auth.isAuth,
+    auth.isAuth,
+    checkActive,
+    auth.checkUserRole(['superAdmin', 'admin']),
     validate.depositeValidate,
     validate.validateInputs,
     depositeControllers.addDepsite
@@ -17,13 +20,28 @@ router
 
 router
   .route(links.transaction.GET_TRANSACTIONS)
-  .get(auth.isAuth, depositeControllers.getAllDeposites);
+  .get(
+    auth.isAuth,
+    checkActive,
+    auth.checkUserRole(['superAdmin', 'admin']),
+    depositeControllers.getAllDeposites
+  );
 
 router
   .route(links.transaction.UPDATE_TRANSACTION)
-  .put(auth.isAuth, depositeControllers.updateDeposite);
+  .put(
+    auth.isAuth,
+    checkActive,
+    auth.checkUserRole(['superAdmin', 'admin']),
+    depositeControllers.updateDeposite
+  );
 
 router
   .route(links.transaction.DELETE_TRANSACTION)
-  .delete(auth.isAuth, depositeControllers.deleteDeposite);
+  .delete(
+    auth.isAuth,
+    checkActive,
+    auth.checkUserRole(['superAdmin', 'admin']),
+    depositeControllers.deleteDeposite
+  );
 module.exports = router;
