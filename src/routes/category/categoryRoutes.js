@@ -11,7 +11,6 @@ router
   .route(links.category.GET_CATEGORYS)
   .get(
     auth.isAuth,
-    checkActive,
     auth.checkUserRole(['superAdmin', 'admin']),
     categoryControllers.getAllCategorys
   );
