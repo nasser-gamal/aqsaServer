@@ -10,6 +10,7 @@ exports.checkActive = async (req, res, next) => {
     if (!user.isActive) {
       throw new BadRequestError(constants.ACCOUNT_NOT_ACTIVE, 401);
     }
+    next();
   } catch (err) {
     return next(err);
   }
