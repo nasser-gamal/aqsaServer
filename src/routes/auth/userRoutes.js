@@ -33,6 +33,16 @@ router
     userControllers.updateUser
   );
 router
+  .route(links.user.UPDATE_PASSWORD_MANUAL)
+  .put(
+    auth.isAuth,
+    auth.checkUserRole(['superAdmin']),
+    validate.passwordValidate,
+    validate.validateInputs,
+    userControllers.updatePasswordManual
+  );
+
+router
   .route(links.user.UPDATE_PASSWORD)
   .put(
     auth.isAuth,

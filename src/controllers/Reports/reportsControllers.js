@@ -15,7 +15,6 @@ exports.bankAccountReports = async (req, res, next) => {
   }
 };
 
-
 exports.exportBankAccountReports = async (req, res, next) => {
   try {
     const query = req.query;
@@ -37,7 +36,6 @@ exports.exportBankAccountReports = async (req, res, next) => {
     next(err);
   }
 };
-
 
 exports.dailyReports = async (req, res, next) => {
   try {
@@ -91,13 +89,47 @@ exports.employReports = async (req, res, next) => {
   }
 };
 
-
-
 exports.exportEmployReport = async (req, res, next) => {
   try {
     const query = req.query;
 
     const workbook = await reportsServices.exportEmployReportExcel(query);
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    );
+    res.setHeader(
+      'Content-Disposition',
+      'attachment; filename=' + `users-${Date.now()}.xlsx`
+    );
+
+    return workbook.xlsx.write(res).then(() => {
+      res.status(200).end();
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.transferReports = async (req, res, next) => {
+  try {
+    const query = req.query;
+
+    const transfer = await reportsServices.transferReport(query);
+
+    return res.status(200).json(transfer);
+  } catch (err) {
+    next(err);
+  }
+};
+
+
+
+exports.exportTransferReport = async (req, res, next) => {
+  try {
+    const query = req.query;
+
+    const workbook = await reportsServices.exportTransferReportExcel(query);
     res.setHeader(
       'Content-Type',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'

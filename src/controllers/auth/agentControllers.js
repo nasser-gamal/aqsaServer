@@ -35,6 +35,22 @@ exports.updateAgent = async (req, res, next) => {
   }
 };
 
+
+exports.updatePasswordManual = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+
+    const { message } = await userServices.updatePasswordManual(
+      userId,
+      req.body
+    );
+
+    return res.status(200).json({ message: message });
+  } catch (err) {
+    return next(err);
+  }
+};
+
 exports.updatePassword = async (req, res, next) => {
   try {
     const { userId } = req.params;

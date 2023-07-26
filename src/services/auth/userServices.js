@@ -8,11 +8,6 @@ const { checkResourceExists } = require('../../utils/checkResourceExists.js');
 const { sendSMSMessage } = require('../../utils/sms.js');
 const { Op } = require('sequelize');
 
-const isRoleExist = async (roleId) => {
-  const role = await roleRepository.findById(roleId);
-  return checkResourceExists(role, constants.ROLE_NOT_FOUND);
-};
-
 const isUserExist = async (userId) => {
   const user = await userRepository.findById(userId);
   return checkResourceExists(user, constants.USER_NOT_FOUND);
@@ -119,10 +114,21 @@ exports.updateUser = async (userId, userData) => {
   return { message: constants.UPDATE_USER_SUCCESS };
 };
 
-exports.updatePassword = async (userId) => {
+exports.updatePasswordManual = async (userId, body) => {
+  const { password } = body;
   const user = await isUserExist(userId);
 
-  // await comparePassword(user, password);
+  const hashPassword = await user.hashPassword(password);
+
+  await userRepository.updateOne(userId, {
+    password: hashPassword,
+  });
+
+  return { message: constants.UPDATE_PASSWORD_SUCCESS };
+};
+
+exports.updatePassword = async (userId) => {
+  const user = await isUserExist(userId);
 
   const password = generatePassword();
 
@@ -134,10 +140,6 @@ exports.updatePassword = async (userId) => {
     password: hashPassword,
   });
   await sendSMSMessage(user.phoneNumber, message);
-
-  // if (response.code !== 1901) {
-  //   throw new BadRequestError(constants.SMS_ERROR);
-  // }
 
   return { message: constants.UPDATE_PASSWORD_SUCCESS };
 };

@@ -9,16 +9,6 @@ exports.getAllAdmins = async (req, res, next) => {
   }
 };
 
-// exports.getAllAgents = async (req, res, next) => {
-//   try {
-//     const users = await userServices.getAllAgents();
-
-//     return res.status(200).json(users);
-//   } catch (err) {
-//     return next(err);
-//   }
-// };
-
 exports.addUser = async (req, res, next) => {
   try {
     const userData = req.body;
@@ -37,6 +27,21 @@ exports.updateUser = async (req, res, next) => {
     const { userId } = req.params;
 
     const { message } = await userServices.updateUser(userId, userData);
+
+    return res.status(200).json({ message: message });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.updatePasswordManual = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+
+    const { message } = await userServices.updatePasswordManual(
+      userId,
+      req.body
+    );
 
     return res.status(200).json({ message: message });
   } catch (err) {

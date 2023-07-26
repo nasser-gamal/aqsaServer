@@ -130,6 +130,20 @@ exports.updateAgent = async (userId, userData) => {
   return { message: constants.UPDATE_USER_SUCCESS };
 };
 
+
+exports.updatePasswordManual = async (userId, body) => {
+  const { password } = body;
+  const user = await isUserExist(userId);
+
+  const hashPassword = await user.hashPassword(password);
+
+  await userRepository.updateOne(userId, {
+    password: hashPassword,
+  });
+
+  return { message: constants.UPDATE_PASSWORD_SUCCESS };
+};
+
 exports.updatePassword = async (agentId) => {
   const user = await isUserExist(agentId);
 
@@ -144,9 +158,8 @@ exports.updatePassword = async (agentId) => {
   });
 
   await sendSMSMessage(user.phoneNumber, message);
-  // if (response.code !== 1901) {
-  //   throw new BadRequestError(constants.SMS_ERROR);
-  // }
+
+  
 
   return { message: constants.UPDATE_PASSWORD_SUCCESS };
 };

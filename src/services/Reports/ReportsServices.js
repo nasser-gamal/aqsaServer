@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const transactionRepository = require('../../dataAccess/transaction/transactionRepository');
 const Excel = require('exceljs');
+const transferRepository = require('../../dataAccess/transaction/transferRepository');
 
 exports.bankAccountReports = async (query) => {
   const { startDate, endDate, bankAccountId, page, limit, order, sort } = query;
@@ -513,6 +514,101 @@ exports.exportEmployReportExcel = async (query) => {
   });
 
   worksheet.rowCount = transactions.length + 1; // Adding 1 for the total row
+
+  return workbook;
+};
+
+exports.transferReport = async (query) => {
+  const { startDate, endDate, page, limit, order, sort } = query;
+
+  const nextDay = new Date(endDate);
+  nextDay.setDate(nextDay.getDate() + 1);
+
+  const whereClause = {
+    createdAt: {
+      [Op.between]: [startDate, nextDay.toISOString().slice(0, 10)],
+    },
+  };
+
+  const transfer = await transferRepository.findAll(
+    whereClause,
+    page,
+    limit,
+    order,
+    sort
+  );
+
+  return transfer;
+};
+
+exports.exportTransferReportExcel = async (query) => {
+  const { startDate, endDate } = query;
+
+  const nextDay = new Date(endDate);
+  nextDay.setDate(nextDay.getDate() + 1);
+
+  const whereClause = {
+    createdAt: {
+      [Op.between]: [startDate, nextDay.toISOString().slice(0, 10)],
+    },
+  };
+
+  const { transfers } = await transferRepository.findAll(whereClause);
+
+  const workbook = new Excel.Workbook();
+
+  const worksheet = workbook.addWorksheet('sheet 1', { rightToLeft: true });
+
+  worksheet.columns = [
+    { header: 'التاريخ', key: 'date', width: '20' },
+    { header: 'القيمة', key: 'amountTotal', width: '15' },
+    { header: 'المحول منه', key: 'sender', width: '20' },
+    { header: 'رصيد قبل', key: 'senderBalanceBefore', width: '15' },
+    { header: 'رصيد بعد', key: 'senderBalanceAfter', width: '15' },
+    { header: 'المحول إليه', key: 'recipient', width: '15' },
+    { header: 'رصيد قبل', key: 'recipientBalanceBefore', width: '15' },
+    { header: 'رصيد بعد', key: 'recipientBalanceAfter', width: '15' },
+    { header: 'ملحوظة', key: 'note', width: '80' },
+  ];
+
+  await transfers.map((transfer, i) => {
+    return worksheet.addRows([
+      {
+        date: transfer.createdAt,
+        amountTotal: transfer.amountTotal,
+        sender: transfer.sender.accountName,
+        senderBalanceBefore: transfer.balanceSenderBefore,
+        senderBalanceAfter: transfer.balanceSenderAfter,
+        recipient: transfer.recipient.accountName,
+        recipientBalanceBefore: transfer.balanceRecipientBefore,
+        recipientBalanceAfter: transfer.balanceRecipientAfter,
+        note: transfer.note || '-',
+      },
+    ]);
+  });
+
+  worksheet.eachRow((row) => {
+    row.eachCell((cell) => {
+      cell.font = { bold: true };
+      cell.alignment = {
+        textRotation: 180,
+        vertical: 'middle',
+        horizontal: 'center',
+      };
+    });
+  });
+
+  const headerRow = worksheet.getRow(1);
+  headerRow.eachCell((cell) => {
+    cell.font = { bold: true, size: 14, color: { argb: '000000' } };
+    cell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: '296f93' }, // Replace 'FFFF0000' with your desired color code
+    };
+  });
+
+  worksheet.rowCount = transfers.length + 1; // Adding 1 for the total row
 
   return workbook;
 };

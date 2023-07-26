@@ -45,6 +45,7 @@ exports.findAll = async (whereClause, page, limit, order, sort) => {
     const orderBy = order || 'createdAt';
     const sortBy = sort || 'DESC';
 
+
     const transfers = await Transfer.findAndCountAll({
       where: whereClause,
       order: [[orderBy, sortBy]],

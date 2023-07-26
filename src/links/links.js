@@ -10,6 +10,7 @@ const links = {
     CREATE_USER: '/create',
     UPDATE_USER: '/update/:userId',
     UPDATE_PASSWORD: '/update-password/:userId',
+    UPDATE_PASSWORD_MANUAL: '/update-password-manual/:userId',
     UPDATE_STATUS: '/update-status/:userId',
     DELETE_USER: '/delete/:userId',
   },
@@ -115,9 +116,11 @@ const links = {
     USER_TRANSACTION: '/transactions/user',
     EMPLOY_TRANSACTION: '/transactions/employ',
     DAILY_TRANSACTION: '/transactions/daily',
+    DAILY_TRANSFER: '/transfer/daily',
     EXPORT_DAILY_TRANSACTION: '/transactions/daily/excel',
     EXPORT_BANK_TRANSACTION: '/transactions/bankAccount/excel',
     EXPORT_EMPLOY_TRANSACTION: '/transactions/employ/excel',
+    EXPORT_TRANSFER_TRANSACTION: '/transfer/daily/excel',
   },
 };
 

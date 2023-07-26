@@ -45,6 +45,17 @@ router
     checkPassword,
     agentControllers.updatePassword
   );
+
+router
+  .route(links.user.UPDATE_PASSWORD_MANUAL)
+  .put(
+    auth.isAuth,
+    auth.checkUserRole(['superAdmin']),
+    validate.passwordValidate,
+    validate.validateInputs,
+    agentControllers.updatePasswordManual
+  );
+
 router
   .route(links.user.UPDATE_STATUS)
   .put(
