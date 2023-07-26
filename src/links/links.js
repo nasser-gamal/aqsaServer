@@ -122,6 +122,9 @@ const links = {
     EXPORT_EMPLOY_TRANSACTION: '/transactions/employ/excel',
     EXPORT_TRANSFER_TRANSACTION: '/transfer/daily/excel',
   },
+  profits: {
+    GET_DAILY_PROFITS: '/daily',
+  },
 };
 
 module.exports = links;
