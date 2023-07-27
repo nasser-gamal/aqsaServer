@@ -1,3 +1,4 @@
+const User = require('../../models/auth/userModel');
 const Fees = require('../../models/fees/feesModel');
 const { pagination } = require('../../utils/pagination');
 
@@ -51,6 +52,13 @@ exports.findAll = async (whereClause, page, limit, order, sort) => {
       where: whereClause,
       ...options,
       order: [[orderBy, sortBy]],
+      include: [
+        {
+          model: User,
+          as: 'creator',
+          attributes: ['id', 'userName', 'accountName'],
+        },
+      ],
     });
 
     return {
