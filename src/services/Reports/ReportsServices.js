@@ -710,13 +710,13 @@ exports.userCommissionReports = async (query) => {
         agentId,
         agent: agent,
         commissions: commissions.reduce(
-          (total, commission) => total + commission.commission,
+          (total, commission) => total + parseFloat(commission.commission),
           0
         ),
       };
     } else {
       agentReports[agentId].commissions += commissions.reduce(
-        (total, commission) => total + commission.commission,
+        (total, commission) => total + parseFloat(commission.commission),
         0
       );
     }
