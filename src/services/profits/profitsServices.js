@@ -81,7 +81,7 @@ exports.dailyProfits = async (query) => {
     });
   });
 
-  const totalProfits = profits - totalCommission;
+  const totalProfits = (profits - totalCommission).toFixed(2);
 
   return {
     transactions: {
@@ -94,7 +94,7 @@ exports.dailyProfits = async (query) => {
     },
     commissions: {
       userCommissionCount: commissions.length,
-      totalCommission,
+      totalCommission: totalCommission.toFixed(2),
     },
   };
 };
