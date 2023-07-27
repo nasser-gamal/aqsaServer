@@ -37,10 +37,14 @@ exports.bankAccountReports = async (query) => {
 
   const totalWithdraw = transactions.transactions
     .filter((transaction) => {
-      return transaction.type !== 'ايداع';
+      return transaction.type === 'سحب';
     })
     .reduce((acc, transaction) => {
-      return acc + transaction.amountTotal;
+      return (transaction.balanceBefore - transaction.balanceAfter).toFixed(
+        2
+      ) == transaction.amountTotal.toFixed(2)
+        ? acc + transaction.amountTotal
+        : acc + transaction.providerDeduction;
     }, 0)
     .toFixed(2);
 
@@ -77,12 +81,16 @@ exports.exportBankAccountReports = async (query) => {
       return acc + transaction.amountTotal;
     }, 0);
 
-  const totalWithdraw = transactions
+  const totalWithdraw = transactions.transactions
     .filter((transaction) => {
-      return transaction.type !== 'ايداع';
+      return transaction.type === 'سحب';
     })
     .reduce((acc, transaction) => {
-      return acc + transaction.amountTotal;
+      return (transaction.balanceBefore - transaction.balanceAfter).toFixed(
+        2
+      ) == transaction.amountTotal.toFixed(2)
+        ? acc + transaction.amountTotal
+        : acc + transaction.providerDeduction;
     }, 0);
 
   const workbook = new Excel.Workbook();
@@ -190,10 +198,14 @@ exports.dailyReports = async (query) => {
 
   const totalWithdraw = transactions.transactions
     .filter((transaction) => {
-      return transaction.type !== 'ايداع';
+      return transaction.type === 'سحب';
     })
     .reduce((acc, transaction) => {
-      return acc + transaction.amountTotal;
+      return (transaction.balanceBefore - transaction.balanceAfter).toFixed(
+        2
+      ) == transaction.amountTotal.toFixed(2)
+        ? acc + transaction.amountTotal
+        : acc + transaction.providerDeduction;
     }, 0)
     .toFixed(2);
 
@@ -230,10 +242,14 @@ exports.exportDayReportExcel = async (query) => {
 
   const totalWithdraw = transactions.transactions
     .filter((transaction) => {
-      return transaction.type !== 'ايداع';
+      return transaction.type === 'سحب';
     })
     .reduce((acc, transaction) => {
-      return acc + transaction.amountTotal;
+      return (transaction.balanceBefore - transaction.balanceAfter).toFixed(
+        2
+      ) == transaction.amountTotal.toFixed(2)
+        ? acc + transaction.amountTotal
+        : acc + transaction.providerDeduction;
     }, 0);
 
   const workbook = new Excel.Workbook();
@@ -368,10 +384,14 @@ exports.employReports = async (query) => {
 
   const totalWithdraw = transactions.transactions
     .filter((transaction) => {
-      return transaction.type !== 'ايداع';
+      return transaction.type === 'سحب';
     })
     .reduce((acc, transaction) => {
-      return acc + transaction.amountTotal;
+      return (transaction.balanceBefore - transaction.balanceAfter).toFixed(
+        2
+      ) == transaction.amountTotal.toFixed(2)
+        ? acc + transaction.amountTotal
+        : acc + transaction.providerDeduction;
     }, 0)
     .toFixed(2);
 
@@ -420,10 +440,14 @@ exports.exportEmployReportExcel = async (query) => {
 
   const totalWithdraw = transactions.transactions
     .filter((transaction) => {
-      return transaction.type !== 'ايداع';
+      return transaction.type === 'سحب';
     })
     .reduce((acc, transaction) => {
-      return acc + transaction.amountTotal;
+      return (transaction.balanceBefore - transaction.balanceAfter).toFixed(
+        2
+      ) == transaction.amountTotal.toFixed(2)
+        ? acc + transaction.amountTotal
+        : acc + transaction.providerDeduction;
     }, 0);
 
   const workbook = new Excel.Workbook();

@@ -18,7 +18,6 @@ exports.getDailyProfits = async (req, res, next) => {
       totalProfits,
     });
   } catch (err) {
-    console.log(err);
     return next(err);
   }
 };
