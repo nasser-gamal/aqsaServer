@@ -78,4 +78,13 @@ router
     reportsControllers.exportTransferReport
   );
 
+router
+  .route(links.reports.DAILY_FEES)
+  .get(
+    auth.isAuth,
+    checkActive,
+    auth.checkUserRole(['superAdmin', 'admin']),
+    reportsControllers.feesReports
+  );
+
 module.exports = router;

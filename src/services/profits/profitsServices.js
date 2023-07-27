@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const transactionRepository = require('../../dataAccess/transaction/transactionRepository');
 const UserCommission = require('../../dataAccess/commission/userCommission.repository');
+const feesRepository = require('../../dataAccess/fees/feesRepository');
 
 exports.dailyProfits = async (query) => {
   const { startDate, endDate } = query;
@@ -81,7 +82,15 @@ exports.dailyProfits = async (query) => {
     });
   });
 
-  const totalProfits = (profits - totalCommission).toFixed(2);
+  const { fees } = await feesRepository.findAll(whereClause);
+
+  const totalFees = fees
+    .reduce((acc, fee) => {
+      return acc + fee.amount;
+    }, 0)
+    .toFixed(2);
+
+  const totalProfits = (+profits - (+totalCommission + +totalFees)).toFixed(2);
 
   return {
     transactions: {
@@ -92,6 +101,7 @@ exports.dailyProfits = async (query) => {
       profits,
       totalProfits,
     },
+    totalFees,
     commissions: {
       userCommissionCount: commissions.length,
       totalCommission: totalCommission.toFixed(2),

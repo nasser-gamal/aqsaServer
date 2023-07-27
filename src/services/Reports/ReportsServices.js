@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
-const transactionRepository = require('../../dataAccess/transaction/transactionRepository');
 const Excel = require('exceljs');
+const feesRepository = require('../../dataAccess/fees/feesRepository');
+const transactionRepository = require('../../dataAccess/transaction/transactionRepository');
 const transferRepository = require('../../dataAccess/transaction/transferRepository');
 
 exports.bankAccountReports = async (query) => {
@@ -10,7 +11,7 @@ exports.bankAccountReports = async (query) => {
   nextDay.setDate(nextDay.getDate() + 1);
 
   const whereClause = {
-    createdAt: {
+    date: {
       [Op.between]: [startDate, nextDay.toISOString().slice(0, 10)],
     },
   };
@@ -635,4 +636,33 @@ exports.exportTransferReportExcel = async (query) => {
   worksheet.rowCount = transfers.length + 1; // Adding 1 for the total row
 
   return workbook;
+};
+
+exports.feesReports = async (query) => {
+  const { startDate, endDate, page, limit, order, sort } = query;
+
+  const nextDay = new Date(endDate);
+  nextDay.setDate(nextDay.getDate() + 1);
+
+  const whereClause = {
+    createdAt: {
+      [Op.between]: [startDate, nextDay.toISOString().slice(0, 10)],
+    },
+  };
+
+  const fees = await feesRepository.findAll(
+    whereClause,
+    page,
+    limit,
+    order,
+    sort
+  );
+
+  const totalFees = fees.fees
+    .reduce((acc, fee) => {
+      return acc + fee.amount;
+    }, 0)
+    .toFixed(2);
+
+  return { fees, totalFees };
 };

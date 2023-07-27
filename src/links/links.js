@@ -86,7 +86,10 @@ const links = {
     UPDATE_TRANSFER: '/update/:transactionId',
   },
   fees: {
+    GET_FEES: '/getAll',
     CREATE_FEE: '/create',
+    UPDATE_FEE: '/update/:feesId',
+    DELETE_FEE: '/delete/:feesId',
   },
   category: {
     GET_CATEGORYS: '/getAll',
@@ -120,6 +123,7 @@ const links = {
     EMPLOY_TRANSACTION: '/transactions/employ',
     DAILY_TRANSACTION: '/transactions/daily',
     DAILY_TRANSFER: '/transfer/daily',
+    DAILY_FEES: '/fees/daily',
     EXPORT_DAILY_TRANSACTION: '/transactions/daily/excel',
     EXPORT_BANK_TRANSACTION: '/transactions/bankAccount/excel',
     EXPORT_EMPLOY_TRANSACTION: '/transactions/employ/excel',
@@ -128,7 +132,6 @@ const links = {
   profits: {
     GET_DAILY_PROFITS: '/daily',
   },
-
 };
 
 module.exports = links;

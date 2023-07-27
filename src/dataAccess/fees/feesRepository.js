@@ -47,15 +47,15 @@ exports.findAll = async (whereClause, page, limit, order, sort) => {
       options = { limit: itemPerPage, offset: (pageNumber - 1) * itemPerPage };
     }
 
-    const categories = await Fees.findAndCountAll({
+    const fees = await Fees.findAndCountAll({
       where: whereClause,
       ...options,
       order: [[orderBy, sortBy]],
     });
 
     return {
-      categories: categories.rows,
-      pagination: pagination(pageNumber, itemPerPage, categories.count),
+      fees: fees.rows,
+      pagination: pagination(pageNumber, itemPerPage, fees.count),
     };
   } catch (err) {
     throw new Error(err);

@@ -1,12 +1,13 @@
 const feesRepository = require('../../dataAccess/fees/feesRepository');
 const constants = require('../../utils/constants');
+const { checkResourceExists } = require('../../utils/checkResourceExists.js');
 
 const isFeesExist = async (id) => {
   const fees = await feesRepository.findById(id);
   return checkResourceExists(fees, constants.FEES_NOT_FOUND);
 };
 
-exports.createFees = async (data) => {
+exports.createFees = async (userId, data) => {
   const { amount, note } = data;
 
   await feesRepository.createOne({
@@ -26,7 +27,6 @@ exports.updateFees = async (feesId, data) => {
   await feesRepository.updateOne(feesId, {
     amount,
     note,
-    createdBy: userId,
   });
 
   return { message: constants.UPDATE_FEES_SUCCESS };

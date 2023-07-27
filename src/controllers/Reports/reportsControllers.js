@@ -123,8 +123,6 @@ exports.transferReports = async (req, res, next) => {
   }
 };
 
-
-
 exports.exportTransferReport = async (req, res, next) => {
   try {
     const query = req.query;
@@ -142,6 +140,18 @@ exports.exportTransferReport = async (req, res, next) => {
     return workbook.xlsx.write(res).then(() => {
       res.status(200).end();
     });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.feesReports = async (req, res, next) => {
+  try {
+    const query = req.query;
+
+    const { fees, totalFees } = await reportsServices.feesReports(query);
+
+    return res.status(200).json({fees, totalFees});
   } catch (err) {
     next(err);
   }
