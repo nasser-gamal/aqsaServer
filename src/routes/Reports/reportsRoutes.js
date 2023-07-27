@@ -87,4 +87,13 @@ router
     reportsControllers.feesReports
   );
 
+router
+  .route(links.reports.DAILY_COMMISSIONS)
+  .get(
+    auth.isAuth,
+    checkActive,
+    auth.checkUserRole(['superAdmin', 'admin']),
+    reportsControllers.userCommissionReports
+  );
+
 module.exports = router;

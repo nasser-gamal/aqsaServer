@@ -124,6 +124,7 @@ const links = {
     DAILY_TRANSACTION: '/transactions/daily',
     DAILY_TRANSFER: '/transfer/daily',
     DAILY_FEES: '/fees/daily',
+    DAILY_COMMISSIONS: '/commissions/daily',
     EXPORT_DAILY_TRANSACTION: '/transactions/daily/excel',
     EXPORT_BANK_TRANSACTION: '/transactions/bankAccount/excel',
     EXPORT_EMPLOY_TRANSACTION: '/transactions/employ/excel',

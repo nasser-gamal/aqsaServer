@@ -1,3 +1,4 @@
+const { Sequelize } = require('sequelize');
 const User = require('../../models/auth/userModel');
 const Category = require('../../models/category/categoryModel');
 const Commission = require('../../models/commission/commissionModel');
@@ -63,11 +64,13 @@ exports.findAll = async (
 
     const commissions = await UserCommission.findAndCountAll({
       where: commissionQuery,
+      // attributes: [
+      //   'agentId',
+      //   [Sequelize.fn('count', Sequelize.col('agentId')), 'cnt'],
+      // ],
       // order: [[orderBy, sortBy]],
       // limit: itemPerPage,
       // offset: (pageNumber - 1) * itemPerPage,
-
-      // attributes: { exclude: ['createdBy', 'agentId'] },
       include: [
         {
           model: User,

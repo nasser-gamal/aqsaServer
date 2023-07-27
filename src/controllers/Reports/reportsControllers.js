@@ -151,7 +151,22 @@ exports.feesReports = async (req, res, next) => {
 
     const { fees, totalFees } = await reportsServices.feesReports(query);
 
-    return res.status(200).json({fees, totalFees});
+    return res.status(200).json({ fees, totalFees });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.userCommissionReports = async (req, res, next) => {
+  try {
+    const query = req.query;
+
+    const { groupedCommissions, totalCommission } =
+      await reportsServices.userCommissionReports(query);
+
+    return res
+      .status(200)
+      .json({ commissions: groupedCommissions, totalCommission });
   } catch (err) {
     next(err);
   }
