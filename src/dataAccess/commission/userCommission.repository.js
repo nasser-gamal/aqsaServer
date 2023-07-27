@@ -80,22 +80,21 @@ exports.findAll = async (
         {
           model: Commission,
         },
-        // {
-        //   model: User,
-        //   where: whereClause,
-        //   as: 'agent',
-        //   attributes: {
-        //     exclude: [
-        //       'password',
-        //       'resetPasswordCode',
-        //       'passwordCodeExpiration',
-        //       'createdAt',
-        //       'updatedAt',
-        //       'roleId',
-        //       'isActive',
-        //     ],
-        //   },
-        // },
+        {
+          model: User,
+          as: 'agent',
+          attributes: {
+            exclude: [
+              'password',
+              'resetPasswordCode',
+              'passwordCodeExpiration',
+              'createdAt',
+              'updatedAt',
+              'roleId',
+              'isActive',
+            ],
+          },
+        },
       ],
     });
     return {

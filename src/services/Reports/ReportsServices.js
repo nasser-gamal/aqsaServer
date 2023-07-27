@@ -701,23 +701,24 @@ exports.userCommissionReports = async (query) => {
 
   // Iterate through each user commission record
   commissions.forEach((userCommission) => {
-    const { agentId, commissions, creator, ...rest } = userCommission.toJSON({
-      include: 'creator',
+    const { agentId, commissions, agent, ...rest } = userCommission.toJSON({
+      include: 'agent',
     });
 
     if (!agentReports[agentId]) {
       agentReports[agentId] = {
         agentId,
-        agent: creator,
+        agent: agent,
         commissions: commissions.reduce(
-          (total, commission) => +total + +commission.commission,
+          (total, commission) => total + commission.commission,
           0
         ),
       };
     } else {
-      agentReports[agentId].commissions += commissions
-        .reduce((total, commission) => +total + +commission.commission, 0)
-        .toFixed(2);
+      agentReports[agentId].commissions += commissions.reduce(
+        (total, commission) => total + commission.commission,
+        0
+      );
     }
   });
 
