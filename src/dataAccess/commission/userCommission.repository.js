@@ -1,5 +1,6 @@
 const User = require('../../models/auth/userModel');
 const Category = require('../../models/category/categoryModel');
+const Commission = require('../../models/commission/commissionModel');
 const UserCommission = require('../../models/commission/userCommission');
 const Segment = require('../../models/segments/segmentsModel');
 const { pagination } = require('../../utils/pagination');
@@ -67,29 +68,32 @@ exports.findAll = async (
       // offset: (pageNumber - 1) * itemPerPage,
 
       // attributes: { exclude: ['createdBy', 'agentId'] },
-      // include: [
-      //   // {
-      //   //   model: User,
-      //   //   as: 'creator',
-      //   //   attributes: ['id', 'userName', 'accountName'],
-      //   // },
-      //   // {
-      //   //   model: User,
-      //   //   where: whereClause,
-      //   //   as: 'agent',
-      //   //   attributes: {
-      //   //     exclude: [
-      //   //       'password',
-      //   //       'resetPasswordCode',
-      //   //       'passwordCodeExpiration',
-      //   //       'createdAt',
-      //   //       'updatedAt',
-      //   //       'roleId',
-      //   //       'isActive',
-      //   //     ],
-      //   //   },
-      //   // },
-      // ],
+      include: [
+        {
+          model: User,
+          as: 'creator',
+          attributes: ['id', 'userName', 'accountName'],
+        },
+        {
+          model: Commission,
+        },
+        // {
+        //   model: User,
+        //   where: whereClause,
+        //   as: 'agent',
+        //   attributes: {
+        //     exclude: [
+        //       'password',
+        //       'resetPasswordCode',
+        //       'passwordCodeExpiration',
+        //       'createdAt',
+        //       'updatedAt',
+        //       'roleId',
+        //       'isActive',
+        //     ],
+        //   },
+        // },
+      ],
     });
     return {
       commissions: commissions.rows,
