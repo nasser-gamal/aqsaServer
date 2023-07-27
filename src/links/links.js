@@ -85,6 +85,9 @@ const links = {
     DELETE_TRANSACTION: '/delete/:transactionId',
     UPDATE_TRANSFER: '/update/:transactionId',
   },
+  fees: {
+    CREATE_FEE: '/create',
+  },
   category: {
     GET_CATEGORYS: '/getAll',
     GET_CATEGORY: '/get/:categoryId',
@@ -125,6 +128,7 @@ const links = {
   profits: {
     GET_DAILY_PROFITS: '/daily',
   },
+
 };
 
 module.exports = links;

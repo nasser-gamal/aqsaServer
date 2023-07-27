@@ -28,6 +28,7 @@ const constants = {
   SEGEMNT_NOT_FOUND: 'الشريحة غير موجودة',
   COMMISSION_NOT_FOUND: 'العمولة غير موجودة',
   PROFIT_NOT_EXIST: 'لا يوجد ارباح في هذه الفترة',
+  FEES_NOT_FOUND: 'لا يوجد مصاريف',
 
   BANK_ACCOUNT_BALANCE_NOT_ENOUGH: 'رصيد الحساب ليس كافي لاجراء العملية',
 
@@ -70,6 +71,9 @@ const constants = {
   CREATE_PERMISSION_SUCCESS: 'تم اضافة الصلاحية بنجاح',
   UPDATE_PERMISSION_SUCCESS: 'تم تعديل الصلاحية بنجاح',
   DELETE_PERMISSION_SUCCESS: 'تم حذف الصلاحية بنجاح',
+  CREATE_FEES_SUCCESS: 'تم الاضافة بنجاح',
+  UPDATE_FEES_SUCCESS: 'تم التعديل بنجاح',
+  DELETE_FEES_SUCCESS: 'تم الحذف بنجاح',
 
   ACCOUNT_ACTIVE: 'تم تنشيط الحساب',
   ACCOUNT_IN_ACTIVE: 'تم ايقاف تنشيط الحساب',

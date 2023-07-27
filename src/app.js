@@ -23,6 +23,7 @@ const Category = require('./models/category/categoryModel.js');
 const Segment = require('./models/segments/segmentsModel.js');
 const Commission = require('./models/commission/commissionModel.js');
 const UserCommission = require('./models/commission/userCommission.js');
+const Fees = require('./models/fees/feesModel.js');
 
 const corsOptions = {
   origin: process.env.CLIENT_URL,
@@ -118,6 +119,11 @@ Commission.belongsTo(Segment, {
 
 UserCommission.hasMany(Commission);
 Commission.belongsTo(UserCommission);
+
+Fees.belongsTo(User, {
+  foreignKey: 'createdBy',
+  as: 'creator',
+});
 
 app.use('/api', routes);
 

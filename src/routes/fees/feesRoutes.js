@@ -1,0 +1,19 @@
+const express = require('express');
+const router = express.Router();
+
+const feesControllers = require('../../controllers/fees/feesControllers');
+const links = require('../../links/links.js');
+
+const auth = require('../../middlewares/auth.js');
+const { checkActive } = require('../../middlewares/checkActive');
+
+router
+  .route(links.fees.CREATE_FEE)
+  .post(
+    auth.isAuth,
+    checkActive,
+    auth.checkUserRole(['superAdmin', 'admin']),
+    feesControllers.createFee
+  );
+
+module.exports = router;
