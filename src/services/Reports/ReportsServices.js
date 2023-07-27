@@ -710,20 +710,20 @@ exports.userCommissionReports = async (query) => {
         agentId,
         agent: creator,
         commissions: commissions.reduce(
-          (total, commission) => total + commission.commission,
+          (total, commission) => +total + +commission.commission,
           0
         ),
       };
     } else {
-      agentReports[agentId].commissions += commissions.reduce(
-        (total, commission) => total + commission.commission,
-        0
-      );
+      agentReports[agentId].commissions += commissions
+        .reduce((total, commission) => +total + +commission.commission, 0)
+        .toFixed(2);
     }
   });
 
   // Convert the agentReports object into an array of objects
   const groupedCommissions = Object.values(agentReports);
+
   const totalCommission = groupedCommissions
     .reduce((acc, commission) => {
       return acc + commission.commissions;
