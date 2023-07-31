@@ -3,13 +3,13 @@ const BadRequestError = require('../utils/badRequestError.js');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    let path = 'uploads';
-    if (req.body.imgPath == 'icons') {
-      path += '/icons';
-    } else {
-      path += '/invoices';
-    }
+    let path = 'uploads/apps';
     cb(null, path);
+    // if (req.body.imgPath == 'icons') {
+    //   path += '/icons';
+    // } else {
+    //   path += '/invoices';
+    // }
   },
 
   filename: (req, file, cb) => {
@@ -31,6 +31,6 @@ const fileFilter = (req, file, cb) => {
   cb(null, true);
 };
 
-const upload = multer({ storage, fileFilter });
+const upload = multer({ storage });
 
 module.exports = upload;

@@ -74,6 +74,9 @@ const constants = {
   CREATE_FEES_SUCCESS: 'تم الاضافة بنجاح',
   UPDATE_FEES_SUCCESS: 'تم التعديل بنجاح',
   DELETE_FEES_SUCCESS: 'تم الحذف بنجاح',
+  CREATE_APP_SUCCESS: 'تم اضافة التطبيق بنجاح',
+  UPDATE_APP_SUCCESS: 'تم تعديل التطبيق بنجاح',
+  DELETE_APP_SUCCESS: 'تم حذف التطبيق بنجاح',
 
   ACCOUNT_ACTIVE: 'تم تنشيط الحساب',
   ACCOUNT_IN_ACTIVE: 'تم ايقاف تنشيط الحساب',

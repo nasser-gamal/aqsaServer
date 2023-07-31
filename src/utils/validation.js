@@ -1,4 +1,4 @@
-const { body, validationResult } = require('express-validator');
+const { body, validationResult, check } = require('express-validator');
 
 // validation for roles
 exports.roleValidate = [
@@ -122,10 +122,7 @@ exports.bankAccountValidate = [
 
 exports.depositeValidate = [
   body('bankAccountId').not().isEmpty().withMessage('اختر البنك'),
-  body('number')
-    .not()
-    .isEmpty()
-    .withMessage('ادخل الرقم'),
+  body('number').not().isEmpty().withMessage('ادخل الرقم'),
   body('amount')
     .not()
     .isEmpty()
@@ -148,10 +145,7 @@ exports.depositeValidate = [
 exports.withDrawValidate = [
   body('isTotalRevenue').not().isEmpty().withMessage('ادخل طريقة حساب الخصم'),
   body('bankAccountId').not().isEmpty().withMessage('اختر الحساب'),
-  body('number')
-    .not()
-    .isEmpty()
-    .withMessage('ادخل الرقم'),
+  body('number').not().isEmpty().withMessage('ادخل الرقم'),
   body('amount')
     .not()
     .isEmpty()
@@ -233,6 +227,17 @@ exports.claimsValidate = [
   body('claims').custom((value, { req }) => {
     if (value.length < 1) {
       throw new Error('ادخل الصلاحيات المتاحة للصفحة');
+    }
+    return true;
+  }),
+];
+
+exports.appValidate = [
+  check('name').not().isEmpty().withMessage('ادخل اسم التطبيق'),
+  check('isLink').not().isEmpty().withMessage('اختر طريقة الوصول للتطبيق'),
+  check('link').custom((value, { req }) => {
+    if (req.body.isLink == true && !value) {
+      throw new Error('ادخل رابط التطبيق');
     }
     return true;
   }),

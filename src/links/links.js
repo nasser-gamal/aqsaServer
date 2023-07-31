@@ -112,6 +112,14 @@ const links = {
     UPDATE_COMMISSION: '/update/:commissionId',
     DELETE_COMMISSION: '/delete/:commissionId',
   },
+  application: {
+    GET_APPS: '/getAll',
+    GET_APP: '/get/:appId',
+    DOWNLOAD_APP: '/download/:appId',
+    CREATE_APP: '/create',
+    UPDATE_APP: '/update/:appId',
+    DELETE_APP: '/delete/:appId',
+  },
   treasury: {
     GET_TREASURY: '/get',
   },
