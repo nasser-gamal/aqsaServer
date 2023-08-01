@@ -8,10 +8,11 @@ const isFeesExist = async (id) => {
 };
 
 exports.createFees = async (userId, data) => {
-  const { amount, note } = data;
+  const { amount, date, note } = data;
 
   await feesRepository.createOne({
     amount,
+    date,
     note,
     createdBy: userId,
   });
@@ -20,12 +21,13 @@ exports.createFees = async (userId, data) => {
 };
 
 exports.updateFees = async (feesId, data) => {
-  const { amount, note } = data;
+  const { amount, date, note } = data;
 
   await isFeesExist(feesId);
 
   await feesRepository.updateOne(feesId, {
     amount,
+    date,
     note,
   });
 

@@ -12,6 +12,10 @@ const Fees = sequelize.define('fee', {
     type: Sequelize.DataTypes.FLOAT(16, 2),
     allowNull: false,
   },
+  date: {
+    type: Sequelize.DataTypes.DATE,
+    allowNull: false,
+  },
   note: {
     type: Sequelize.STRING,
     allowNull: true,

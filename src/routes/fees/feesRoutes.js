@@ -6,6 +6,7 @@ const links = require('../../links/links.js');
 
 const auth = require('../../middlewares/auth.js');
 const { checkActive } = require('../../middlewares/checkActive');
+const validate = require('../../utils/validation.js');
 
 router
   .route(links.fees.GET_FEES)
@@ -22,6 +23,8 @@ router
     auth.isAuth,
     checkActive,
     auth.checkUserRole(['superAdmin', 'admin']),
+    validate.feessValidate,
+    validate.validateInputs,
     feesControllers.createFee
   );
 

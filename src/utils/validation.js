@@ -231,6 +231,10 @@ exports.claimsValidate = [
     return true;
   }),
 ];
+exports.feessValidate = [
+  body('amount').not().isEmpty().withMessage('اختر القيمة'),
+  body('date').not().isEmpty().withMessage('ادخل التاريخ'),
+];
 
 exports.appValidate = [
   check('name').not().isEmpty().withMessage('ادخل اسم التطبيق'),

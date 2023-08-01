@@ -141,7 +141,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 3000;
 
 sequelize
-  .sync()
+  .sync({alter: true})
   .then((result) => {
     app.listen(PORT);
   })
