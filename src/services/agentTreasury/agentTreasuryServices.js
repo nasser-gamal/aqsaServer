@@ -1,11 +1,13 @@
 const agentTreasury = require('../../dataAccess/agentTreasury/agentTreasuryRepository');
-const BadRequestError = require('../../utils/badRequestError');
 const { checkResourceExists } = require('../../utils/checkResourceExists');
 const constants = require('../../utils/constants');
 
 const isAgentTreasuryExist = async (id) => {
-  const agentTreasury = await agentTreasury.findById(id);
-  return checkResourceExists(agentTreasury, constants.AGENT_TRSEARY_NOT_FOUND);
+  const agentTreasuryExist = await agentTreasury.findById(id);
+  return checkResourceExists(
+    agentTreasuryExist,
+    constants.AGENT_TRSEARY_NOT_FOUND
+  );
 };
 
 exports.createAgentTreasury = async (userId, data) => {
@@ -21,12 +23,12 @@ exports.createAgentTreasury = async (userId, data) => {
   return { message: constants.CREATE_AGENT_TREASURY_SUCCESS };
 };
 
-exports.updateAgentTreasury = async (providerId, data) => {
+exports.updateAgentTreasury = async (agentTreasuryId, data) => {
   const { amount, date, note } = data;
 
-  await isAgentTreasuryExist(providerId);
+  await isAgentTreasuryExist(agentTreasuryId);
 
-  await agentTreasury.updateOne(providerId, {
+  await agentTreasury.updateOne(agentTreasuryId, {
     amount,
     date,
     note,
@@ -35,15 +37,15 @@ exports.updateAgentTreasury = async (providerId, data) => {
   return { message: constants.UPDATE_AGENT_TREASURY_SUCCESS };
 };
 
-exports.deleteAgentTreasury = async (providerId) => {
-  await isAgentTreasuryExist(providerId);
+exports.deleteAgentTreasury = async (agentTreasuryId) => {
+  await isAgentTreasuryExist(agentTreasuryId);
 
-  await agentTreasury.deleteOne(providerId);
+  await agentTreasury.deleteOne(agentTreasuryId);
 
   return { message: constants.DELETE_AGENT_TREASURY_SUCCESS };
 };
 
 exports.findAllAgentTreasury = async () => {
-  const agentTreasury = await agentTreasury.findAll();
-  return  agentTreasury ;
+  const agentTreasurys = await agentTreasury.findAll();
+  return agentTreasurys;
 };

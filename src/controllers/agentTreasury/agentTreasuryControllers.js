@@ -48,8 +48,8 @@ exports.deleteAgentTreasury = async (req, res, next) => {
 
 exports.getAllAgentTreasury = async (req, res, next) => {
   try {
-    const agentTreasury = await agentTreasuryServices.findAllAgentTreasury();
-    return res.status(200).json(agentTreasury);
+    const agentTreasurys = await agentTreasuryServices.findAllAgentTreasury();
+    return res.status(200).json(agentTreasurys);
   } catch (err) {
     return next(err);
   }
