@@ -32,6 +32,7 @@ const constants = {
   PROVIDER_NOT_FOUND: 'المزود غير موجود',
   PROVIDER_COMMISSION_NOT_FOUND: 'عمولة المزود غير موجوده',
   AGENT_TRSEARY_NOT_FOUND: 'خزنة التجار غير موجودة',
+  PROVIDER_TRSEARY_NOT_FOUND: 'خزنة المزود غير موجودة',
 
   BANK_ACCOUNT_BALANCE_NOT_ENOUGH: 'رصيد الحساب ليس كافي لاجراء العملية',
 
@@ -86,9 +87,9 @@ const constants = {
   CREATE_PROVIDER_COMMISSION_SUCCESS: 'تم اضافة العمولة بنجاح',
   UPDATE_PROVIDER_COMMISSION_SUCCESS: 'تم تعديل العمولة بنجاح',
   DELETE_PROVIDER_COMMISSION_SUCCESS: 'تم حذف العمولة بنجاح',
-  CREATE_AGENT_TREASURY_SUCCESS: 'تم اضافة بنجاح',
-  UPDATE_AGENT_TREASURY_SUCCESS: 'تم تعديل بنجاح',
-  DELETE_AGENT_TREASURY_SUCCESS: 'تم حذف بنجاح',
+  CREATE_TREASURY_SUCCESS: 'تم اضافة بنجاح',
+  UPDATE_TREASURY_SUCCESS: 'تم تعديل بنجاح',
+  DELETE_TREASURY_SUCCESS: 'تم حذف بنجاح',
 
   ACCOUNT_ACTIVE: 'تم تنشيط الحساب',
   ACCOUNT_IN_ACTIVE: 'تم ايقاف تنشيط الحساب',

@@ -20,29 +20,29 @@ exports.createAgentTreasury = async (userId, data) => {
     createdBy: userId,
   });
 
-  return { message: constants.CREATE_AGENT_TREASURY_SUCCESS };
+  return { message: constants.CREATE_TREASURY_SUCCESS };
 };
 
-exports.updateAgentTreasury = async (agentTreasuryId, data) => {
+exports.updateAgentTreasury = async (treasuryId, data) => {
   const { amount, date, note } = data;
 
-  await isAgentTreasuryExist(agentTreasuryId);
+  await isAgentTreasuryExist(treasuryId);
 
-  await agentTreasury.updateOne(agentTreasuryId, {
+  await agentTreasury.updateOne(treasuryId, {
     amount,
     date,
     note,
   });
 
-  return { message: constants.UPDATE_AGENT_TREASURY_SUCCESS };
+  return { message: constants.UPDATE_TREASURY_SUCCESS };
 };
 
-exports.deleteAgentTreasury = async (agentTreasuryId) => {
-  await isAgentTreasuryExist(agentTreasuryId);
+exports.deleteAgentTreasury = async (treasuryId) => {
+  await isAgentTreasuryExist(treasuryId);
 
-  await agentTreasury.deleteOne(agentTreasuryId);
+  await agentTreasury.deleteOne(treasuryId);
 
-  return { message: constants.DELETE_AGENT_TREASURY_SUCCESS };
+  return { message: constants.DELETE_TREASURY_SUCCESS };
 };
 
 exports.findAllAgentTreasury = async () => {

@@ -236,7 +236,7 @@ exports.feessValidate = [
   body('date').not().isEmpty().withMessage('ادخل التاريخ'),
 ];
 
-exports.agentTreasuryValidate = [
+exports.treasuryValidate = [
   body('amount').not().isEmpty().withMessage('اختر القيمة'),
   body('date').not().isEmpty().withMessage('ادخل التاريخ'),
 ];

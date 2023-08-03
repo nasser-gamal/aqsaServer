@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const agentTreasuryControllers = require('../../controllers/agentTreasury/agentTreasuryControllers');
+const providerTreasuryControllers = require('../../controllers/providerTreasury/providerTreasuryControllers');
 const links = require('../../links/links.js');
 
 const auth = require('../../middlewares/auth.js');
@@ -14,7 +14,7 @@ router
     auth.isAuth,
     checkActive,
     auth.checkUserRole(['superAdmin', 'admin']),
-    agentTreasuryControllers.getAllAgentTreasury
+    providerTreasuryControllers.getAllProviderTreasury
   );
 
 router
@@ -25,7 +25,7 @@ router
     auth.checkUserRole(['superAdmin', 'admin']),
     validate.treasuryValidate,
     validate.validateInputs,
-    agentTreasuryControllers.createAgentTreasury
+    providerTreasuryControllers.createProviderTreasury
   );
 
 router
@@ -36,7 +36,7 @@ router
     auth.checkUserRole(['superAdmin', 'admin']),
     validate.treasuryValidate,
     validate.validateInputs,
-    agentTreasuryControllers.updateAgentTreasury
+    providerTreasuryControllers.updateProviderTreasury
   );
 
 router
@@ -45,7 +45,7 @@ router
     auth.isAuth,
     checkActive,
     auth.checkUserRole(['superAdmin', 'admin']),
-    agentTreasuryControllers.deleteAgentTreasury
+    providerTreasuryControllers.deleteProviderTreasury
   );
 
 module.exports = router;

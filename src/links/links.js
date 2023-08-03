@@ -91,11 +91,11 @@ const links = {
     UPDATE_FEE: '/update/:feesId',
     DELETE_FEE: '/delete/:feesId',
   },
-  agentTreasury: {
-    GET_AGENT_TREASURYS: '/getAll',
-    CREATE_AGENT_TREASURY: '/create',
-    UPDATE_AGENT_TREASURY: '/update/:agentTreasuryId',
-    DELETE_AGENT_TREASURY: '/delete/:agentTreasuryId',
+  treasury: {
+    GET_TREASURYS: '/getAll',
+    CREATE_TREASURY: '/create',
+    UPDATE_TREASURY: '/update/:treasuryId',
+    DELETE_TREASURY: '/delete/:treasuryId',
   },
   category: {
     GET_CATEGORYS: '/getAll',
@@ -132,9 +132,9 @@ const links = {
     UPDATE_APP: '/update/:appId',
     DELETE_APP: '/delete/:appId',
   },
-  treasury: {
-    GET_TREASURY: '/get',
-  },
+  // treasury: {
+  //   GET_TREASURY: '/get',
+  // },
   inventory: {
     GET_PROFITES: '/profits',
   },
