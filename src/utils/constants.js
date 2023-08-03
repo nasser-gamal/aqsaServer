@@ -29,6 +29,9 @@ const constants = {
   COMMISSION_NOT_FOUND: 'العمولة غير موجودة',
   PROFIT_NOT_EXIST: 'لا يوجد ارباح في هذه الفترة',
   FEES_NOT_FOUND: 'لا يوجد مصاريف',
+  PROVIDER_NOT_FOUND: 'المزود غير موجود',
+  PROVIDER_COMMISSION_NOT_FOUND: 'عمولة المزود غير موجوده',
+  AGENT_TRSEARY_NOT_FOUND: 'خزنة التجار غير موجودة',
 
   BANK_ACCOUNT_BALANCE_NOT_ENOUGH: 'رصيد الحساب ليس كافي لاجراء العملية',
 
@@ -77,6 +80,15 @@ const constants = {
   CREATE_APP_SUCCESS: 'تم اضافة التطبيق بنجاح',
   UPDATE_APP_SUCCESS: 'تم تعديل التطبيق بنجاح',
   DELETE_APP_SUCCESS: 'تم حذف التطبيق بنجاح',
+  CREATE_PROVIDER_SUCCESS: 'تم اضافة المزود بنجاح',
+  UPDATE_PROVIDER_SUCCESS: 'تم تعديل المزود بنجاح',
+  DELETE_PROVIDER_SUCCESS: 'تم حذف المزود بنجاح',
+  CREATE_PROVIDER_COMMISSION_SUCCESS: 'تم اضافة العمولة بنجاح',
+  UPDATE_PROVIDER_COMMISSION_SUCCESS: 'تم تعديل العمولة بنجاح',
+  DELETE_PROVIDER_COMMISSION_SUCCESS: 'تم حذف العمولة بنجاح',
+  CREATE_AGENT_TREASURY_SUCCESS: 'تم اضافة بنجاح',
+  UPDATE_AGENT_TREASURY_SUCCESS: 'تم تعديل بنجاح',
+  DELETE_AGENT_TREASURY_SUCCESS: 'تم حذف بنجاح',
 
   ACCOUNT_ACTIVE: 'تم تنشيط الحساب',
   ACCOUNT_IN_ACTIVE: 'تم ايقاف تنشيط الحساب',
@@ -86,6 +98,8 @@ const constants = {
   UNAUTHORIZED: 'ليس لديك صلاحية',
   SMS_ERROR: 'هناك مشكلة في خدمة الرسائل',
   PASSWORD_WRONG: 'الرقم السري خطأ',
+
+  DELETE_PROVIDER_FAILD: 'لا يمكنك حذف المزود لانه مرتبط بعمولات تخصه',
 };
 
 module.exports = constants;

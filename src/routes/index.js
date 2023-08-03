@@ -2,10 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 // Import route files
-// const systemMenuRoutes = require('./links/systemMenuRoutes.js');
-// const pagesRoutes = require('./links/pagesRoutes.js');
-// const pageClaimRoutes = require('./claims/pageClaimRoutes.js');
-// const rolePagesRoutes = require('./permmission/rolePagesRoutes.js');
 const roleRoutes = require('./auth/roleRoutes.js');
 const userRoutes = require('./auth/userRoutes.js');
 const agentRoutes = require('./auth/agentRoutes.js');
@@ -16,6 +12,8 @@ const treasuryRoutes = require('./treasury/treasuryRoutes.js');
 const bankAccountsRoutes = require('./banks/bankAccountRoutes.js');
 const bankRoutes = require('./banks/bankRoutes.js');
 const feesRoutes = require('./fees/feesRoutes.js');
+const providerRoutes = require('./provider/provideRoutes.js');
+const providerCommissionRoutes = require('./provider/providerCommissionRoutes');
 const appsRoutes = require('./applications/applicationRoutes.js');
 const transactionRoutes = require('./transaction/transactionRoutes.js');
 const depositeRoutes = require('./transaction/depositeRoutes.js');
@@ -24,12 +22,8 @@ const transferRoutes = require('./transaction/transferRoutes.js');
 const commissionRoutes = require('./commisssion/commissionRoutes.js');
 const inventoryRoutes = require('./inventory/inventoryRoutes.js');
 const reportsRoutes = require('./Reports/reportsRoutes.js');
+const agentTreasuryRoutes = require('./agentTreasury/agentTreasuryRoutes.js');
 const profitsRoutes = require('./profits/profitRoutes.js');
-
-// router.use('/links', systemMenuRoutes);
-// router.use('/pages', pagesRoutes);
-// router.use('/pageClaim', pageClaimRoutes);
-// router.use('/roleMenu', rolePagesRoutes);
 
 router.use('/role', roleRoutes);
 router.use('/user', userRoutes);
@@ -46,9 +40,12 @@ router.use('/transaction/withdraw', withdrawRoutes);
 router.use('/transaction/transfer', transferRoutes);
 router.use('/fees', feesRoutes);
 router.use('/apps', appsRoutes);
+router.use('/provider', providerRoutes);
+router.use('/provider/commission', providerCommissionRoutes);
 router.use('/commission', commissionRoutes);
 router.use('/inventory', inventoryRoutes);
 router.use('/reports', reportsRoutes);
+router.use('/agentTreasury', agentTreasuryRoutes);
 router.use('/profits', profitsRoutes);
 
 module.exports = router;

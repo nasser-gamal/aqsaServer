@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const feesControllers = require('../../controllers/fees/feesControllers');
+const agentTreasuryControllers = require('../../controllers/agentTreasury/agentTreasuryControllers');
 const links = require('../../links/links.js');
 
 const auth = require('../../middlewares/auth.js');
@@ -9,43 +9,43 @@ const { checkActive } = require('../../middlewares/checkActive');
 const validate = require('../../utils/validation.js');
 
 router
-  .route(links.fees.GET_FEES)
+  .route(links.agentTreasury.GET_AGENT_TREASURYS)
   .get(
     auth.isAuth,
     checkActive,
     auth.checkUserRole(['superAdmin', 'admin']),
-    feesControllers.getAllFees
+    agentTreasuryControllers.getAllAgentTreasury
   );
 
 router
-  .route(links.fees.CREATE_FEE)
+  .route(links.agentTreasury.CREATE_AGENT_TREASURY)
   .post(
     auth.isAuth,
     checkActive,
     auth.checkUserRole(['superAdmin', 'admin']),
-    validate.feessValidate,
+    validate.agentTreasuryValidate,
     validate.validateInputs,
-    feesControllers.createFee
+    agentTreasuryControllers.createAgentTreasury
   );
 
 router
-  .route(links.fees.UPDATE_FEE)
+  .route(links.agentTreasury.UPDATE_AGENT_TREASURY)
   .put(
     auth.isAuth,
     checkActive,
     auth.checkUserRole(['superAdmin', 'admin']),
-    validate.feessValidate,
+    validate.agentTreasuryValidate,
     validate.validateInputs,
-    feesControllers.updateFee
+    agentTreasuryControllers.updateAgentTreasury
   );
 
 router
-  .route(links.fees.DELETE_FEE)
+  .route(links.agentTreasury.DELETE_AGENT_TREASURY)
   .delete(
     auth.isAuth,
     checkActive,
     auth.checkUserRole(['superAdmin', 'admin']),
-    feesControllers.deleteFee
+    agentTreasuryControllers.deleteAgentTreasury
   );
 
 module.exports = router;

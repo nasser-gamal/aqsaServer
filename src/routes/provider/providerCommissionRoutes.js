@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const feesControllers = require('../../controllers/fees/feesControllers');
+const providerCommissionControllers = require('../../controllers/provider/providerCommissionControllers');
 const links = require('../../links/links.js');
 
 const auth = require('../../middlewares/auth.js');
@@ -9,43 +9,43 @@ const { checkActive } = require('../../middlewares/checkActive');
 const validate = require('../../utils/validation.js');
 
 router
-  .route(links.fees.GET_FEES)
+  .route(links.provider.GET_PROVIDERS)
   .get(
     auth.isAuth,
     checkActive,
     auth.checkUserRole(['superAdmin', 'admin']),
-    feesControllers.getAllFees
+    providerCommissionControllers.getAllProviderCommissions
   );
 
 router
-  .route(links.fees.CREATE_FEE)
+  .route(links.provider.CREATE_PROVIDER)
   .post(
     auth.isAuth,
     checkActive,
     auth.checkUserRole(['superAdmin', 'admin']),
-    validate.feessValidate,
+    validate.providerCommissionValidate,
     validate.validateInputs,
-    feesControllers.createFee
+    providerCommissionControllers.createProviderCommission
   );
 
 router
-  .route(links.fees.UPDATE_FEE)
+  .route(links.provider.UPDATE_PROVIDER)
   .put(
     auth.isAuth,
     checkActive,
     auth.checkUserRole(['superAdmin', 'admin']),
-    validate.feessValidate,
+    validate.providerCommissionValidate,
     validate.validateInputs,
-    feesControllers.updateFee
+    providerCommissionControllers.updateProviderCommission
   );
 
 router
-  .route(links.fees.DELETE_FEE)
+  .route(links.provider.DELETE_PROVIDER)
   .delete(
     auth.isAuth,
     checkActive,
     auth.checkUserRole(['superAdmin', 'admin']),
-    feesControllers.deleteFee
+    providerCommissionControllers.deleteProviderCommission
   );
 
 module.exports = router;

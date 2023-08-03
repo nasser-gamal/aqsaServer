@@ -646,7 +646,7 @@ exports.feesReports = async (query) => {
   nextDay.setDate(nextDay.getDate() + 1);
 
   const whereClause = {
-    createdAt: {
+    date: {
       [Op.between]: [startDate, nextDay.toISOString().slice(0, 10)],
     },
   };

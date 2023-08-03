@@ -91,12 +91,24 @@ const links = {
     UPDATE_FEE: '/update/:feesId',
     DELETE_FEE: '/delete/:feesId',
   },
+  agentTreasury: {
+    GET_AGENT_TREASURYS: '/getAll',
+    CREATE_AGENT_TREASURY: '/create',
+    UPDATE_AGENT_TREASURY: '/update/:agentTreasuryId',
+    DELETE_AGENT_TREASURY: '/delete/:agentTreasuryId',
+  },
   category: {
     GET_CATEGORYS: '/getAll',
     GET_CATEGORY: '/get/:categoryId',
     CREATE_CATEGORY: '/create',
     UPDATE_CATEGORY: '/update/:categoryId',
     DELETE_CATEGORY: '/delete/:categoryId',
+  },
+  provider: {
+    GET_PROVIDERS: '/getAll',
+    CREATE_PROVIDER: '/create',
+    UPDATE_PROVIDER: '/update/:providerId',
+    DELETE_PROVIDER: '/delete/:providerId',
   },
   segment: {
     GET_SEGMENTS: '/getAll',

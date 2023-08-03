@@ -25,6 +25,9 @@ const Commission = require('./models/commission/commissionModel.js');
 const UserCommission = require('./models/commission/userCommission.js');
 const Fees = require('./models/fees/feesModel.js');
 const Application = require('./models/applications/applicationsModel.js');
+const Provider = require('./models/provider/providerModel.js');
+const ProviderCommission = require('./models/provider/providerCommission.js');
+const AgentTreasury = require('./models/agentTreasury/agentTreasuryModel.js');
 
 const corsOptions = {
   origin: process.env.CLIENT_URL,
@@ -127,6 +130,26 @@ Fees.belongsTo(User, {
 });
 
 Application.belongsTo(User, {
+  foreignKey: 'createdBy',
+  as: 'creator',
+});
+
+Provider.belongsTo(User, {
+  foreignKey: 'createdBy',
+  as: 'creator',
+});
+
+ProviderCommission.belongsTo(Provider, {
+  foreignKey: 'providerId',
+  as: 'provider',
+});
+
+ProviderCommission.belongsTo(User, {
+  foreignKey: 'createdBy',
+  as: 'creator',
+});
+
+AgentTreasury.belongsTo(User, {
   foreignKey: 'createdBy',
   as: 'creator',
 });

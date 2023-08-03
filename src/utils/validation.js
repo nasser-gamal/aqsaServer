@@ -236,6 +236,11 @@ exports.feessValidate = [
   body('date').not().isEmpty().withMessage('ادخل التاريخ'),
 ];
 
+exports.agentTreasuryValidate = [
+  body('amount').not().isEmpty().withMessage('اختر القيمة'),
+  body('date').not().isEmpty().withMessage('ادخل التاريخ'),
+];
+
 exports.appValidate = [
   check('name').not().isEmpty().withMessage('ادخل اسم التطبيق'),
   check('isLink').not().isEmpty().withMessage('اختر طريقة الوصول للتطبيق'),
@@ -245,6 +250,20 @@ exports.appValidate = [
     }
     return true;
   }),
+];
+
+exports.providerValidate = [
+  body('name').not().isEmpty().withMessage('اختر اسم المزود'),
+];
+
+exports.providerCommissionValidate = [
+  body('providerId').not().isEmpty().withMessage('اختر المزود'),
+  body('commission')
+    .not()
+    .isEmpty()
+    .withMessage('ادخل العمولة')
+    .isNumeric()
+    .withMessage('العمولة يجب أن تكون قيمة'),
 ];
 
 exports.validateInputs = (req, res, next) => {
