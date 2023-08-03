@@ -33,6 +33,7 @@ const constants = {
   PROVIDER_COMMISSION_NOT_FOUND: 'عمولة المزود غير موجوده',
   AGENT_TRSEARY_NOT_FOUND: 'خزنة التجار غير موجودة',
   PROVIDER_TRSEARY_NOT_FOUND: 'خزنة المزود غير موجودة',
+  TRSEARY_NOT_FOUND: 'رصيد غير موجود',
 
   BANK_ACCOUNT_BALANCE_NOT_ENOUGH: 'رصيد الحساب ليس كافي لاجراء العملية',
 

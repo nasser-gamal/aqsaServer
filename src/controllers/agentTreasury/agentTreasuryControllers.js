@@ -19,10 +19,10 @@ exports.createAgentTreasury = async (req, res, next) => {
 exports.updateAgentTreasury = async (req, res, next) => {
   try {
     const data = req.body;
-    const { agentTreasuryId } = req.params;
+    const { treasuryId } = req.params;
 
     const { message } = await agentTreasuryServices.updateAgentTreasury(
-      agentTreasuryId,
+      treasuryId,
       data
     );
 
@@ -34,10 +34,10 @@ exports.updateAgentTreasury = async (req, res, next) => {
 
 exports.deleteAgentTreasury = async (req, res, next) => {
   try {
-    const { agentTreasuryId } = req.params;
+    const { treasuryId } = req.params;
 
     const { message } = await agentTreasuryServices.deleteAgentTreasury(
-      agentTreasuryId
+      treasuryId
     );
 
     return res.status(200).json({ message });

@@ -29,6 +29,7 @@ const Provider = require('./models/provider/providerModel.js');
 const ProviderCommission = require('./models/provider/providerCommission.js');
 const AgentTreasury = require('./models/agentTreasury/agentTreasuryModel.js');
 const ProviderTreasury = require('./models/providerTreasury/providerTreasuryModel.js');
+const AddionalTreasury = require('./models/addionalTreasuy/addionalTreasuryModel.js');
 
 const corsOptions = {
   origin: process.env.CLIENT_URL,
@@ -156,6 +157,11 @@ AgentTreasury.belongsTo(User, {
 });
 
 ProviderTreasury.belongsTo(User, {
+  foreignKey: 'createdBy',
+  as: 'creator',
+});
+
+AddionalTreasury.belongsTo(User, {
   foreignKey: 'createdBy',
   as: 'creator',
 });

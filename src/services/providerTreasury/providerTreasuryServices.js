@@ -28,7 +28,7 @@ exports.updateProviderTreasury = async (treasuryId, data) => {
 
   await isProviderTreasuryExist(treasuryId);
 
-  await agentTreasury.updateOne(treasuryId, {
+  await providerTreasuryRepository.updateOne(treasuryId, {
     amount,
     date,
     note,

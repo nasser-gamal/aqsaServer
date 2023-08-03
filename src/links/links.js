@@ -136,7 +136,7 @@ const links = {
   //   GET_TREASURY: '/get',
   // },
   inventory: {
-    GET_PROFITES: '/profits',
+    GET_INVENTORY: '/get',
   },
   reports: {
     USER_TRANSACTION: '/transactions/user',

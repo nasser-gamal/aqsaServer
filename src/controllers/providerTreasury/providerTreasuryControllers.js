@@ -5,7 +5,7 @@ exports.createProviderTreasury = async (req, res, next) => {
     const data = req.body;
     const userId = req.user.id;
 
-    const { message } = await providerTreasuryServices.createAgentTreasury(
+    const { message } = await providerTreasuryServices.createProviderTreasury(
       userId,
       data
     );
@@ -19,10 +19,10 @@ exports.createProviderTreasury = async (req, res, next) => {
 exports.updateProviderTreasury = async (req, res, next) => {
   try {
     const data = req.body;
-    const { providerTreasuryId } = req.params;
+    const { treasuryId } = req.params;
 
-    const { message } = await providerTreasuryServices.updateAgentTreasury(
-      providerTreasuryId,
+    const { message } = await providerTreasuryServices.updateProviderTreasury(
+      treasuryId,
       data
     );
 
@@ -34,10 +34,10 @@ exports.updateProviderTreasury = async (req, res, next) => {
 
 exports.deleteProviderTreasury = async (req, res, next) => {
   try {
-    const { providerTreasuryId } = req.params;
+    const { treasuryId } = req.params;
 
-    const { message } = await providerTreasuryServices.deleteAgentTreasury(
-      providerTreasuryId
+    const { message } = await providerTreasuryServices.deleteProviderTreasury(
+      treasuryId
     );
 
     return res.status(200).json({ message });
@@ -49,7 +49,7 @@ exports.deleteProviderTreasury = async (req, res, next) => {
 exports.getAllProviderTreasury = async (req, res, next) => {
   try {
     const providerTreasurys =
-      await providerTreasuryServices.findAllAgentTreasury();
+      await providerTreasuryServices.findAllProviderTreasury();
     return res.status(200).json(providerTreasurys);
   } catch (err) {
     return next(err);
