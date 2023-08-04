@@ -57,7 +57,7 @@ exports.getInventroy = async (query) => {
     }, 0)
     .toFixed(2);
 
-  const { bankAccounts } = await bankAccountRepository.findAll(createdAtClause);
+  const { bankAccounts } = await bankAccountRepository.findAll();
 
   const totalBankAmount = bankAccounts
     .reduce((acc, bankAccount) => {
