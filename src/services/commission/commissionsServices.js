@@ -17,11 +17,6 @@ const isCommissionExist = async (commissionId) => {
   return checkResourceExists(commission, constants.COMMISSION_NOT_FOUND);
 };
 
-const isCategoryExist = async (serviceId) => {
-  const category = await categoryRepository.findById(serviceId);
-  return checkResourceExists(category, constants.CATEGORY_NOT_FOUND);
-};
-
 const isAgentExist = async (agentId) => {
   const agent = await userRepository.findById(agentId);
   return checkResourceExists(agent, constants.AGENT_NOT_FOUND);
@@ -67,7 +62,7 @@ exports.createCommission = async (userId, data) => {
   const userCommission = await userCommissionRepository.createOne({
     agentId,
     month,
-    year: 2023,
+    year,
     createdBy: userId,
   });
 

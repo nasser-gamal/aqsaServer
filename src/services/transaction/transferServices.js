@@ -107,14 +107,14 @@ exports.deleteTransfer = async (transactionId) => {
   const sender = await isBankAccountExist(transfer.senderId);
   const recipient = await isBankAccountExist(transfer.recipientId);
 
-  const balanceSenderBefore = transfer.balanceSenderBefore;
-  const balanceRecipientBefore = transfer.balanceRecipientBefore;
+  const balanceSenderAfter = sender.balance + +transfer.amountTotal;
+  const balanceRecipientAfter = recipient.balance - +transfer.amountTotal;
 
   await updateBankAccountBalance(
     sender,
     recipient,
-    balanceSenderBefore,
-    balanceRecipientBefore
+    balanceSenderAfter,
+    balanceRecipientAfter
   );
 
   await transferRepository.deleteOne(transactionId);

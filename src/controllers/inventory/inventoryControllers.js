@@ -20,7 +20,6 @@ exports.getInventroy = async (req, res, next) => {
       totalCurrentBalance,
     });
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };

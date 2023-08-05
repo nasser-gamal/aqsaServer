@@ -110,11 +110,10 @@ exports.updateDeposite = async (transactionId, data) => {
       transaction,
       amount,
       profit,
-      isTotalRevenue = true,
+      (isTotalRevenue = true),
       totalProviderDeduction,
       bankAccount
     );
-
 
   await bankAccount.update({ balance: bankBalance });
 
@@ -138,9 +137,12 @@ exports.updateDeposite = async (transactionId, data) => {
 };
 
 exports.deleteDeposite = async (transactionId) => {
+
+
   const transaction = await transactionServicesUtils.isTransactionExists({
     id: transactionId,
   });
+
   const bankAccount = await transactionServicesUtils.findBankAccount(
     transaction.bankAccountId
   );
@@ -149,12 +151,6 @@ exports.deleteDeposite = async (transactionId) => {
 
   // update the bank account balance
   await bankAccount.update({ balance });
-
-  const treasury = await transactionServicesUtils.findTreasury();
-
-  // update the treasury  amountToal
-  const treasuryAmount = treasury.amountTotal - transaction.profit;
-  await transactionServicesUtils.updateTreasury(treasury, treasuryAmount);
 
   await transaction.destroy();
 

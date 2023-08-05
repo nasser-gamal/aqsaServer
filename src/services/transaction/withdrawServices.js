@@ -175,7 +175,6 @@ exports.updateWithDraw = async (transactionId, data) => {
 
   const status = transactionServicesUtils.profitStatus(profit);
 
-
   let { balanceAfter, bankBalance } =
     await transactionServicesUtils.updateTransactionInfo(
       transaction,
@@ -186,7 +185,7 @@ exports.updateWithDraw = async (transactionId, data) => {
       bankAccount
     );
 
-    await bankAccount.update({ balance: bankBalance });
+  await bankAccount.update({ balance: bankBalance });
 
   await transaction.update({
     amount: Number(amount).toFixed(2),
@@ -216,20 +215,17 @@ exports.deleteWithDraw = async (transactionId) => {
   const transaction = await transactionServicesUtils.isTransactionExists({
     id: transactionId,
   });
-  const bankAccount = await transactionServicesUtils.findBankAccount(
-    transaction.bankAccountId
-  );
 
-  const balance = bankAccount.balance + transaction.amountTotal;
 
+  const amountTotal =
+    (transaction.balanceBefore - transaction.balanceAfter).toFixed(2) ==
+    transaction.amountTotal.toFixed(2)
+      ? transaction.amountTotal
+      : transaction.providerDeduction;
+
+  const balance = bankAccount.balance + amountTotal;
   // update the bank account balance
   await bankAccount.update({ balance });
-
-  const treasury = await transactionServicesUtils.findTreasury();
-
-  // update the treasury  amountToal
-  const treasuryAmount = treasury.amountTotal - transaction.profit;
-  await transactionServicesUtils.updateTreasury(treasury, treasuryAmount);
 
   await transaction.destroy();
 
