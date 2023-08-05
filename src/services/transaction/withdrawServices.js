@@ -215,8 +215,9 @@ exports.deleteWithDraw = async (transactionId) => {
   const transaction = await transactionServicesUtils.isTransactionExists({
     id: transactionId,
   });
-
-
+  const bankAccount = await transactionServicesUtils.findBankAccount(
+    transaction.bankAccountId
+  );
   const amountTotal =
     (transaction.balanceBefore - transaction.balanceAfter).toFixed(2) ==
     transaction.amountTotal.toFixed(2)
@@ -228,6 +229,7 @@ exports.deleteWithDraw = async (transactionId) => {
   await bankAccount.update({ balance });
 
   await transaction.destroy();
+
 
   return { message: constants.DELETE_TRANSACTION_SUCCESS };
 };
