@@ -22,6 +22,18 @@ router
     applicationControllers.createApp
   );
 
+router
+  .route(links.application.UPDATE_APP)
+  .put(
+    auth.isAuth,
+    checkActive,
+    auth.checkUserRole(['superAdmin', 'admin']),
+    upload.fields([{ name: 'img' }, { name: 'apk' }]),
+    validate.appValidate,
+    validate.validateInputs,
+    applicationControllers.updateApp
+  );
+
 router.route(links.application.GET_APPS).get(applicationControllers.getAllApps);
 
 router

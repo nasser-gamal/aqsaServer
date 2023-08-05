@@ -20,6 +20,25 @@ exports.createApp = async (req, res, next) => {
   }
 };
 
+exports.updateApp = async (req, res, next) => {
+  try {
+    const data = req.body;
+    const { img, apk } = req.files;
+    const { appId } = req.params;
+
+
+    const { message } = await applicationServices.updateApp(appId, {
+      ...data,
+      img,
+      apk,
+    });
+
+    return res.status(200).json({ message });
+  } catch (err) {
+    return next(err);
+  }
+};
+
 exports.getAllApps = async (req, res, next) => {
   try {
     const apps = await applicationServices.getAllApps();

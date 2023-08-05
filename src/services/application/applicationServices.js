@@ -1,6 +1,7 @@
 const applicationRepository = require('../../dataAccess/applications/applicationRepository');
 const { checkResourceExists } = require('../../utils/checkResourceExists');
 const constants = require('../../utils/constants');
+const deleteFile = require('../../utils/deleteFile');
 
 const isAppExist = async (appId) => {
   const app = await applicationRepository.findOne({ id: appId });
@@ -28,17 +29,24 @@ exports.updateApp = async (appId, data) => {
 
   const app = await isAppExist(appId);
 
-  await applicationRepository.createOne({
+  if (img) {
+    deleteFile(app.img);
+  }
+
+  if (apk) {
+    deleteFile(app.apk);
+  }
+
+  await applicationRepository.updateOne(appId, {
     name,
-    img: img && img[0].path.replaceAll('\\', '/'),
+    img: img ? img[0].path.replaceAll('\\', '/') : app.img,
     isLink,
     link: isLink ? link : null,
-    apk: isLink == 'false' ? apk[0].path.replaceAll('\\', '/') : null,
+    apk: isLink == 'false' && apk ? apk[0].path.replaceAll('\\', '/') : app.img,
     note,
-    createdBy: userId,
   });
 
-  return { message: constants.CREATE_APP_SUCCESS };
+  return { message: constants.UPDATE_APP_SUCCESS };
 };
 
 exports.getAllApps = async () => {

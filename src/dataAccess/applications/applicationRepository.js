@@ -11,7 +11,10 @@ exports.createOne = async (data) => {
 
 exports.updateOne = async (appId, data) => {
   try {
-    const application = await Application.update(appId, data);
+    const application = await Application.update(
+      { ...data },
+      { where: { id: appId } }
+    );
     return application;
   } catch (err) {
     throw new Error(err);
@@ -39,6 +42,15 @@ exports.findAll = async () => {
 exports.findById = async (appId) => {
   try {
     const application = await Application.findByPk(appId);
+    return application;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+exports.findOne = async (query) => {
+  try {
+    const application = await Application.findOne(query);
     return application;
   } catch (err) {
     throw new Error(err);
