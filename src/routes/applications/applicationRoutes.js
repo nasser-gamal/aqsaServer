@@ -34,6 +34,15 @@ router
     applicationControllers.updateApp
   );
 
+router
+  .route(links.application.DELETE_APP)
+  .delete(
+    auth.isAuth,
+    checkActive,
+    auth.checkUserRole(['superAdmin', 'admin']),
+    applicationControllers.deleteApp
+  );
+
 router.route(links.application.GET_APPS).get(applicationControllers.getAllApps);
 
 router

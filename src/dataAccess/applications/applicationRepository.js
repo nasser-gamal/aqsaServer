@@ -23,7 +23,7 @@ exports.updateOne = async (appId, data) => {
 
 exports.deleteOne = async (appId) => {
   try {
-    const application = await Application.destroy(appId);
+    const application = await Application.destroy({ where: { id: appId } });
     return application;
   } catch (err) {
     throw new Error(err);

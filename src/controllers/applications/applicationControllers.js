@@ -26,12 +26,22 @@ exports.updateApp = async (req, res, next) => {
     const { img, apk } = req.files;
     const { appId } = req.params;
 
-
     const { message } = await applicationServices.updateApp(appId, {
       ...data,
       img,
       apk,
     });
+
+    return res.status(200).json({ message });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.deleteApp = async (req, res, next) => {
+  try {
+    const { appId } = req.params;
+    const { message } = await applicationServices.deleteApp(appId);
 
     return res.status(200).json({ message });
   } catch (err) {

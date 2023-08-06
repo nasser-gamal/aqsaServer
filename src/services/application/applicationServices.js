@@ -10,7 +10,7 @@ const isAppExist = async (appId) => {
 
 exports.createApp = async (userId, data) => {
   const { name, img, isLink, link, apk, note } = data;
-
+  console.log(img[0]);
   await applicationRepository.createOne({
     name,
     img: img[0].path.replaceAll('\\', '/'),
@@ -42,11 +42,25 @@ exports.updateApp = async (appId, data) => {
     img: img ? img[0].path.replaceAll('\\', '/') : app.img,
     isLink,
     link: isLink ? link : null,
-    apk: isLink == 'false' && apk ? apk[0].path.replaceAll('\\', '/') : app.img,
+    apk: isLink == 'false' && apk ? apk[0].path.replaceAll('\\', '/') : app.apk,
     note,
   });
 
   return { message: constants.UPDATE_APP_SUCCESS };
+};
+
+exports.deleteApp = async (appId) => {
+  const app = await isAppExist(appId);
+
+  deleteFile(app.img);
+
+  if (app.apk) {
+    deleteFile(app.apk);
+  }
+
+  await applicationRepository.deleteOne(appId);
+
+  return { message: constants.DELETE_APP_SUCCESS };
 };
 
 exports.getAllApps = async () => {

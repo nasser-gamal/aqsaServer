@@ -6,4 +6,4 @@ const deleteFile = (path) => {
   });
 };
 
-module.exports =  deleteFile;
+module.exports = deleteFile;
