@@ -46,7 +46,15 @@ exports.deleteProvider = async (providerId) => {
   return { message: constants.DELETE_PROVIDER_SUCCESS };
 };
 
-exports.findAllProvider = async () => {
-  const provider = await providerRepository.findAll();
+exports.findAllProvider = async (query) => {
+  const { page, limit, order, sort } = query;
+
+  const provider = await providerRepository.findAll(
+    undefined,
+    page,
+    limit,
+    order,
+    sort
+  );
   return { provider };
 };

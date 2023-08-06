@@ -24,7 +24,7 @@ exports.createProviderCommission = async (userId, data) => {
   return { message: constants.CREATE_PROVIDER_COMMISSION_SUCCESS };
 };
 
-exports.updateProviderCommission  = async (providerCommissionId, data) => {
+exports.updateProviderCommission = async (providerCommissionId, data) => {
   const { providerId, commission, date, note } = data;
 
   await isProviderCommissionExist(providerCommissionId);
@@ -39,7 +39,7 @@ exports.updateProviderCommission  = async (providerCommissionId, data) => {
   return { message: constants.UPDATE_PROVIDER_COMMISSION_SUCCESS };
 };
 
-exports.deleteProviderCommission  = async (providerCommissionId) => {
+exports.deleteProviderCommission = async (providerCommissionId) => {
   await isProviderCommissionExist(providerCommissionId);
 
   await providerCommissionRepository.deleteOne(providerCommissionId);
@@ -47,7 +47,15 @@ exports.deleteProviderCommission  = async (providerCommissionId) => {
   return { message: constants.DELETE_PROVIDER_COMMISSION_SUCCESS };
 };
 
-exports.findAllProviderCommissions = async () => {
-  const providerCommissions = await providerCommissionRepository.findAll();
+exports.findAllProviderCommissions = async (query) => {
+  const { page, limit, order, sort } = query;
+
+  const providerCommissions = await providerCommissionRepository.findAll(
+    undefined,
+    page,
+    limit,
+    order,
+    sort
+  );
   return { providerCommissions };
 };

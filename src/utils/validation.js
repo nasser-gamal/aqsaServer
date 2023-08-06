@@ -213,7 +213,12 @@ exports.segmentValidate = [
 exports.commissionValidate = [
   body('serviceId').not().isEmpty().withMessage('اختر الخدمة'),
   body('agentId').not().isEmpty().withMessage('اختر الوكيل'),
-  body('amountTotal').not().isEmpty().withMessage('ادخل القيمة'),
+  body('amountTotal')
+    .not()
+    .isEmpty()
+    .withMessage('ادخل القيمة')
+    .isNumeric()
+    .withMessage('القيمة يجب أن تكون رقم'),
   body('count').not().isEmpty().withMessage('ادخل عدد العمليات'),
 ];
 
@@ -232,12 +237,22 @@ exports.claimsValidate = [
   }),
 ];
 exports.feessValidate = [
-  body('amount').not().isEmpty().withMessage('اختر القيمة'),
+  body('amount')
+    .not()
+    .isEmpty()
+    .withMessage('اختر القيمة')
+    .isNumeric()
+    .withMessage('القيمة يجب أن تكون رقم'),
   body('date').not().isEmpty().withMessage('ادخل التاريخ'),
 ];
 
 exports.treasuryValidate = [
-  body('amount').not().isEmpty().withMessage('اختر القيمة'),
+  body('amount')
+    .not()
+    .isEmpty()
+    .withMessage('اختر القيمة')
+    .isNumeric()
+    .withMessage('القيمة يجب أن تكون رقم'),
   body('date').not().isEmpty().withMessage('ادخل التاريخ'),
 ];
 

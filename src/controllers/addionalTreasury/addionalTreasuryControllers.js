@@ -48,8 +48,10 @@ exports.deleteAddionalTreasury = async (req, res, next) => {
 
 exports.getAllAddionalTreasury = async (req, res, next) => {
   try {
+    const query = req.query;
+
     const addionalTreasurys =
-      await addionalTreasuryServices.findAllAddionalTreasury();
+      await addionalTreasuryServices.findAllAddionalTreasury(query);
     return res.status(200).json(addionalTreasurys);
   } catch (err) {
     return next(err);

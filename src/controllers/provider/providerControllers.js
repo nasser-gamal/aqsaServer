@@ -40,7 +40,8 @@ exports.deleteProvider = async (req, res, next) => {
 
 exports.getAllProviderss = async (req, res, next) => {
   try {
-    const providers = await providerServices.findAllProvider();
+    const query = req.query;
+    const providers = await providerServices.findAllProvider(query);
     return res.status(200).json(providers);
   } catch (err) {
     return next(err);

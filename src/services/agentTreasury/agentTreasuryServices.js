@@ -45,7 +45,15 @@ exports.deleteAgentTreasury = async (treasuryId) => {
   return { message: constants.DELETE_TREASURY_SUCCESS };
 };
 
-exports.findAllAgentTreasury = async () => {
-  const agentTreasurys = await agentTreasury.findAll();
+exports.findAllAgentTreasury = async (query) => {
+  const { page, limit, order, sort } = query;
+
+  const agentTreasurys = await agentTreasury.findAll(
+    undefined,
+    page,
+    limit,
+    order,
+    sort
+  );
   return agentTreasurys;
 };

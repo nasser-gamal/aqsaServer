@@ -45,7 +45,13 @@ exports.deleteProviderTreasury = async (treasuryId) => {
   return { message: constants.DELETE_TREASURY_SUCCESS };
 };
 
-exports.findAllProviderTreasury = async () => {
-  const providerTreasurys = await providerTreasuryRepository.findAll();
+exports.findAllProviderTreasury = async (query) => {
+  const { page, limit, order, sort } = query;
+
+  const providerTreasurys = await providerTreasuryRepository.findAll(   undefined,
+    page,
+    limit,
+    order,
+    sort);
   return providerTreasurys;
 };

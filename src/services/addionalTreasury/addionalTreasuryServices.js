@@ -45,7 +45,13 @@ exports.deleteAddionalTreasury = async (treasuryId) => {
   return { message: constants.DELETE_TREASURY_SUCCESS };
 };
 
-exports.findAllAddionalTreasury = async () => {
-  const addionalTreasurys = await addionalTreasuryRepository.findAll();
+exports.findAllAddionalTreasury = async (query) => {
+  const { page, limit, order, sort } = query;
+
+  const addionalTreasurys = await addionalTreasuryRepository.findAll(    undefined,
+    page,
+    limit,
+    order,
+    sort);
   return addionalTreasurys;
 };

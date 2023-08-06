@@ -46,8 +46,10 @@ exports.deleteProviderCommission = async (req, res, next) => {
 
 exports.getAllProviderCommissions = async (req, res, next) => {
   try {
+    const query = req.query;
+
     const providerCommissions =
-      await providerCommissionServices.findAllProviderCommissions();
+      await providerCommissionServices.findAllProviderCommissions(query);
     return res.status(200).json(providerCommissions);
   } catch (err) {
     return next(err);

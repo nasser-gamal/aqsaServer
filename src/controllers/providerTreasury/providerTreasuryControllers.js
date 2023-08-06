@@ -48,8 +48,10 @@ exports.deleteProviderTreasury = async (req, res, next) => {
 
 exports.getAllProviderTreasury = async (req, res, next) => {
   try {
+    const query = req.query;
+
     const providerTreasurys =
-      await providerTreasuryServices.findAllProviderTreasury();
+      await providerTreasuryServices.findAllProviderTreasury(query);
     return res.status(200).json(providerTreasurys);
   } catch (err) {
     return next(err);
