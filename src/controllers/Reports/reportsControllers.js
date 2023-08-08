@@ -107,6 +107,7 @@ exports.exportEmployReport = async (req, res, next) => {
       res.status(200).end();
     });
   } catch (err) {
+    console.log(err)
     next(err);
   }
 };

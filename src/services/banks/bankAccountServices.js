@@ -1,5 +1,6 @@
 const bankAccountRepository = require('../../dataAccess/banks/bankAccountRepository.js');
 const bankRepository = require('../../dataAccess/banks/bankRepository.js');
+const transactionRepository = require('../../dataAccess/transaction/transactionRepository.js');
 
 const BadRequestError = require('../../utils/badRequestError.js');
 const constants = require('../../utils/constants.js');
@@ -70,6 +71,8 @@ exports.updateBankAccount = async (bankAccountId, data) => {
 
 exports.deleteBankAccount = async (bankAccountId) => {
   await isBankAccountExist(bankAccountId);
+
+  await await transactionRepository.deleteOne({ bankAccountId });
 
   await bankAccountRepository.deleteOne(bankAccountId);
 
