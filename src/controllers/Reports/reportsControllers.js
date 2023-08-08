@@ -1,4 +1,4 @@
-const reportsServices = require('../../services/reports/ReportsServices');
+const reportsServices = require('../../services/reports/reportsServices');
 
 exports.bankAccountReports = async (req, res, next) => {
   try {
@@ -33,7 +33,6 @@ exports.exportBankAccountReports = async (req, res, next) => {
       res.status(200).end();
     });
   } catch (err) {
-    console.log(err);
     next(err);
   }
 };

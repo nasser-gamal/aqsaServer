@@ -66,7 +66,7 @@ exports.exportBankAccountReports = async (query) => {
   nextDay.setDate(nextDay.getDate() + 1);
 
   const whereClause = {
-    createdAt: {
+    date: {
       [Op.between]: [startDate, nextDay.toISOString().slice(0, 10)],
     },
   };
@@ -83,7 +83,7 @@ exports.exportBankAccountReports = async (query) => {
       return acc + transaction.amountTotal;
     }, 0);
 
-  const totalWithdraw = transactions.transactions
+  const totalWithdraw = transactions
     .filter((transaction) => {
       return transaction.type === 'سحب';
     })
@@ -175,7 +175,7 @@ exports.dailyReports = async (query) => {
   nextDay.setDate(nextDay.getDate() + 1);
 
   const whereClause = {
-    createdAt: {
+    date: {
       [Op.between]: [startDate, nextDay.toISOString().slice(0, 10)],
     },
   };
@@ -227,14 +227,14 @@ exports.exportDayReportExcel = async (query) => {
   nextDay.setDate(nextDay.getDate() + 1);
 
   const whereClause = {
-    createdAt: {
+    date: {
       [Op.between]: [startDate, nextDay.toISOString().slice(0, 10)],
     },
   };
 
-  const transactions = await transactionRepository.findAll(whereClause);
+  const { transactions } = await transactionRepository.findAll(whereClause);
 
-  const totalDepoite = transactions.transactions
+  const totalDepoite = transactions
     .filter((transaction) => {
       return transaction.type === 'ايداع';
     })
@@ -242,7 +242,7 @@ exports.exportDayReportExcel = async (query) => {
       return acc + transaction.amountTotal;
     }, 0);
 
-  const totalWithdraw = transactions.transactions
+  const totalWithdraw = transactions
     .filter((transaction) => {
       return transaction.type === 'سحب';
     })
@@ -275,7 +275,7 @@ exports.exportDayReportExcel = async (query) => {
     { header: 'بواسطة', key: 'creater', width: '20' },
   ];
 
-  await transactions.transactions.map((transaction, i) => {
+  await transactions.map((transaction, i) => {
     return worksheet.addRows([
       {
         date: transaction.createdAt,
@@ -356,7 +356,7 @@ exports.employReports = async (query) => {
   nextDay.setDate(nextDay.getDate() + 1);
 
   const whereClause = {
-    createdAt: {
+    date: {
       [Op.between]: [startDate, nextDay.toISOString().slice(0, 10)],
     },
   };
@@ -413,7 +413,7 @@ exports.exportEmployReportExcel = async (query) => {
   nextDay.setDate(nextDay.getDate() + 1);
 
   const whereClause = {
-    createdAt: {
+    date: {
       [Op.between]: [startDate, nextDay.toISOString().slice(0, 10)],
     },
   };
@@ -422,7 +422,7 @@ exports.exportEmployReportExcel = async (query) => {
     id: userId,
   };
 
-  const transactions = await transactionRepository.findAll(
+  const { transactions } = await transactionRepository.findAll(
     whereClause,
     undefined,
     undefined,
@@ -432,7 +432,7 @@ exports.exportEmployReportExcel = async (query) => {
     userClause
   );
 
-  const totalDepoite = transactions.transactions
+  const totalDepoite = transactions
     .filter((transaction) => {
       return transaction.type === 'ايداع';
     })
@@ -440,7 +440,7 @@ exports.exportEmployReportExcel = async (query) => {
       return acc + transaction.amountTotal;
     }, 0);
 
-  const totalWithdraw = transactions.transactions
+  const totalWithdraw = transactions
     .filter((transaction) => {
       return transaction.type === 'سحب';
     })
@@ -472,7 +472,7 @@ exports.exportEmployReportExcel = async (query) => {
     { header: 'الربح', key: 'profit', width: '15' },
   ];
 
-  await transactions.transactions.map((transaction, i) => {
+  await transactions.map((transaction, i) => {
     return worksheet.addRows([
       {
         date: transaction.createdAt,
@@ -588,10 +588,10 @@ exports.exportTransferReportExcel = async (query) => {
   worksheet.columns = [
     { header: 'التاريخ', key: 'date', width: '20' },
     { header: 'القيمة', key: 'amountTotal', width: '15' },
-    { header: 'المحول منه', key: 'sender', width: '20' },
+    { header: 'المحول منه', key: 'sender', width: '30' },
     { header: 'رصيد قبل', key: 'senderBalanceBefore', width: '15' },
     { header: 'رصيد بعد', key: 'senderBalanceAfter', width: '15' },
-    { header: 'المحول إليه', key: 'recipient', width: '15' },
+    { header: 'المحول إليه', key: 'recipient', width: '30' },
     { header: 'رصيد قبل', key: 'recipientBalanceBefore', width: '15' },
     { header: 'رصيد بعد', key: 'recipientBalanceAfter', width: '15' },
     { header: 'ملحوظة', key: 'note', width: '80' },
