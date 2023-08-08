@@ -19,7 +19,7 @@ exports.exportBankAccountReports = async (req, res, next) => {
   try {
     const query = req.query;
 
-    const workbook = await reportsServices.exportExcel(query);
+    const workbook = await reportsServices.exportBankAccountReports(query);
     res.setHeader(
       'Content-Type',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
@@ -33,6 +33,7 @@ exports.exportBankAccountReports = async (req, res, next) => {
       res.status(200).end();
     });
   } catch (err) {
+    console.log(err);
     next(err);
   }
 };
