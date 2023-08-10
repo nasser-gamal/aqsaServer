@@ -8,14 +8,7 @@ const auth = require('../../middlewares/auth.js');
 const { checkPassword } = require('../../middlewares/checkPassword.js');
 const { checkActive } = require('../../middlewares/checkActive.js');
 
-router
-  .route(links.user.GET_USERS)
-  .get(
-    auth.isAuth,
-    checkActive,
-    auth.checkUserRole(['superAdmin', 'admin']),
-    agentControllers.getAllAgents
-  );
+router.route(links.user.GET_USERS).get(agentControllers.getAllAgents);
 router
   .route(links.user.CREATE_USER)
   .post(
@@ -25,7 +18,7 @@ router
     validate.userValidate,
     validate.agentValidate,
     validate.validateInputs,
-    agentControllers.addAgent
+    agentControllers.addAgent~
   );
 
 router
