@@ -10,9 +10,6 @@ const { checkActive } = require('../../middlewares/checkActive.js');
 router
   .route(links.segment.GET_SEGMENTS)
   .get(
-    auth.isAuth,
-    checkActive,
-    auth.checkUserRole(['superAdmin', 'admin', 'agent']),
     segmentControllers.getAllSegments
   );
 
