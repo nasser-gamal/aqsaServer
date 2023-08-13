@@ -44,11 +44,15 @@ exports.findAll = async (whereClause, page, limit, order, sort) => {
     const orderBy = order || 'createdAt';
     const sortBy = sort || 'ASC';
 
+    let options;
+    if (page && limit) {
+      options = { limit: itemPerPage, offset: (pageNumber - 1) * itemPerPage };
+    }
+
     const segments = await Segment.findAndCountAll({
       where: whereClause,
       order: [[orderBy, sortBy]],
-      limit: itemPerPage,
-      offset: (pageNumber - 1) * itemPerPage,
+      options,
       attributes: { exclude: ['createdBy', 'serviceId'] },
       include: [
         {
