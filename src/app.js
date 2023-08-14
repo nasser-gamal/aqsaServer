@@ -10,54 +10,30 @@ dotenv.config();
 const errorHandler = require('./middlewares/errorHandler.js');
 const ApiError = require('./utils/apiError.js');
 const sequelize = require('./config/database.js');
-
 const routes = require('./routes/index.js');
 
-const User = require('./models/auth/userModel.js');
-const Role = require('./models/auth/roleModel.js');
-const BankAccount = require('./models/banks/bankAccountModel.js');
-const Bank = require('./models/banks/bankModel.js');
-const Transaction = require('./models/transaction/transactionModel.js');
-const Transfer = require('./models/transaction/transferModel.js');
-const Category = require('./models/category/categoryModel.js');
-const Segment = require('./models/segments/segmentsModel.js');
-const Commission = require('./models/commission/commissionModel.js');
-const UserCommission = require('./models/commission/userCommission.js');
-const Fees = require('./models/fees/feesModel.js');
-const Application = require('./models/applications/applicationsModel.js');
-const Provider = require('./models/provider/providerModel.js');
-const ProviderCommission = require('./models/provider/providerCommission.js');
-const AgentTreasury = require('./models/agentTreasury/agentTreasuryModel.js');
-const ProviderTreasury = require('./models/providerTreasury/providerTreasuryModel.js');
-const AddionalTreasury = require('./models/addionalTreasuy/addionalTreasuryModel.js');
+const {
+  User,
+  Role,
+  BankAccount,
+  Bank,
+  Transaction,
+  Transfer,
+  Category,
+  Segment,
+  Commission,
+  UserCommission,
+  Fees,
+  Application,
+  Provider,
+  ProviderCommission,
+  AgentTreasury,
+  ProviderTreasury,
+  AddionalTreasury,
+} = require('./models/index.js');
+const Dues = require('./models/dues/duesModel.js');
 
-const corsOptions = {
-  origin: process.env.CLIENT_URL,
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-};
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use('/api/uploads', express.static('uploads'));
-app.use(cors(corsOptions));
-app.use(morgan('tiny'));
-
-// app.use(function (req, res, next) {
-//   res.header('Access-Control-Allow-Origin', process.env.CLIENT_URL)
-//   res.header(
-//     'Access-Control-Allow-Methods',
-//     'GET, POST, PUT, DELETE'
-//   )
-//   res.header(
-//     'Access-Control-Allow-Headers',
-//     'Origin, X-Requested-With, Content-Type, Accept'
-//   )
-//   res.setHeader('Access-Control-Allow-Credentials', 'true');
-//   next()
-// })
+const PORT = process.env.PORT || 3000;
 
 User.belongsTo(Role);
 Role.hasMany(User);
@@ -166,14 +142,31 @@ AddionalTreasury.belongsTo(User, {
   as: 'creator',
 });
 
+Dues.belongsTo(User, {
+  foreignKey: 'createdBy',
+  as: 'creator',
+});
+
+const corsOptions = {
+  origin: process.env.CLIENT_URL,
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+};
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use('/api/uploads', express.static('uploads'));
+app.use(cors(corsOptions));
+app.use(morgan('tiny'));
+
 app.use('/api', routes);
 
 app.use('*', (req, res, next) => {
   next(new ApiError("cann't find this endpoint"));
 });
 app.use(errorHandler);
-
-const PORT = process.env.PORT || 3000;
 
 sequelize
   .sync()

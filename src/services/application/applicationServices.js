@@ -10,7 +10,7 @@ const isAppExist = async (appId) => {
 
 exports.createApp = async (userId, data) => {
   const { name, img, isLink, link, apk, note } = data;
-  console.log(img[0]);
+
   await applicationRepository.createOne({
     name,
     img: img[0].path.replaceAll('\\', '/'),
@@ -70,6 +70,5 @@ exports.getAllApps = async () => {
 
 exports.downloadApp = async (appId) => {
   const app = await applicationRepository.findById(appId);
-  console.log(app);
   return app;
 };

@@ -35,6 +35,7 @@ const constants = {
   PROVIDER_TRSEARY_NOT_FOUND: 'خزنة المزود غير موجودة',
   TRSEARY_NOT_FOUND: 'رصيد غير موجود',
   APP_NOT_FOUND: 'التطبيق غير موجود',
+  DUES_NOT_FOUND: 'المستحقات غير موجودة',
 
   BANK_ACCOUNT_BALANCE_NOT_ENOUGH: 'رصيد الحساب ليس كافي لاجراء العملية',
 

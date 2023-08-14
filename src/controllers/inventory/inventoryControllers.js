@@ -9,6 +9,7 @@ exports.getInventroy = async (req, res, next) => {
       totalAddionalTreasury,
       totalBankAmount,
       totalProfits,
+      totalDues,
       totalCurrentBalance,
     } = await inventoryServices.getInventroy(query);
     return res.status(200).json({
@@ -17,6 +18,7 @@ exports.getInventroy = async (req, res, next) => {
       totalAddionalTreasury,
       totalBankAmount,
       totalProfits,
+      totalDues,
       totalCurrentBalance,
     });
   } catch (err) {

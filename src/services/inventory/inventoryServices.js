@@ -7,7 +7,7 @@ const transactionRepository = require('../../dataAccess/transaction/transactionR
 const providerCommissionRepository = require('../../dataAccess/provider/providerCommissionRepository');
 const feesRepository = require('../../dataAccess/fees/feesRepository');
 const UserCommission = require('../../dataAccess/commission/userCommission.repository');
-
+const duesRepository = require('../../dataAccess/dues/dues.repository');
 
 exports.getInventroy = async (query) => {
   const { startDate, endDate } = query;
@@ -17,12 +17,6 @@ exports.getInventroy = async (query) => {
 
   const dateClause = {
     date: {
-      [Op.between]: [startDate, nextDay.toISOString().slice(0, 10)],
-    },
-  };
-
-  const createdAtClause = {
-    createdAt: {
       [Op.between]: [startDate, nextDay.toISOString().slice(0, 10)],
     },
   };
@@ -130,13 +124,23 @@ exports.getInventroy = async (query) => {
     (+totalCommission + +totalFees)
   ).toFixed(2);
 
+  const { dues } = await duesRepository.findAll(dateClause);
+
+  const totalDues = dues
+    .reduce((acc, due) => {
+      return acc + due.amount;
+    }, 0)
+    .toFixed(2);
+
+
   const totalCurrentBalance =
     +totalAgentTreasury -
     (
       +totalProviderTreasury +
       +totalAddionalTreasury +
       +totalBankAmount +
-      +totalProfits
+      +totalProfits +
+      +totalDues
     ).toFixed(2);
 
   return {
@@ -145,6 +149,7 @@ exports.getInventroy = async (query) => {
     totalAddionalTreasury,
     totalBankAmount,
     totalProfits,
+    totalDues,
     totalCurrentBalance,
   };
 };

@@ -6,7 +6,6 @@ exports.createApp = async (req, res, next) => {
     const { img, apk } = req.files;
     const userId = req.user.id;
 
-    console.log(req.files);
 
     const { message } = await applicationServices.createApp(userId, {
       ...data,

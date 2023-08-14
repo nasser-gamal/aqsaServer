@@ -23,6 +23,7 @@ const inventoryRoutes = require('./inventory/inventoryRoutes.js');
 const reportsRoutes = require('./Reports/reportsRoutes.js');
 const agentTreasuryRoutes = require('./agentTreasury/agentTreasuryRoutes.js');
 const providerTreasuryRoutes = require('./providerTreasury/providerTreasuryRoutes.js');
+const duesRoutes = require('./dues/dues.routes.js');
 const addionalTreasuryRoutes = require('./addionalTreasury/agentTreasuryRoutes.js');
 const profitsRoutes = require('./profits/profitRoutes.js');
 
@@ -48,6 +49,7 @@ router.use('/reports', reportsRoutes);
 router.use('/agentTreasury', agentTreasuryRoutes);
 router.use('/providerTreasury', providerTreasuryRoutes);
 router.use('/addionalTreasury', addionalTreasuryRoutes);
+router.use('/dues', duesRoutes);
 router.use('/profits', profitsRoutes);
 
 module.exports = router;

@@ -1,43 +1,37 @@
-// 'use strict';
+const User = require('./auth/userModel.js');
+const Role = require('./auth/roleModel.js');
+const BankAccount = require('./banks/bankAccountModel.js');
+const Bank = require('./banks/bankModel.js');
+const Transaction = require('./transaction/transactionModel.js');
+const Transfer = require('./transaction/transferModel.js');
+const Category = require('./category/categoryModel.js');
+const Segment = require('./segments/segmentsModel.js');
+const Commission = require('./commission/commissionModel.js');
+const UserCommission = require('./commission/userCommission.js');
+const Fees = require('./fees/feesModel.js');
+const Application = require('./applications/applicationsModel.js');
+const Provider = require('./provider/providerModel.js');
+const ProviderCommission = require('./provider/providerCommission.js');
+const AgentTreasury = require('./agentTreasury/agentTreasuryModel.js');
+const ProviderTreasury = require('./providerTreasury/providerTreasuryModel.js');
+const AddionalTreasury = require('./addionalTreasuy/addionalTreasuryModel.js');
 
-// const fs = require('fs');
-// const path = require('path');
-// const Sequelize = require('sequelize');
-// const process = require('process');
-// const basename = path.basename(__filename);
-// const env = process.env.NODE_ENV || 'development';
-// const config = require(__dirname + '/../config/config.json')[env];
-// const db = {};
-
-// let sequelize;
-// if (config.use_env_variable) {
-//   sequelize = new Sequelize(process.env[config.use_env_variable], config);
-// } else {
-//   sequelize = new Sequelize(config.database, config.username, config.password, config);
-// }
-
-// fs
-//   .readdirSync(__dirname)
-//   .filter(file => {
-//     return (
-//       file.indexOf('.') !== 0 &&
-//       file !== basename &&
-//       file.slice(-3) === '.js' &&
-//       file.indexOf('.test.js') === -1
-//     );
-//   })
-//   .forEach(file => {
-//     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-//     db[model.name] = model;
-//   });
-
-// Object.keys(db).forEach(modelName => {
-//   if (db[modelName].associate) {
-//     db[modelName].associate(db);
-//   }
-// });
-
-// db.sequelize = sequelize;
-// db.Sequelize = Sequelize;
-
-// module.exports = db;
+module.exports = {
+  User,
+  Role,
+  BankAccount,
+  Bank,
+  Transaction,
+  Transfer,
+  Category,
+  Segment,
+  Commission,
+  UserCommission,
+  Fees,
+  Application,
+  Provider,
+  ProviderCommission,
+  AgentTreasury,
+  ProviderTreasury,
+  AddionalTreasury,
+};

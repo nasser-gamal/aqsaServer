@@ -91,6 +91,12 @@ const links = {
     UPDATE_FEE: '/update/:feesId',
     DELETE_FEE: '/delete/:feesId',
   },
+  dues: {
+    GET_DUES: '/getAll',
+    CREATE_DUE: '/create',
+    UPDATE_DUE: '/update/:dueId',
+    DELETE_DUE: '/delete/:dueId',
+  },
   treasury: {
     GET_TREASURYS: '/getAll',
     CREATE_TREASURY: '/create',
