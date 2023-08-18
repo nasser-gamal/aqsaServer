@@ -4,7 +4,7 @@ const constants = require('../../utils/constants');
 const deleteFile = require('../../utils/deleteFile');
 
 const isAppExist = async (appId) => {
-  const app = await applicationRepository.findOne({ id: appId });
+  const app = await applicationRepository.findById(appId);
   return checkResourceExists(app, constants.APP_NOT_FOUND);
 };
 
