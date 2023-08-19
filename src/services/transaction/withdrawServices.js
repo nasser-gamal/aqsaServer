@@ -134,6 +134,7 @@ exports.addWithDraw = async (userId, data) => {
 exports.updateWithDraw = async (transactionId, data) => {
   const {
     isTotalRevenue,
+    date,
     isPercentage,
     bankAccountId,
     number,
