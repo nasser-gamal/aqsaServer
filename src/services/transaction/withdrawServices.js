@@ -189,6 +189,7 @@ exports.updateWithDraw = async (transactionId, data) => {
 
   await transaction.update({
     amount: Number(amount).toFixed(2),
+    date,
     isPercentage,
     number,
     providerFees,
