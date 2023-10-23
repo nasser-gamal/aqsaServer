@@ -2,13 +2,8 @@ const transactionRepository = require('../../dataAccess/transaction/transactionR
 const transactionServicesUtils = require('../../utils/transactionServicesUtils.js');
 
 const constants = require('../../utils/constants.js');
-const BadRequestError = require('../../utils/badRequestError.js');
 
-// const checkBankAccountBalance = async (bankAccount, amountTotal) => {
-//   if (+bankAccount.balance < +amountTotal) {
-//     throw new BadRequestError(constants.BANK_ACCOUNT_BALANCE_NOT_ENOUGH, 400);
-//   }
-// };
+
 
 const calcWithDraw = (
   isPercentage,
@@ -18,10 +13,14 @@ const calcWithDraw = (
   agentDeduction,
   agentRevenue,
   additionalFees,
-  additionalRevenue
+  additionalRevenue,
+  isFeesPercentage
 ) => {
+  // حساب الرسوم
+  let fees = isFeesPercentage ? (+providerFees / 100) * +amount : providerFees;
+
   // المخصوم م البنك
-  let amountTotal = (+amount + +providerFees).toFixed(2);
+  let amountTotal = (+amount + +fees).toFixed(2);
 
   let providerRevenue = isPercentage
     ? (providerPercentage / 100) * amountTotal
@@ -49,6 +48,7 @@ const calcWithDraw = (
     totalAgentDeduction,
     profit,
     providerRevenue,
+    fees,
   };
 };
 
@@ -66,6 +66,7 @@ exports.addWithDraw = async (userId, data) => {
     providerFees,
     additionalFees,
     additionalRevenue,
+    isFeesPercentage,
     note,
   } = data;
 
@@ -80,6 +81,7 @@ exports.addWithDraw = async (userId, data) => {
     totalAgentDeduction,
     profit,
     providerRevenue,
+    fees,
   } = calcWithDraw(
     isPercentage,
     amount,
@@ -88,10 +90,10 @@ exports.addWithDraw = async (userId, data) => {
     agentDeduction,
     agentRevenue,
     additionalFees,
-    additionalRevenue
+    additionalRevenue,
+    isFeesPercentage
   );
   const status = transactionServicesUtils.profitStatus(profit);
-  // await checkBankAccountBalance(bankAccount, amountTotal);
 
   const { balanceBefore, balanceAfter } =
     await transactionServicesUtils.updateBankAccount(
@@ -110,6 +112,7 @@ exports.addWithDraw = async (userId, data) => {
     amount: Number(amount).toFixed(2),
     number,
     providerFees,
+    isFeesPercentage,
     providerPercentage: isPercentage && providerPercentage,
     providerRevenue,
     providerDeduction: totalProviderDeduction,
@@ -145,6 +148,7 @@ exports.updateWithDraw = async (transactionId, data) => {
     providerFees,
     additionalFees,
     additionalRevenue,
+    isFeesPercentage,
     note,
   } = data;
 
@@ -163,6 +167,7 @@ exports.updateWithDraw = async (transactionId, data) => {
     totalAgentDeduction,
     profit,
     providerRevenue,
+    fees,
   } = calcWithDraw(
     isPercentage,
     amount,
@@ -171,7 +176,8 @@ exports.updateWithDraw = async (transactionId, data) => {
     agentDeduction,
     agentRevenue,
     additionalFees,
-    additionalRevenue
+    additionalRevenue,
+    isFeesPercentage
   );
 
   const status = transactionServicesUtils.profitStatus(profit);
@@ -185,6 +191,7 @@ exports.updateWithDraw = async (transactionId, data) => {
       totalProviderDeduction,
       bankAccount
     );
+
 
   await bankAccount.update({ balance: bankBalance });
 
@@ -207,6 +214,7 @@ exports.updateWithDraw = async (transactionId, data) => {
     balanceAfter,
     status,
     bankAccountId,
+    isFeesPercentage,
     note,
   });
 
@@ -231,7 +239,6 @@ exports.deleteWithDraw = async (transactionId) => {
   await bankAccount.update({ balance });
 
   await transaction.destroy();
-
 
   return { message: constants.DELETE_TRANSACTION_SUCCESS };
 };

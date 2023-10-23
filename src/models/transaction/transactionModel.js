@@ -71,6 +71,10 @@ const Transaction = sequelize.define('transaction', {
     type: Sequelize.DataTypes.FLOAT(16, 2),
     allowNull: true,
   },
+  isFeesPercentage: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true,
+  },
   additionalRevenue: {
     type: Sequelize.DataTypes.FLOAT(16, 2),
     allowNull: true,
@@ -89,7 +93,7 @@ const Transaction = sequelize.define('transaction', {
     type: Sequelize.FLOAT(16, 2),
     allowNull: false,
   },
-  
+
   isActive: {
     type: Sequelize.BOOLEAN,
     allowNull: false,

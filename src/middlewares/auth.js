@@ -1,8 +1,6 @@
-
-const BadRequestError = require('../utils/badRequestError.js')
-const jwt = require('jsonwebtoken')
-const constants = require('../utils/constants.js')
-
+const BadRequestError = require('../utils/badRequestError.js');
+const jwt = require('jsonwebtoken');
+const constants = require('../utils/constants.js');
 
 exports.isAuth = (req, res, next) => {
   try {

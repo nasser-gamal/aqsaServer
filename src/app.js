@@ -174,3 +174,5 @@ sequelize
     app.listen(PORT);
   })
   .catch((err) => console.log(err));
+
+module.exports = app;
