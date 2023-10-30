@@ -32,6 +32,7 @@ const {
   AddionalTreasury,
 } = require('./models/index.js');
 const Dues = require('./models/dues/duesModel.js');
+const logger = require('./config/logger.js');
 
 const PORT = process.env.PORT || 3000;
 
@@ -172,6 +173,7 @@ sequelize
   .sync()
   .then((result) => {
     app.listen(PORT);
+    logger.log('info', 'Server is Running')
   })
   .catch((err) => console.log(err));
 

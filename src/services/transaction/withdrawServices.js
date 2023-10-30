@@ -73,7 +73,7 @@ exports.addWithDraw = async (userId, data) => {
   const bankAccount = await transactionServicesUtils.findBankAccount(
     bankAccountId
   );
-  const treasury = await transactionServicesUtils.findTreasury();
+  // const treasury = await transactionServicesUtils.findTreasury();
 
   const {
     amountTotal,
@@ -100,10 +100,10 @@ exports.addWithDraw = async (userId, data) => {
       bankAccount,
       isTotalRevenue ? -amountTotal : -totalProviderDeduction
     );
-  await transactionServicesUtils.updateTreasury(
-    treasury,
-    +treasury.amountTotal + +profit
-  );
+  // await transactionServicesUtils.updateTreasury(
+  //   treasury,
+  //   +treasury.amountTotal + +profit
+  // );
 
   await transactionRepository.createOne({
     type: 'سحب',

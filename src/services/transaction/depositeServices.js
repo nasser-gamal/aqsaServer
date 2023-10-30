@@ -43,7 +43,7 @@ exports.addDeposit = async (userId, data) => {
   const bankAccount = await transactionServicesUtils.findBankAccount(
     bankAccountId
   );
-  const treasury = await transactionServicesUtils.findTreasury();
+  // const treasury = await transactionServicesUtils.findTreasury();
 
   const { amountTotal, totalProviderDeduction, profit, providerRevenue } =
     calcDeposite(isPercentage, amount, providerFees, providerPercentage);
@@ -52,10 +52,10 @@ exports.addDeposit = async (userId, data) => {
 
   const { balanceBefore, balanceAfter } =
     await transactionServicesUtils.updateBankAccount(bankAccount, amountTotal);
-  await transactionServicesUtils.updateTreasury(
-    treasury,
-    +treasury.amountTotal + +profit
-  );
+  // await transactionServicesUtils.updateTreasury(
+  //   treasury,
+  //   +treasury.amountTotal + +profit
+  // );
 
   await transactionRepository.createOne({
     isPercentage,
@@ -65,7 +65,7 @@ exports.addDeposit = async (userId, data) => {
     date,
     providerFees,
     amountTotal,
-    providerRevenue,
+    providerRevenue, 
     providerPercentage: isPercentage && providerPercentage,
     providerDeduction: totalProviderDeduction,
     profit,
