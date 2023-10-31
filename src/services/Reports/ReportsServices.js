@@ -59,6 +59,7 @@ exports.bankAccountReports = async (query) => {
   return { transactions, totalDepoite, totalWithdraw, totalProfit };
 };
 
+
 exports.exportBankAccountReports = async (query) => {
   const { startDate, endDate, bankAccountId } = query;
 
