@@ -149,8 +149,8 @@ Dues.belongsTo(User, {
 });
 
 const corsOptions = {
-  // origin: process.env.CLIENT_URL,
-  origin: '*',
+  origin: process.env.CLIENT_URL,
+  // origin: '*',
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -174,7 +174,7 @@ sequelize
   .sync()
   .then((result) => {
     app.listen(PORT);
-    logger.log('info', 'Server is Running');
+    logger.log('info', 'Server is Running')
   })
   .catch((err) => console.log(err));
 
