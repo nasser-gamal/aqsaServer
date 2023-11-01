@@ -10,10 +10,10 @@ exports.login = async (req, res, next) => {
     res.cookie('token', token, {
       httpOnly: true,
       secure: true,
-      sameSite: 'none',
+      sameSite: 'none'
     });
 
-    return res.status(200).json({ user, token });
+    return res.status(200).json({ user });
   } catch (err) {
     return next(err);
   }
