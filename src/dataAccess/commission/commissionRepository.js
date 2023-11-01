@@ -102,6 +102,7 @@ exports.findAll = async (
     };
   } catch (err) {
     logger.error(err);
+    console.log(err)
     throw new Error(err);
   }
 };

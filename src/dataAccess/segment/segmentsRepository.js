@@ -74,6 +74,7 @@ exports.findAll = async (whereClause, page, limit, order, sort) => {
     };
   } catch (err) {
     logger.error(err);
+    console.log(err)
     throw new Error(err);
   }
 };
