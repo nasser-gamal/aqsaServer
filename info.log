@@ -497,6 +497,17 @@
 {"level":"info","message":"Server is Running","timestamp":"2023-10-30T09:48:01.785Z"}
 {"level":"info","message":"Server is Running","timestamp":"2023-10-30T10:28:05.776Z"}
 {"level":"info","message":"Server is Running","timestamp":"2023-10-31T08:33:46.949Z"}
+{"level":"info","message":"Server is Running","timestamp":"2023-11-01T10:35:14.474Z"}
+{"level":"info","message":"Server is Running","timestamp":"2023-11-01T10:35:28.869Z"}
+{"level":"error","name":"SequelizeAccessDeniedError","original":{"code":"ER_ACCESS_DENIED_ERROR","errno":1045,"sqlMessage":"Access denied for user 'root'@'localhost' (using password: YES)","sqlState":"28000"},"parent":{"code":"ER_ACCESS_DENIED_ERROR","errno":1045,"sqlMessage":"Access denied for user 'root'@'localhost' (using password: YES)","sqlState":"28000"},"timestamp":"2023-11-01T10:35:34.817Z"}
+{"level":"error","name":"SequelizeAccessDeniedError","original":{"code":"ER_ACCESS_DENIED_ERROR","errno":1045,"sqlMessage":"Access denied for user 'root'@'localhost' (using password: YES)","sqlState":"28000"},"parent":{"code":"ER_ACCESS_DENIED_ERROR","errno":1045,"sqlMessage":"Access denied for user 'root'@'localhost' (using password: YES)","sqlState":"28000"},"timestamp":"2023-11-01T10:35:49.227Z"}
+{"level":"error","name":"SequelizeAccessDeniedError","original":{"code":"ER_ACCESS_DENIED_ERROR","errno":1045,"sqlMessage":"Access denied for user 'root'@'localhost' (using password: YES)","sqlState":"28000"},"parent":{"code":"ER_ACCESS_DENIED_ERROR","errno":1045,"sqlMessage":"Access denied for user 'root'@'localhost' (using password: YES)","sqlState":"28000"},"timestamp":"2023-11-01T10:36:01.558Z"}
+{"level":"error","name":"SequelizeAccessDeniedError","original":{"code":"ER_ACCESS_DENIED_ERROR","errno":1045,"sqlMessage":"Access denied for user 'root'@'localhost' (using password: YES)","sqlState":"28000"},"parent":{"code":"ER_ACCESS_DENIED_ERROR","errno":1045,"sqlMessage":"Access denied for user 'root'@'localhost' (using password: YES)","sqlState":"28000"},"timestamp":"2023-11-01T10:36:55.915Z"}
+{"level":"error","name":"SequelizeAccessDeniedError","original":{"code":"ER_ACCESS_DENIED_ERROR","errno":1045,"sqlMessage":"Access denied for user 'root'@'localhost' (using password: YES)","sqlState":"28000"},"parent":{"code":"ER_ACCESS_DENIED_ERROR","errno":1045,"sqlMessage":"Access denied for user 'root'@'localhost' (using password: YES)","sqlState":"28000"},"timestamp":"2023-11-01T10:37:03.512Z"}
+{"level":"info","message":"Server is Running","timestamp":"2023-11-01T10:37:17.315Z"}
+{"level":"info","message":"Server is Running","timestamp":"2023-11-01T10:39:03.396Z"}
+{"level":"info","message":"Server is Running","timestamp":"2023-11-01T10:39:18.772Z"}
+{"level":"info","message":"Server is Running","timestamp":"2023-11-01T10:39:30.523Z"}
 
 
 {"level":"info","message":"Server is Running","timestamp":"2023-10-31T20:12:47.850Z"}

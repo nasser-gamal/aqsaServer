@@ -1,3 +1,4 @@
+const logger = require('../../config/logger');
 const User = require('../../models/auth/userModel');
 const Category = require('../../models/category/categoryModel');
 const Commission = require('../../models/commission/commissionModel');
@@ -18,6 +19,7 @@ exports.createOne = async (data) => {
     const commission = await Commission.create(data);
     return commission;
   } catch (err) {
+    logger.error(err);
     throw new Error(err);
   }
 };
@@ -66,7 +68,7 @@ exports.findAll = async (
       order: [[orderBy, sortBy]],
       limit: itemPerPage,
       offset: (pageNumber - 1) * itemPerPage,
-      
+
       attributes: { exclude: ['createdBy', 'segmentId', 'agentId'] },
       include: [
         {
@@ -99,6 +101,7 @@ exports.findAll = async (
       pagination: pagination(pageNumber, itemPerPage, commissions.count),
     };
   } catch (err) {
+    logger.error(err);
     throw new Error(err);
   }
 };

@@ -1,3 +1,4 @@
+const logger = require('../../config/logger.js');
 const User = require('../../models/auth/userModel.js');
 const Category = require('../../models/category/categoryModel.js');
 const Segment = require('../../models/segments/segmentsModel.js');
@@ -72,6 +73,7 @@ exports.findAll = async (whereClause, page, limit, order, sort) => {
       pagination: pagination(pageNumber, itemPerPage, segments.count),
     };
   } catch (err) {
+    logger.error(err);
     throw new Error(err);
   }
 };
