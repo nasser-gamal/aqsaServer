@@ -41,6 +41,7 @@ exports.getAllSegments = async (req, res, next) => {
     const { segments } = await segmentServices.findAllSegments(query);
     return res.status(200).json(segments);
   } catch (err) {
+    return res.status(500).json(err)
     return next(err);
   }
 };

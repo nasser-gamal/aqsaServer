@@ -52,6 +52,7 @@ exports.getAllCommissions = async (req, res, next) => {
       .status(200)
       .json({ userCommission, commissions, totalAmount, totalCommissions });
   } catch (err) {
+    return res.status(500).json(err)
     return next(err);
   }
 };
