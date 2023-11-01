@@ -36,6 +36,28 @@ const logger = require('./config/logger.js');
 
 const PORT = process.env.PORT || 3000;
 
+const corsOptions = {
+  origin: process.env.CLIENT_URL,
+  // origin: '*',
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+};
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use('/api/uploads', express.static('uploads'));
+app.use(cors(corsOptions));
+app.use(morgan('tiny'));
+
+app.use('/api', routes);
+
+app.use('*', (req, res, next) => {
+  next(new ApiError("cann't find this endpoint"));
+});
+app.use(errorHandler);
+
 User.belongsTo(Role);
 Role.hasMany(User);
 
@@ -148,34 +170,12 @@ Dues.belongsTo(User, {
   as: 'creator',
 });
 
-const corsOptions = {
-  origin: process.env.CLIENT_URL,
-  // origin: '*',
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-};
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use('/api/uploads', express.static('uploads'));
-app.use(cors(corsOptions));
-app.use(morgan('tiny'));
-
-app.use('/api', routes);
-
-app.use('*', (req, res, next) => {
-  next(new ApiError("cann't find this endpoint"));
-});
-app.use(errorHandler);
-
 sequelize
   .sync()
   .then((result) => {
     app.listen(PORT);
-    logger.log('info', 'Server is Running')
+    logger.log('info', 'Server is Running');
   })
-  .catch((err) => console.log(err));
+  .catch((err) => logger.error(err));
 
 module.exports = app;
