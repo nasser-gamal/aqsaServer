@@ -164,10 +164,9 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use('/api/src/uploads', express.static('uploads'));
+app.use('/api/src/uploads', express.static(__dirname + '/' + 'uploads'));
 app.use(cors(corsOptions));
 app.use(morgan('tiny'));
-
 
 app.use('/api', routes);
 
