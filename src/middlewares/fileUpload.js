@@ -3,7 +3,7 @@ const BadRequestError = require('../utils/badRequestError.js');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    let path = 'uploads/apps';
+    let path = 'src/uploads/apps';
     cb(null, path);
   },
 
