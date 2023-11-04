@@ -176,7 +176,7 @@ app.use('*', (req, res, next) => {
 app.use(errorHandler);
 
 sequelize
-  .sync()
+  .sync({alter: true})
   .then((result) => {
     app.listen(PORT);
   })

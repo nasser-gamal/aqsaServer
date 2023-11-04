@@ -30,7 +30,7 @@ exports.bankAccountReports = async (query) => {
 
   const totalDepoite = transactions.transactions
     .filter((transaction) => {
-      return transaction.type === 'ايداع';
+      return transaction.type === 'ايداع' && !transaction.isDeleted;
     })
     .reduce((acc, transaction) => {
       return acc + transaction.amountTotal;
@@ -39,7 +39,7 @@ exports.bankAccountReports = async (query) => {
 
   const totalWithdraw = transactions.transactions
     .filter((transaction) => {
-      return transaction.type === 'سحب';
+      return transaction.type === 'سحب' && !transaction.isDeleted;
     })
     .reduce((acc, transaction) => {
       return (transaction.balanceBefore - transaction.balanceAfter).toFixed(
@@ -51,6 +51,9 @@ exports.bankAccountReports = async (query) => {
     .toFixed(2);
 
   const totalProfit = transactions.transactions
+    .filter((transaction) => {
+      return !transaction.isDeleted;
+    })
     .reduce((acc, transaction) => {
       return acc + transaction.profit;
     }, 0)
@@ -58,7 +61,6 @@ exports.bankAccountReports = async (query) => {
 
   return { transactions, totalDepoite, totalWithdraw, totalProfit };
 };
-
 
 exports.exportBankAccountReports = async (query) => {
   const { startDate, endDate, bankAccountId } = query;
@@ -78,7 +80,7 @@ exports.exportBankAccountReports = async (query) => {
 
   const totalDepoite = transactions
     .filter((transaction) => {
-      return transaction.type === 'ايداع';
+      return transaction.type === 'ايداع' && !transaction.isDeleted;
     })
     .reduce((acc, transaction) => {
       return acc + transaction.amountTotal;
@@ -86,7 +88,7 @@ exports.exportBankAccountReports = async (query) => {
 
   const totalWithdraw = transactions
     .filter((transaction) => {
-      return transaction.type === 'سحب';
+      return transaction.type === 'سحب' && !transaction.isDeleted;
     })
     .reduce((acc, transaction) => {
       return (transaction.balanceBefore - transaction.balanceAfter).toFixed(
@@ -192,7 +194,7 @@ exports.dailyReports = async (query) => {
 
   const totalDepoite = transactions.transactions
     .filter((transaction) => {
-      return transaction.type === 'ايداع';
+      return transaction.type === 'ايداع' && !transaction.isDeleted;
     })
     .reduce((acc, transaction) => {
       return acc + transaction.amountTotal;
@@ -201,7 +203,7 @@ exports.dailyReports = async (query) => {
 
   const totalWithdraw = transactions.transactions
     .filter((transaction) => {
-      return transaction.type === 'سحب';
+      return transaction.type === 'سحب' && !transaction.isDeleted;
     })
     .reduce((acc, transaction) => {
       return (transaction.balanceBefore - transaction.balanceAfter).toFixed(
@@ -213,6 +215,9 @@ exports.dailyReports = async (query) => {
     .toFixed(2);
 
   const totalProfit = transactions.transactions
+    .filter((transaction) => {
+      return !transaction.isDeleted;
+    })
     .reduce((acc, transaction) => {
       return acc + transaction.profit;
     }, 0)
@@ -378,7 +383,7 @@ exports.employReports = async (query) => {
 
   const totalDepoite = transactions.transactions
     .filter((transaction) => {
-      return transaction.type === 'ايداع';
+      return transaction.type === 'ايداع' && !transaction.isDeleted;
     })
     .reduce((acc, transaction) => {
       return acc + transaction.amountTotal;
@@ -387,7 +392,7 @@ exports.employReports = async (query) => {
 
   const totalWithdraw = transactions.transactions
     .filter((transaction) => {
-      return transaction.type === 'سحب';
+      return transaction.type === 'سحب' && !transaction.isDeleted;
     })
     .reduce((acc, transaction) => {
       return (transaction.balanceBefore - transaction.balanceAfter).toFixed(
@@ -399,6 +404,9 @@ exports.employReports = async (query) => {
     .toFixed(2);
 
   const totalProfit = transactions.transactions
+    .filter((transaction) => {
+      return  !transaction.isDeleted;
+    })
     .reduce((acc, transaction) => {
       return acc + transaction.profit;
     }, 0)
