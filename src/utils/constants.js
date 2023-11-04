@@ -65,6 +65,7 @@ const constants = {
   CREATE_TRANSACTION_SUCCESS: 'تم اضافة العملية بنجاح',
   UPDATE_TRANSACTION_SUCCESS: 'تم تعديل العملية بنجاح',
   DELETE_TRANSACTION_SUCCESS: 'تم حذف العملية بنجاح',
+  RESTORE_TRANSACTION_SUCCESS: 'تم استرجاع العملية بنجاح',
   CREATE_TRANSFER_SUCCESS: 'تم تحويل المبلغ بنجاح',
   CREATE_CATEGORY_SUCCESS: 'تم اضافة الخدمة بنجاح',
   UPDATE_CATEGORY_SUCCESS: 'تم تعديل الخدمة بنجاح',

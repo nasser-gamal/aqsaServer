@@ -1,8 +1,5 @@
-
-
-const transactionServices = require('../../services/transaction/transactionServices')
-const withdrawServices = require('../../services/transaction/withdrawServices')
-
+const transactionServices = require('../../services/transaction/transactionServices');
+const withdrawServices = require('../../services/transaction/withdrawServices');
 
 exports.addWithDraw = async (req, res, next) => {
   try {
@@ -30,22 +27,7 @@ exports.updateWithDraw = async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
-  
 };
-
-
-exports.deleteWithDraw = async (req, res, next) => {
-  try {
-    const { transactionId } = req.params;
-
-    const { message } = await withdrawServices.deleteWithDraw(transactionId);
-    return res.status(200).json({ message });
-  } catch (err) {
-    return next(err);
-  }
-};
-
-
 
 exports.getAllWithDraws = async (req, res, next) => {
   try {
@@ -58,9 +40,37 @@ exports.getAllWithDraws = async (req, res, next) => {
         page,
         limit,
         order,
-        sort,
+        sort
       );
     return res.status(200).json({ transactions, pagination });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.deleteWithDraw = async (req, res, next) => {
+  try {
+    const { transactionId } = req.params;
+
+    const { message } = await transactionServices.deleteTransaction(
+      transactionId,
+      'withdraw'
+    );
+    return res.status(200).json({ message });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.restoreWithDraw = async (req, res, next) => {
+  try {
+    const { transactionId } = req.params;
+
+    const { message } = await transactionServices.restoreTransaction(
+      transactionId,
+      'withdraw'
+    );
+    return res.status(200).json({ message });
   } catch (err) {
     return next(err);
   }

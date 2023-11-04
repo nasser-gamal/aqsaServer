@@ -47,4 +47,13 @@ router
     withdrawControllers.deleteWithDraw
   );
 
+router
+  .route(links.transaction.RESTORE_TRANSACTION)
+  .put(
+    auth.isAuth,
+    checkActive,
+    auth.checkUserRole(['superAdmin', 'admin']),
+    withdrawControllers.restoreWithDraw
+  );
+
 module.exports = router;

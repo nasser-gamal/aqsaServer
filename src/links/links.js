@@ -82,8 +82,9 @@ const links = {
     GET_TRANSACTION: '/get/:transactionId',
     CREATE_TRANSACTION: '/create',
     UPDATE_TRANSACTION: '/update/:transactionId',
-    DELETE_TRANSACTION: '/delete/:transactionId',
     UPDATE_TRANSFER: '/update/:transactionId',
+    DELETE_TRANSACTION: '/delete/:transactionId',
+    RESTORE_TRANSACTION: '/restore/:transactionId',
   },
   fees: {
     GET_FEES: '/getAll',

@@ -44,4 +44,16 @@ router
     auth.checkUserRole(['superAdmin', 'admin']),
     depositeControllers.deleteDeposite
   );
+
+router
+  .route(links.transaction.RESTORE_TRANSACTION)
+  .put(
+    auth.isAuth,
+    checkActive,
+    auth.checkUserRole(['superAdmin', 'admin']),
+    depositeControllers.restoreDeposite
+  );
+
+
+
 module.exports = router;

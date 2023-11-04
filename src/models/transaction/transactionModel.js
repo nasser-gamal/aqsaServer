@@ -103,6 +103,10 @@ const Transaction = sequelize.define('transaction', {
     type: Sequelize.ENUM('خسارة', 'مكسب', 'لا يوجد ربح'),
     allowNull: false,
   },
+  isDeleted: {
+    type: Sequelize.BOOLEAN,
+    default: false,
+  },
   note: {
     type: Sequelize.STRING,
     allowNull: true,

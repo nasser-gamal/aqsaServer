@@ -1,7 +1,6 @@
 const transactionRepository = require('../../dataAccess/transaction/transactionRepository.js');
 
 const transactionServicesUtils = require('../../utils/transactionServicesUtils.js');
-const treasuryRepository = require('../../dataAccess/treasury/treasuryRepository.js');
 
 const constants = require('../../utils/constants.js');
 
@@ -65,7 +64,7 @@ exports.addDeposit = async (userId, data) => {
     date,
     providerFees,
     amountTotal,
-    providerRevenue, 
+    providerRevenue,
     providerPercentage: isPercentage && providerPercentage,
     providerDeduction: totalProviderDeduction,
     profit,
@@ -136,9 +135,8 @@ exports.updateDeposite = async (transactionId, data) => {
   return { message: constants.UPDATE_TRANSACTION_SUCCESS };
 };
 
+
 exports.deleteDeposite = async (transactionId) => {
-
-
   const transaction = await transactionServicesUtils.isTransactionExists({
     id: transactionId,
   });
@@ -152,7 +150,8 @@ exports.deleteDeposite = async (transactionId) => {
   // update the bank account balance
   await bankAccount.update({ balance });
 
-  await transaction.destroy();
+  transaction.isDeleted = true;
+  await transaction.save();
 
   return { message: constants.DELETE_TRANSACTION_SUCCESS };
 };
