@@ -51,7 +51,6 @@ exports.findById = async (appId) => {
 exports.findOne = async (filter) => {
   try {
     const application = await Application.findOne(filter);
-    console.log('apps-------------------------------------', application);
     return application;
   } catch (err) {
     throw new Error(err);

@@ -26,6 +26,7 @@ const providerTreasuryRoutes = require('./providerTreasury/providerTreasuryRoute
 const duesRoutes = require('./dues/dues.routes.js');
 const addionalTreasuryRoutes = require('./addionalTreasury/agentTreasuryRoutes.js');
 const profitsRoutes = require('./profits/profitRoutes.js');
+const chatRoutes = require('./chat/chatRoute.js');
 
 router.use('/role', roleRoutes);
 router.use('/user', userRoutes);
@@ -51,5 +52,6 @@ router.use('/providerTreasury', providerTreasuryRoutes);
 router.use('/addionalTreasury', addionalTreasuryRoutes);
 router.use('/dues', duesRoutes);
 router.use('/profits', profitsRoutes);
+router.use('/chat', chatRoutes);
 
 module.exports = router;

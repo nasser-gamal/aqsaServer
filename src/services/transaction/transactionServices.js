@@ -26,7 +26,6 @@ exports.deleteTransaction = async (transactionId, type) => {
   let balance;
 
   if (type === 'deposit') {
-    console.log('deposite---------------------')
     balance = +bankAccount.balance - +transaction.amountTotal;
   } else {
     const amountTotal =
@@ -35,7 +34,6 @@ exports.deleteTransaction = async (transactionId, type) => {
         ? transaction.amountTotal
         : transaction.providerDeduction;
     balance = bankAccount.balance + amountTotal;
-    console.log('withdraw---------------------', balance)
 
   }
 
@@ -60,7 +58,6 @@ exports.restoreTransaction = async (transactionId, type) => {
   let balance;
 
   if (type === 'deposit') {
-    console.log('deposit')
 
     balance = +bankAccount.balance + +transaction.amountTotal;
   } else {
@@ -70,13 +67,8 @@ exports.restoreTransaction = async (transactionId, type) => {
         ? transaction.amountTotal
         : transaction.providerDeduction;
     balance = bankAccount.balance - amountTotal;
-
-    console.log('withdraw')
   }
 
-  console.log(bankAccount.balance)
-  console.log(transaction.amountTotal)
-  console.log(balance);
   // update the bank account balance
   await bankAccount.update({ balance });
   

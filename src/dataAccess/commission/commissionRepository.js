@@ -99,7 +99,6 @@ exports.findAll = async (
       pagination: pagination(pageNumber, itemPerPage, commissions.count),
     };
   } catch (err) {
-    console.log(err)
     throw new Error(err);
   }
 };

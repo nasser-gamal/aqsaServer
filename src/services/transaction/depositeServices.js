@@ -104,15 +104,19 @@ exports.updateDeposite = async (transactionId, data) => {
     calcDeposite(isPercentage, amount, providerFees, providerPercentage);
   const status = transactionServicesUtils.profitStatus(profit);
 
-  let { balanceAfter, bankBalance } =
-    await transactionServicesUtils.updateTransactionInfo(
-      transaction,
-      amount,
-      profit,
-      (isTotalRevenue = true),
-      totalProviderDeduction,
-      bankAccount
-    );
+  // let { balanceAfter, bankBalance } =
+  //   await transactionServicesUtils.updateTransactionInfo(
+  //     transaction,
+  //     amount,
+  //     profit,
+  //     (isTotalRevenue = true),
+  //     totalProviderDeduction,
+  //     bankAccount
+  //   );
+
+  let more = transaction.amountTotal - +amount;
+  let balanceAfter = +transaction.balanceAfter - more;
+  bankBalance = +bankAccount.balance - more;
 
   await bankAccount.update({ balance: bankBalance });
 
@@ -134,7 +138,6 @@ exports.updateDeposite = async (transactionId, data) => {
 
   return { message: constants.UPDATE_TRANSACTION_SUCCESS };
 };
-
 
 exports.deleteDeposite = async (transactionId) => {
   const transaction = await transactionServicesUtils.isTransactionExists({

@@ -33,6 +33,8 @@ const {
 } = require('./models/index.js');
 const Dues = require('./models/dues/duesModel.js');
 const PORT = process.env.PORT || 3000;
+const Chat = require('./models/chat/chat.js')
+const Message = require('./models/messages/message.js')
 
 User.belongsTo(Role);
 Role.hasMany(User);

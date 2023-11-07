@@ -72,7 +72,6 @@ exports.findAll = async (whereClause, page, limit, order, sort) => {
       pagination: pagination(pageNumber, itemPerPage, segments.count),
     };
   } catch (err) {
-    console.log(err)
     throw new Error(err);
   }
 };

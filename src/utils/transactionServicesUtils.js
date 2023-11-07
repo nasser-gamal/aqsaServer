@@ -60,10 +60,12 @@ exports.updateTransactionInfo = async (
   bankAccount
 ) => {
   let more = isTotalRevenue
-    ? transaction.amountTotal - +amount  
+    ? +amount - transaction.amountTotal 
     : +totalProviderDeduction - +transaction.providerDeduction;
   let balanceAfter = +transaction.balanceAfter - more;
   bankBalance = +bankAccount.balance - more;
+
+  console.log('---- ', balanceAfter, '------', bankBalance, '--more', more);
 
   return { balanceAfter, bankBalance };
 };
