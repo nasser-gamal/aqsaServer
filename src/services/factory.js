@@ -15,7 +15,6 @@ exports.getDocs = asyncHandler(
       .sort()
       .limitFields()
       .search();
-    console.log(queryObj);
 
     const { conditions, sortArr, included, excluded, keyword } = features;
 

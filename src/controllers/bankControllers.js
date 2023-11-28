@@ -12,7 +12,6 @@ exports.createBank = asyncHandler(async (req, res) => {
 });
 
 exports.getBanks = async (req, res) => {
-  console.log(req.query)
   const { docs, pagination } = await bankServices.getBanks(req.query);
   sendResponse(res, {
     statusCode: 200,

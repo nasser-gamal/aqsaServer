@@ -45,7 +45,6 @@ exports.updateBankAccountValidate = [
     .withMessage('invalid bankAccount id')
     .custom(async (value, { req }) => {
       const bankAccount = await BankAccount.findByPk(value);
-      console.log(bankAccount);
       if (!bankAccount) throw new NotFoundError('الحساب غير موجود');
       return true;
     }),

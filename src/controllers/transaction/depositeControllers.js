@@ -16,7 +16,6 @@ exports.addDepsite = asyncHandler(async (req, res, next) => {
 
 exports.updateDeposite = asyncHandler(async (req, res) => {
   const { transactionId } = req.params;
-  console.log(req.params);
   const { message } = await depositeServices.updateDeposite(
     transactionId,
     req.body

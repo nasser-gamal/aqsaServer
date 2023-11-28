@@ -71,7 +71,6 @@ exports.aggregation = asyncHandler(async (queryObj, filterObj) => {
     ],
   });
 
-  console.log(docs);
   return { docs: docs[0] };
 });
 

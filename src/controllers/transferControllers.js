@@ -16,7 +16,6 @@ exports.addTransfer = async (req, res, next) => {
 };
 
 exports.getTransfers = asyncHandler(async (req, res) => {
-  console.log("0000000000000000000000000000000000000")
   const { docs, pagination } = await transferServices.getTransfers(req.query);
   sendResponse(res, {
     statusCode: 200,

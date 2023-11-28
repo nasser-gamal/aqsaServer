@@ -3,7 +3,6 @@ const feesServices = require('../services/feesServices');
 const sendResponse = require('../utils/sendResponse');
 
 exports.createFee = asyncHandler(async (req, res) => {
-  console.log(req.body)
   req.body.createdBy = req.user.id;
   const { message } = await feesServices.createFees(req.body);
   sendResponse(res, {
@@ -13,10 +12,10 @@ exports.createFee = asyncHandler(async (req, res) => {
 });
 
 exports.getFees = asyncHandler(async (req, res) => {
-  const { docs, pagination } = await feesServices.getFees(req.query);
+  const { docs, pagination, totalFees } = await feesServices.getFees(req.query);
   sendResponse(res, {
     statusCode: 200,
-    meta: { pagination },
+    meta: { pagination, totalFees },
     data: docs,
   });
 });

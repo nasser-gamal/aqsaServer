@@ -4,7 +4,6 @@ const sendResponse = require('../utils/sendResponse');
 
 exports.createApp = asyncHandler(async (req, res) => {
   req.body.createdBy = req.user.id;
-  console.log(req.files);
   const { message } = await applicationServices.createApp(req.files, req.body);
   sendResponse(res, {
     statusCode: 201,

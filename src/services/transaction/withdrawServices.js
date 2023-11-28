@@ -146,7 +146,6 @@ exports.updateWithDraw = async (transactionId, data) => {
     note,
   } = data;
 
-  console.log(transactionId, data);
 
   // check if the Transaction is exists
   const transaction = await transactionServicesUtils.isTransactionExists({

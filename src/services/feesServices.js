@@ -15,15 +15,18 @@ exports.createFees = asyncHandler(async (data) => {
   return { message: constants.CREATE_FEES_SUCCESS };
 });
 
-exports.getFees = asyncHandler(async (query, queryObj) =>
-  getDocs(Fees, query, queryObj, [
+exports.getFees = asyncHandler(async (query, queryObj) => {
+  const { docs, pagination } = await getDocs(Fees, query, queryObj, [
     {
       model: User,
       as: 'creator',
       attributes: ['id', 'userName', 'accountName'],
     },
-  ])
-);
+  ]);
+
+  const totalFees = docs.reduce((total, fee) => total + fee.amount, 0);
+  return { docs, pagination, totalFees };
+});
 
 exports.getFee = asyncHandler(async (feesId) => getDoc(Fees, feesId));
 

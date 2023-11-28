@@ -3,7 +3,6 @@ const transactionServices = require('../../services/transaction/transactionServi
 const sendResponse = require('../../utils/sendResponse.js');
 
 exports.getAllTransactions = asyncHandler(async (req, res) => {
-  console.log('query---', req.query);
   const { docs, pagination } = await transactionServices.getAllTransactions(
     req.query
   );

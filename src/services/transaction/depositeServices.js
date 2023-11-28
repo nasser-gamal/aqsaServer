@@ -79,12 +79,9 @@ exports.updateDeposite = async (transactionId, data) => {
     providerPercentage,
   } = data;
 
-  console.log('data-----------', data);
   
   const transaction = await getDoc(Transaction, transactionId);
-  console.log('transaction-------------------', transaction);
   const bankAccount = await getDoc(BankAccount, bankAccountId);
-  console.log('bankAccount------------------', bankAccount);
 
   const { amountTotal, totalProviderDeduction, profit, providerRevenue } =
     calcDeposite(isPercentage, amount, providerFees, providerPercentage);
