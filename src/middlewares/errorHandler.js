@@ -19,9 +19,8 @@ const sendErrorForProd = (err, res) => {
 
 const globalError = (err, req, res, next) => {
   const errObj = {
-    // message:
-    // config.app.env === 'development' ? err.message : 'something went wrong',
-    message: err.message,
+    message:
+      config.app.env === 'development' ? err.message : 'something went wrong',
     status: StatusCodes.INTERNAL_SERVER_ERROR,
     statusText: 'Error',
     stack: err.stack,

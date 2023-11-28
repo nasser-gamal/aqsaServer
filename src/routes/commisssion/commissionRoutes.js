@@ -5,6 +5,9 @@ const commissionControllers = require('../../controllers/commission/commissionCo
 const links = require('../../links/links.js');
 const validate = require('../../utils/validation.js');
 const { protected, allowedTo, checkActive } = require('../../middlewares/auth');
+const {
+  createCommissionValidate,
+} = require('../../validator/commissionValidator.js');
 
 router.get(
   '/me',
@@ -38,6 +41,7 @@ router
     protected,
     checkActive,
     allowedTo(['superAdmin', 'admin']),
+    createCommissionValidate,
     commissionControllers.addCommission
   );
 
