@@ -2,17 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const transactionControllers = require('../../controllers/transaction/transactionControllers.js');
-const links = require('../../links/links.js');
-const auth = require('../../middlewares/auth.js');
-const { checkActive } = require('../../middlewares/checkActive.js');
+const { protected, allowedTo, checkActive } = require('../../middlewares/auth');
 
-router
-  .route(links.transaction.GET_TRANSACTIONS)
-  .get(
-    auth.isAuth,
-    checkActive,
-    auth.checkUserRole(['superAdmin', 'admin']),
-    transactionControllers.getAllTransactions
-  );
+router.use(protected);
+router.use(checkActive);
+router.use(allowedTo(['superAdmin', 'admin']));
+
+router.route('/').get(transactionControllers.getAllTransactions);
+router.get('/reports', transactionControllers.aggregation);
 
 module.exports = router;

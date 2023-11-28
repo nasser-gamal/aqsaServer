@@ -1,5 +1,5 @@
-const User = require('../../models/auth/userModel');
-const Due = require('../../models/dues/duesModel');
+const User = require('../../models/userModel');
+const Due = require('../../models/duesModel');
 const { pagination } = require('../../utils/pagination');
 
 exports.createOne = async (data) => {

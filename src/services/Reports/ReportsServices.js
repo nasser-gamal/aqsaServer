@@ -4,6 +4,10 @@ const feesRepository = require('../../dataAccess/fees/feesRepository');
 const transactionRepository = require('../../dataAccess/transaction/transactionRepository');
 const transferRepository = require('../../dataAccess/transaction/transferRepository');
 const UserCommission = require('../../dataAccess/commission/userCommission.repository');
+const AgentCommission = require('../../models/commission/agentCommission');
+
+const asyncHandler = require('express-async-handler');
+const User = require('../../models/userModel');
 
 exports.bankAccountReports = async (query) => {
   const { startDate, endDate, bankAccountId, page, limit, order, sort } = query;
@@ -405,7 +409,7 @@ exports.employReports = async (query) => {
 
   const totalProfit = transactions.transactions
     .filter((transaction) => {
-      return  !transaction.isDeleted;
+      return !transaction.isDeleted;
     })
     .reduce((acc, transaction) => {
       return acc + transaction.profit;
@@ -676,8 +680,8 @@ exports.feesReports = async (query) => {
 
   return { fees, totalFees };
 };
-exports.userCommissionReports = async (query) => {
-  const { startDate, endDate, page, limit, order, sort } = query;
+exports.userCommissionReports = asyncHandler(async (query) => {
+  const { startDate, endDate } = query;
 
   const dateFrom = new Date(startDate);
   const dateTo = new Date(endDate);
@@ -687,58 +691,68 @@ exports.userCommissionReports = async (query) => {
   const yearFrom = dateFrom.getFullYear();
   const yearTo = dateTo.getFullYear();
 
-  const { commissions } = await UserCommission.findAll({
-    [Op.or]: [
+  const agentCommissions = await AgentCommission.findAll({
+    where: {
+      [Op.or]: [
+        {
+          year: yearFrom,
+          [Op.and]: [
+            { month: { [Op.gte]: monthFrom } },
+            { month: { [Op.lte]: monthTo } },
+          ],
+        },
+        {
+          year: yearTo,
+          [Op.and]: [
+            { month: { [Op.gte]: monthFrom } },
+            { month: { [Op.lte]: monthTo } },
+          ],
+        },
+      ],
+    },
+    include: [
       {
-        year: yearFrom,
-        [Op.and]: [
-          { month: { [Op.gte]: monthFrom } },
-          { month: { [Op.lte]: monthTo } },
-        ],
-      },
-      {
-        year: yearTo,
-        [Op.and]: [
-          { month: { [Op.gte]: monthFrom } },
-          { month: { [Op.lte]: monthTo } },
-        ],
+        model: User,
+        as: 'agent',
+        attributes: ['id', 'userName', 'accountName', 'accountNumber'],
       },
     ],
   });
 
-  const agentReports = {};
+  // const agentReports = {};
 
-  // Iterate through each user commission record
-  commissions.forEach((userCommission) => {
-    const { agentId, commissions, agent, ...rest } = userCommission.toJSON({
-      include: 'agent',
-    });
+  // // Iterate through each user commission record
+  // commissions.forEach((userCommission) => {
+  //   const { agentId, commissions, agent, ...rest } = userCommission.toJSON({
+  //     include: 'agent',
+  //   });
 
-    if (!agentReports[agentId]) {
-      agentReports[agentId] = {
-        agentId,
-        agent: agent,
-        commissions: commissions.reduce(
-          (total, commission) => total + commission.commission,
-          0
-        ),
-      };
-    } else {
-      agentReports[agentId].commissions += commissions.reduce(
-        (total, commission) => total + commission.commission,
-        0
-      );
-    }
-  });
+  //   if (!agentReports[agentId]) {
+  //     agentReports[agentId] = {
+  //       agentId,
+  //       agent: agent,
+  //       commissions: commissions.reduce(
+  //         (total, commission) => total + commission.commission,
+  //         0
+  //       ),
+  //     };
+  //   } else {
+  //     agentReports[agentId].commissions += commissions.reduce(
+  //       (total, commission) => total + commission.commission,
+  //       0
+  //     );
+  //   }
+  // });
 
-  // Convert the agentReports object into an array of objects
-  const groupedCommissions = Object.values(agentReports);
+  // // Convert the agentReports object into an array of objects
+  // const groupedCommissions = Object.values(agentReports);
 
-  const totalCommission = groupedCommissions
+  const totalCommission = agentCommissions
     .reduce((acc, commission) => {
-      return acc + commission.commissions;
+      return acc + commission.commissionAmount;
     }, 0)
     .toFixed(2);
 
-  return { groupedCommissions, totalCommission };
-};
+  return { agentCommissions, totalCommission };
+  // return { groupedCommissions, totalCommission };
+});

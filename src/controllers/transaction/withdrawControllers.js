@@ -1,5 +1,7 @@
+const asyncHandler = require('express-async-handler');
 const transactionServices = require('../../services/transaction/transactionServices');
 const withdrawServices = require('../../services/transaction/withdrawServices');
+const sendResponse = require('../../utils/sendResponse');
 
 exports.addWithDraw = async (req, res, next) => {
   try {
@@ -29,24 +31,18 @@ exports.updateWithDraw = async (req, res, next) => {
   }
 };
 
-exports.getAllWithDraws = async (req, res, next) => {
-  try {
-    const { page, limit, order, sort } = req.query;
-    let whereClause = { type: 'سحب' };
+exports.getAllWithDraws = asyncHandler(async (req, res, next) => {
+  const { docs, pagination } = await transactionServices.getAllTransactions(
+    req.query,
+    { type: 'سحب' }
+  );
 
-    const { transactions, pagination } =
-      await transactionServices.findAllTransactions(
-        whereClause,
-        page,
-        limit,
-        order,
-        sort
-      );
-    return res.status(200).json({ transactions, pagination });
-  } catch (err) {
-    return next(err);
-  }
-};
+  sendResponse(res, {
+    statusCode: 200,
+    meta: { pagination },
+    data: docs,
+  });
+});
 
 exports.deleteWithDraw = async (req, res, next) => {
   try {

@@ -1,8 +1,8 @@
-const User = require('../../models/auth/userModel.js');
-const BankAccount = require('../../models/banks/bankAccountModel.js');
-const Bank = require('../../models/banks/bankModel.js');
+const User = require('../../models/userModel');
+const BankAccount = require('../../models/bankAccountModel');
+const Bank = require('../../models/bankModel.js');
 const { pagination } = require('../../utils/pagination.js');
-const Transfer = require('../../models/transaction/transferModel.js');
+const Transfer = require('../../models/transferModel.js');
 
 exports.createOne = async (data) => {
   try {
@@ -44,7 +44,6 @@ exports.findAll = async (whereClause, page, limit, order, sort) => {
     const itemPerPage = +limit || 10;
     const orderBy = order || 'createdAt';
     const sortBy = sort || 'DESC';
-
 
     const transfers = await Transfer.findAndCountAll({
       where: whereClause,

@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
-const Role = require('../../models/auth/roleModel');
-const User = require('../../models/auth/userModel');
+const Role = require('../../models/roleModel');
+const User = require('../../models/userModel');
 
 exports.createOne = async (data) => {
   try {

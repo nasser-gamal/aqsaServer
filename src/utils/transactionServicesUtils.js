@@ -1,6 +1,5 @@
 const bankAccountRepository = require('../dataAccess/banks/bankAccountRepository.js');
 const transactionRepository = require('../dataAccess/transaction/transactionRepository.js');
-const treasuryRepository = require('../dataAccess/treasury/treasuryRepository.js');
 
 const { checkResourceExists } = require('./checkResourceExists.js');
 const constants = require('./constants.js');
@@ -28,16 +27,9 @@ exports.updateBankAccount = async (bankAccount, amountTotal) => {
   };
 };
 
-exports.findTreasury = async () => {
-  const treasury = treasuryRepository.findOne();
-  return checkResourceExists(treasury, constants.TREASURY_NOT_FOUND);
-};
 
-exports.updateTreasury = async (treasury, amountTotal) => {
-  await treasury.update({
-    amountTotal,
-  });
-};
+
+
 
 exports.profitStatus = (profit) => {
   let status;

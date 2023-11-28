@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../../config/database.js');
-const User = require('../auth/userModel.js');
+const { sequelize } = require('../../config/database.js');
+const User = require('../userModel');
 
 const Chat = sequelize.define('chat', {
   id: {

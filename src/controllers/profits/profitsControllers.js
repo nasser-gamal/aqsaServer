@@ -1,4 +1,4 @@
-const ProfitsServices = require('../../services/profits/ProfitsServices');
+const ProfitsServices = require('../../services/profits/profitsServices');
 
 exports.getDailyProfits = async (req, res, next) => {
   try {

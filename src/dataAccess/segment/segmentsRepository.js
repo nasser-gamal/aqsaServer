@@ -1,6 +1,6 @@
-const User = require('../../models/auth/userModel.js');
-const Category = require('../../models/category/categoryModel.js');
-const Segment = require('../../models/segments/segmentsModel.js');
+const User = require('../../models/userModel');
+const Category = require('../../models/categoryModel');
+const Segment = require('../../models/segmentsModel');
 const { pagination } = require('../../utils/pagination.js');
 
 exports.createOne = async (data) => {

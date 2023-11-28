@@ -3,16 +3,15 @@ const router = express.Router();
 
 const profitsControllers = require('../../controllers/profits/profitsControllers');
 const links = require('../../links/links.js');
+const { protected, allowedTo, checkActive } = require('../../middlewares/auth');
 
-const auth = require('../../middlewares/auth.js');
-const { checkActive } = require('../../middlewares/checkActive');
 
 router
   .route(links.profits.GET_DAILY_PROFITS)
   .get(
-    auth.isAuth,
+    protected,
     checkActive,
-    auth.checkUserRole(['superAdmin', 'admin']),
+    allowedTo(['superAdmin', 'admin']),
     profitsControllers.getDailyProfits
   );
 

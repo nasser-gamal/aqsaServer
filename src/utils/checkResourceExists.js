@@ -1,8 +1,8 @@
-const ApiError = require('./apiError.js');
+const { NotFoundError } = require('./apiError.js');
 
 exports.checkResourceExists = (resource, errorMessage) => {
   if (!resource) {
-    throw new ApiError(errorMessage);
+    throw new NotFoundError(errorMessage);
   }
   return resource;
 };

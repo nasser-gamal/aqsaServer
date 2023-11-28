@@ -1,14 +1,10 @@
-const axios = require('axios')
-
-let language = 2;
-let environment = 1;
-
-let api = 'https://smsmisr.com/api/SMS/';
+const axios = require('axios');
+const { config } = require('../config/config');
 
 exports.sendSMSMessage = async (mobile, message) => {
   try {
     const response = await axios.post(
-      `${api}?username=${process.env.SMS_USER_NAME}&password=${process.env.SMS_PASSWORD}&sender=${process.env.SMS_SENDER}&environment=${environment}&language=${language}&mobile=${mobile}&message=${message}`
+      `${config.sms.url}?username=${config.sms.username}&password=${config.sms.password}&sender=${config.sms.sender}&environment=${config.sms.environment}&language=${config.sms.language}&mobile=${mobile}&message=${message}`
     );
     return response;
   } catch (err) {

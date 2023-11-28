@@ -9,17 +9,28 @@ const constants = require('../../utils/constants.js');
 const { Op } = require('sequelize');
 const userCommissionRepository = require('../../dataAccess/commission/userCommission.repository.js');
 const BadRequestError = require('../../utils/badRequestError.js');
-const Segment = require('../../models/segments/segmentsModel.js');
-const Category = require('../../models/category/categoryModel.js');
+const Segment = require('../../models/segmentsModel');
+const Category = require('../../models/categoryModel');
+const Commission = require('../../models/commission/commissionModel.js');
+const CommissionItems = require('../../models/commission/CommissionItems.js');
+
+const asyncHandler = require('express-async-handler');
+
+const {
+  createDoc,
+  updateDoc,
+  deleteDoc,
+  getDocs,
+  getDoc,
+} = require('../factory');
+const User = require('../../models/userModel.js');
+const SubCategory = require('../../models/subCategory.js');
+const AgentCommission = require('../../models/commission/agentCommission.js');
+const ApiFeature = require('../../utils/ApiFeature.js');
 
 const isCommissionExist = async (commissionId) => {
   const commission = await userCommissionRepository.findById(commissionId);
   return checkResourceExists(commission, constants.COMMISSION_NOT_FOUND);
-};
-
-const isAgentExist = async (agentId) => {
-  const agent = await userRepository.findById(agentId);
-  return checkResourceExists(agent, constants.AGENT_NOT_FOUND);
 };
 
 const findSegment = async (serviceId, amountTotal) => {
@@ -41,50 +52,102 @@ const findSegment = async (serviceId, amountTotal) => {
 };
 
 const calcCommission = (amountTotal, percentage) => {
-  let commission = (percentage / 100) * amountTotal;
+  let commission = (percentage / 100) * +amountTotal;
   return commission;
 };
 
-exports.createCommission = async (userId, data) => {
-  const { agentId, month, year, commissions } = data;
+// const calcTotalAgentOpration = () => {
 
-  await isAgentExist(agentId);
+//   let totalAmount = 0;
+//   let counts = 0;
+//   let totalCommissions = 0;
 
-  const whereClause = { agentId, month, year };
+//    totalAmount += amountTotal;
+//    counts += totalCount;
+//    totalCommissions += commissionAmount;
 
-  const { userCommission: userCommissionExist } =
-    await userCommissionRepository.findOne(whereClause);
+// }
 
-  if (userCommissionExist) {
-    throw new BadRequestError(constants.USER_COMMISSION_EXIST);
+const createCommission = asyncHandler(
+  async (
+    agentCommissionId,
+    segmentId,
+    categoryId,
+    amountTotal,
+    totalCount,
+    commissionAmount
+  ) => {
+    const commission = await Commission.create({
+      agentCommId: agentCommissionId,
+      segmentId: segmentId,
+      categoryId: categoryId,
+      amountTotal,
+      totalCount,
+      commissionAmount,
+    });
+    return commission;
   }
+);
+const createCommissionItem = asyncHandler(async (category, commissionId) => {
+  const commissionItems = category.subCategories.map((subCategory) => ({
+    subCategoryId: subCategory.id,
+    amount: subCategory.amount,
+    count: subCategory.count,
+    commissionId: commissionId,
+  }));
+  await CommissionItems.bulkCreate(commissionItems);
+});
 
-  const userCommission = await userCommissionRepository.createOne({
+exports.createAgentCommission = async (userId, data) => {
+  const { agentId, month, year } = data;
+
+  const agentCommission = await createDoc(AgentCommission, {
     agentId,
     month,
     year,
     createdBy: userId,
   });
 
-  await Promise.all(
-    commissions.map(async (commission) => {
-      const segment = await findSegment(
-        commission.serviceId,
-        commission.amountTotal
-      );
-      const calccommission = calcCommission(
-        commission.amountTotal,
-        segment.percentage
-      );
-      await userCommission.createCommission({
-        amountTotal: commission.amountTotal,
-        commission: calccommission,
-        segmentId: segment.id,
-        count: commission.count,
-      });
-    })
-  );
+  let agentTotalAmount = 0;
+  let agentTotalCount = 0;
+  let agentTotalCommission = 0;
 
+  const promises = data.commissions.map(async (category) => {
+    const categoryId = category.categoryId;
+    const amountTotal = category.subCategories.reduce(
+      (total, subCategory) => total + subCategory.amount,
+      0
+    );
+    const totalCount = category.subCategories.reduce(
+      (total, subCategory) => total + subCategory.count,
+      0
+    );
+    const segment = await findSegment(categoryId, amountTotal);
+    const commissionAmount = calcCommission(amountTotal, segment.percentage);
+
+    const commission = await createCommission(
+      agentCommission.id,
+      segment.id,
+      categoryId,
+      amountTotal,
+      totalCount,
+      commissionAmount
+    );
+
+    await createCommissionItem(category, commission.id);
+
+    agentTotalAmount += amountTotal;
+    agentTotalCount += totalCount;
+    agentTotalCommission += commissionAmount;
+  });
+
+  await Promise.all(promises);
+
+  await updateDoc(AgentCommission, agentCommission.id, {
+    amountTotal: agentTotalAmount,
+    totalCount: agentTotalCount,
+    commissionAmount: agentTotalCommission,
+  });
   return { message: constants.CREATE_COMMISSION_SUCCESS };
 };
 
@@ -111,71 +174,70 @@ exports.deleteCommission = async (commissionId) => {
   return { message: constants.DELETE_COMMISSION_SUCCESS };
 };
 
-exports.findAllCommissions = async (queryParams) => {
-  const { search, agentId, year, month } = queryParams;
-
-  // Search by agent
-  let userQuery = {};
-
-  if (search) {
-    userQuery = {
-      [Op.or]: {
-        phoneNumber: search,
-        accountNumber: search,
-        nationalId: search,
-      },
-    };
-  }
-
-  // Search by commission
-  let commissionQuery = {
-    month,
-    year,
-  };
-
-  if (agentId) {
-    commissionQuery.agentId = agentId;
-  }
-  const { userCommission } = await userCommissionRepository.findOne(
-    commissionQuery,
-    userQuery
-  );
-
-  if (!userCommission) {
-    return {
-      commissions: [],
-    };
-  }
-
-  const commissions = await userCommission.getCommissions({
-    include: {
-      model: Segment,
-      as: 'segment',
-      attributes: ['id', 'title', 'start', 'end', 'percentage'],
-      include: {
-        model: Category,
-        as: 'service',
-        order: [['createdAt', 'DESC']],
-        attributes: ['id', 'name', 'createdAt'],
-      },
+exports.getUserCommission = asyncHandler(async (query, queryObj) => {
+  return await getDocs(AgentCommission, query, queryObj, [
+    {
+      model: User,
+      as: 'agent',
+      attributes: [
+        'id',
+        'accountName',
+        'accountNumber',
+        'userName',
+        'phoneNumber',
+        'nationalId',
+        'address',
+      ],
     },
-  });
+    {
+      model: Commission,
+      as: 'commissions',
+      include: [
+        {
+          model: Category,
+          as: 'service',
+          attributes: ['id', 'name'],
+        },
+        {
+          model: Segment,
+          as: 'segment',
+          attributes: ['id', 'title', 'percentage'],
+        },
+        {
+          model: CommissionItems,
+          as: 'commissionItems',
+          include: [
+            {
+              model: SubCategory,
+              as: 'subCategory',
+              attributes: ['id', 'name'],
+            },
+          ],
+        },
+      ],
+    },
+  ]);
+});
+// exports.aggregation = asyncHandler(async (queryObj, filterObj) => {
+//   const { conditions } = new ApiFeature(queryObj)
+//     .filter()
 
-  const totalAmount = commissions.reduce((acc, commission) => {
-    return acc + commission.amountTotal;
-  }, 0);
+//   const docs = await AgentCommission.findAll({
+//     where: {
+//       ...conditions,
+//       ...filterObj,
+//       isDeleted: false,
+//     },
+//     raw: true,
+//     attributes: [
+//       [sequelize.fn('SUM', sequelize.col('amountTotal')), 'amountTotal'],
+//       [sequelize.fn('SUM', sequelize.col('amountTotal')), 'amountTotal'],
+//     ],
+//   });
 
-  const totalCommissions = commissions.reduce((acc, commission) => {
-    return acc + commission.commission;
-  }, 0);
-
-  return {
-    userCommission,
-    commissions,
-    totalAmount: totalAmount.toFixed(2),
-    totalCommissions: totalCommissions.toFixed(2),
-  };
-};
+//   console.log(docs);
+//   return { docs: docs[0] };
+// });
 
 exports.findCommissionById = async (commissionId) => {
   const commission = await isCommissionExist(commissionId);

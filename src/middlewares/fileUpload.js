@@ -1,9 +1,9 @@
 const multer = require('multer');
-const BadRequestError = require('../utils/badRequestError.js');
+const { config } = require('../config/config');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    let path = 'src/uploads/apps';
+    let path = config.app.filesPath;
     cb(null, path);
   },
 

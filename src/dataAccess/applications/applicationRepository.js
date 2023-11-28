@@ -1,4 +1,4 @@
-const Application = require('../../models/applications/applicationsModel');
+const Application = require('../../models/applicationsModel');
 
 exports.createOne = async (data) => {
   try {

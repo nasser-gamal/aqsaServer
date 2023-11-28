@@ -135,12 +135,18 @@ exports.depositeValidate = [
     .withMessage('ادخل رسوم المزود')
     .isNumeric()
     .withMessage('رسوم المزود يجب ان يكون رقم'),
-  body('providerPercentage')
+  // body('providerPercentage')
+  //   .not()
+  //   .isEmpty()
+  //   .withMessage('ادخل عائد المزود')
+  //   .isNumeric()
+  //   .withMessage('عائد المزود يجب ان تكون رقم'),
+  body('date')
     .not()
     .isEmpty()
-    .withMessage('ادخل عائد المزود')
-    .isNumeric()
-    .withMessage('عائد المزود يجب ان تكون رقم'),
+    .withMessage('ادخل  التاريخ')
+    // .isDate()
+    // .withMessage('التاريخ غير صالح'),
 ];
 exports.withDrawValidate = [
   body('isTotalRevenue').not().isEmpty().withMessage('ادخل طريقة حساب الخصم'),

@@ -1,4 +1,5 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { config } = require('../config/config');
 
 function generateToken(user) {
   const payload = {
@@ -11,8 +12,8 @@ function generateToken(user) {
     role: user.role,
   };
 
-  const token = jwt.sign(payload, process.env.JWT_SECRET);
-  const refreshToken = jwt.sign(payload, process.env.JWT_SECRET);
+  const token = jwt.sign(payload, config.jwt.secret);
+  const refreshToken = jwt.sign(payload, config.jwt.secret);
   return { token, refreshToken };
 }
 

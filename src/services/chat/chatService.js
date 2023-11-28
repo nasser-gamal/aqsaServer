@@ -1,12 +1,13 @@
-const { Op } = require('sequelize');
+const { Op, useInflection } = require('sequelize');
 const chatRepository = require('../../dataAccess/chat/chatRepository');
 const BadRequestError = require('../../utils/badRequestError');
 const constants = require('../../utils/constants');
-const User = require('../../models/auth/userModel');
+const User = require('../../models/userModel');
 const Chat = require('../../models/chat/chat');
 
 const isChatExist = async (query) => {
   const chat = await chatRepository.findOne(query);
+  if (!chat) throw new NotFoundError(constants.CHAT_NOT_FOUND, 404);
   return chat;
 };
 
@@ -30,7 +31,8 @@ exports.createChat = async (userId, body) => {
   return { message: constants.CREATE_CHAT };
 };
 
-exports.getLoggedUserChats = async (userId) => {
+exports.getLoggedUserChats = async (userId, queries) => {
+
   const userChats = await User.findByPk(userId, {
     include: [
       {
@@ -82,62 +84,28 @@ exports.getLoggedUserChats = async (userId) => {
   return chats;
 };
 
-exports.getChat = async (userId, chatId) => {
-  const currentChat = await User.findByPk(userId, {
+exports.getChat = async (chatId) => {
+  const currentChat = await Chat.findByPk(chatId, {
     include: [
       {
-        model: Chat,
-        where: {
-          id: chatId,
-        },
-        as: 'chats',
+        model: User,
+        as: 'members',
         through: {
-          attributes: [], // Exclude all attributes from the join table
+          attributes: [],
         },
-
-        include: [
-          {
-            model: User, // Include the User model
-            as: 'members',
-            through: {
-              attributes: [], // Exclude all attributes from the join table
-            },
-            attributes: [
-              'id',
-              'userName',
-              'accountName',
-              'email',
-              'phoneNumber',
-            ],
-          },
-          {
-            model: User,
-            as: 'owner',
-            attributes: [
-              'id',
-              'userName',
-              'accountName',
-              'email',
-              'phoneNumber',
-            ],
-          },
-        ],
+        attributes: ['id', 'userName', 'accountName', 'accountNumber'],
+      },
+      {
+        model: User,
+        as: 'owner',
+        attributes: ['id', 'userName', 'accountName'],
       },
     ],
   });
 
-  if (!currentChat) throw new BadRequestError(constants.CHAT_NOT_FOUND, 404);
+  if (!currentChat) throw new NotFoundError(constants.CHAT_NOT_FOUND, 404);
 
-  const chats = currentChat.chats.map((chat) => {
-    const numberOfMembers = chat.members.length;
-
-    // Create a new object with the chat attributes and the number of members
-    return {
-      ...chat.toJSON(), // Extract chat attributes
-      numberOfMembers, // Include the number of members
-    };
-  });
-  return chats;
+  return currentChat;
 };
 
 exports.updateChat = async (userId, chatId, body) => {
@@ -171,27 +139,37 @@ exports.updateChat = async (userId, chatId, body) => {
   return { message: constants.UPDATE_CHAT };
 };
 
-exports.addMembers = async (userId, chatId, body) => {
-  const chat = await chatRepository.findById(chatId);
+exports.addMembers = async (currentUser, chatId, userId) => {
+  const chat = await chatRepository.findById(chatId, {
+    include: [{ model: User, as: 'members' }],
+  });
   if (!chat) throw new BadRequestError(constants.CHAT_NOT_FOUND, 404);
 
   // check if the current user is the owner of the chat
-  if (chat.ownerId !== userId)
+  if (chat.ownerId !== currentUser)
     throw new BadRequestError(constants.CHAT_OWNER, 400);
 
-  await chat.addMembers(body.users);
+  // check if the user already member in the Chat Group
+  const findMember = chat.members.findIndex((member) => member.id == userId);
+
+  if (findMember >= 0) {
+    throw new BadRequestError('هذا المستخدم موجود في المجموعة', 400);
+  } else {
+    await chat.addMembers(userId);
+  }
 
   return { message: constants.ADD_MEMBERS_TO_CHAT };
 };
 
-exports.removeMember = async (userId, chatId, body) => {
+
+exports.removeMember = async (currentUser, chatId, userId) => {
   const chat = await chatRepository.findById(chatId);
   if (!chat) throw new BadRequestError(constants.CHAT_NOT_FOUND, 404);
 
-  if (chat.ownerId !== userId)
+  if (chat.ownerId !== currentUser)
     throw new BadRequestError(constants.CHAT_OWNER, 400);
 
-  await chat.addMembers(users);
+  await chat.removeMembers(userId);
 
-  return { message: constants.ADD_MEMBERS_TO_CHAT };
+  return { message: constants.REMOVE_MEMBER_FROM_CHAT };
 };

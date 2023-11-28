@@ -1,14 +1,23 @@
-const transactionServices = require('../../services/transaction/transactionServices.js')
+const asyncHandler = require('express-async-handler');
+const transactionServices = require('../../services/transaction/transactionServices.js');
+const sendResponse = require('../../utils/sendResponse.js');
 
-exports.getAllTransactions = async (req, res, next) => {
-  try {
-    const { page, limit, order, sort } = req.query;
+exports.getAllTransactions = asyncHandler(async (req, res) => {
+  console.log('query---', req.query);
+  const { docs, pagination } = await transactionServices.getAllTransactions(
+    req.query
+  );
+  sendResponse(res, {
+    statusCode: 200,
+    meta: { pagination },
+    data: docs,
+  });
+});
 
-    const { transactions, pagination } =
-      await transactionServices.findAllTransactions(page, limit, order, sort);
-    return res.status(200).json({ transactions, pagination });
-  } catch (err) {
-    return next(err);
-  }
-};
-
+exports.aggregation = asyncHandler(async (req, res) => {
+  const { docs } = await transactionServices.aggregation(req.query);
+  sendResponse(res, {
+    statusCode: 200,
+    data: docs,
+  });
+});

@@ -1,9 +1,9 @@
 const { Sequelize } = require('sequelize');
-const User = require('../../models/auth/userModel');
-const Category = require('../../models/category/categoryModel');
+const User = require('../../models/userModel');
+const Category = require('../../models/categoryModel');
 const Commission = require('../../models/commission/commissionModel');
-const UserCommission = require('../../models/commission/userCommission');
-const Segment = require('../../models/segments/segmentsModel');
+const UserCommission = require('../../models/commission/CommissionItems');
+const Segment = require('../../models/segmentsModel');
 const { pagination } = require('../../utils/pagination');
 
 exports.createMany = async (data) => {

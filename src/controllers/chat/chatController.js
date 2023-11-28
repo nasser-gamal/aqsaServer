@@ -41,3 +41,33 @@ exports.updateChat = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.addNewMember = async (req, res, next) => {
+  try {
+    const currentUser = req.user.id;
+    const { chatId, userId } = req.params;
+    const { message } = await chatServices.addMembers(
+      currentUser,
+      chatId,
+      userId
+    );
+    return res.status(200).json({ message });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.removeMember = async (req, res, next) => {
+  try {
+    const currentUser = req.user.id;
+    const { chatId, userId } = req.params;
+    const { message } = await chatServices.removeMember(
+      currentUser,
+      chatId,
+      userId
+    );
+    return res.status(200).json({ message });
+  } catch (err) {
+    return next(err);
+  }
+};
