@@ -1,5 +1,9 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../../config/database.js');
+const { sequelize } = require('../../config/database.js');
+const Category = require('../categoryModel.js');
+const User = require('../userModel.js');
+const Segment = require('../segmentsModel.js');
+const AgentCommission = require('./agentCommission.js');
 
 const Commission = sequelize.define('commission', {
   id: {
@@ -12,12 +16,12 @@ const Commission = sequelize.define('commission', {
     type: Sequelize.DataTypes.FLOAT(16, 2),
     allowNull: false,
   },
-  commission: {
+  commissionAmount: {
     type: Sequelize.DataTypes.FLOAT(16, 2),
     allowNull: false,
   },
-  count: {
-    type: Sequelize.DataTypes.INTEGER,
+  totalCount: {
+    type: Sequelize.INTEGER,
     allowNull: false,
     defaultValue: 0,
   },
@@ -25,11 +29,31 @@ const Commission = sequelize.define('commission', {
     type: Sequelize.STRING,
     allowNull: true,
   },
-  isActive: {
+  isDeleted: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: true,
+    defaultValue: false,
   },
 });
 
-module.exports =  Commission;
+AgentCommission.hasMany(Commission, {
+  foreignKey: 'agentCommId',
+  as: 'commissions',
+});
+
+Commission.belongsTo(AgentCommission, {
+  foreignKey: 'agentCommId',
+  as: 'agentCommission',
+});
+
+Commission.belongsTo(Category, {
+  foreignKey: 'categoryId',
+  as: 'service',
+});
+
+Commission.belongsTo(Segment, {
+  foreignKey: 'segmentId',
+  as: 'segment',
+});
+
+module.exports = Commission;

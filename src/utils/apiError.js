@@ -1,8 +1,34 @@
+const { StatusCodes } = require('http-status-codes');
 class ApiError extends Error {
-  constructor(message, statusCode = 404) {
+  constructor(message, status) {
     super(message);
-    this.statusCode = statusCode;
+    this.status = status;
+    this.statusText = `${this.status}`.startsWith('4') ? 'Fail' : 'Error';
+    Error.captureStackTrace(this, this.constructor);
   }
 }
 
-module.exports = ApiError;
+class NotFoundError extends ApiError {
+  constructor(message) {
+    super(message, StatusCodes.NOT_FOUND);
+  }
+}
+
+class BadRequestError extends ApiError {
+  constructor(message) {
+    super(message, StatusCodes.BAD_REQUEST);
+  }
+}
+
+class UnAuthorizedError extends ApiError {
+  constructor(message) {
+    super(message, StatusCodes.UNAUTHORIZED);
+  }
+}
+
+module.exports = {
+  ApiError,
+  NotFoundError,
+  BadRequestError,
+  UnAuthorizedError,
+};

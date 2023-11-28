@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../../config/database.js');
-const User = require('../auth/userModel.js');
+const { sequelize } = require('../../config/database.js');
+const User = require('../userModel');
 const Chat = require('../chat/chat.js');
 
 const Message = sequelize.define('message', {
@@ -19,7 +19,6 @@ const Message = sequelize.define('message', {
     allowNull: true,
   },
 });
-
 
 // Define the association between Message and User for the sender
 Message.belongsTo(User, { as: 'sender' });

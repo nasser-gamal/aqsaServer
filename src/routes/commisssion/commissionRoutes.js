@@ -4,51 +4,58 @@ const router = express.Router();
 const commissionControllers = require('../../controllers/commission/commissionControllers.js');
 const links = require('../../links/links.js');
 const validate = require('../../utils/validation.js');
-const auth = require('../../middlewares/auth.js');
-const { checkActive } = require('../../middlewares/checkActive.js');
+const { protected, allowedTo, checkActive } = require('../../middlewares/auth');
+
+router.get(
+  '/me',
+  protected,
+  checkActive,
+  allowedTo(['agent']),
+  commissionControllers.getLoggedUserCommission
+);
 
 router
   .route(links.commission.GET_COMMISSIONS)
   .get(
-    auth.isAuth,
+    protected,
     checkActive,
-    auth.checkUserRole(['superAdmin', 'admin', 'agent']),
-    commissionControllers.getAllCommissions
+    allowedTo(['superAdmin', 'admin']),
+    commissionControllers.getUserCommission
   );
 
 router
   .route(links.commission.GET_COMMISSION)
   .get(
-    auth.isAuth,
+    protected,
     checkActive,
-    auth.checkUserRole(['superAdmin', 'admin']),
+    allowedTo(['superAdmin', 'admin']),
     commissionControllers.getCommission
   );
 
 router
   .route(links.commission.CREATE_COMMISSION)
   .post(
-    auth.isAuth,
+    protected,
     checkActive,
-    auth.checkUserRole(['superAdmin', 'admin']),
+    allowedTo(['superAdmin', 'admin']),
     commissionControllers.addCommission
   );
 
 router
   .route(links.commission.UPDATE_COMMISSION)
   .put(
-    auth.isAuth,
+    protected,
     checkActive,
-    auth.checkUserRole(['superAdmin', 'admin']),
+    allowedTo(['superAdmin', 'admin']),
     commissionControllers.updateCommission
   );
 
 router
   .route(links.commission.DELETE_COMMISSION)
   .delete(
-    auth.isAuth,
+    protected,
     checkActive,
-    auth.checkUserRole(['superAdmin', 'admin']),
+    allowedTo(['superAdmin', 'admin']),
     commissionControllers.deleteCommission
   );
 

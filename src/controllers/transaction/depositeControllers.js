@@ -1,52 +1,41 @@
 const depositeServices = require('../../services/transaction/depositeServices');
 const transactionServices = require('../../services/transaction/transactionServices');
+const asyncHandler = require('express-async-handler');
+const { BadRequestError } = require('../../utils/apiError');
+const sendResponse = require('../../utils/sendResponse');
 
-exports.addDepsite = async (req, res, next) => {
-  try {
-    const data = req.body;
-    const userId = req.user.id;
+exports.addDepsite = asyncHandler(async (req, res, next) => {
+  const data = req.body;
+  const userId = req.user.id;
+  const { message } = await depositeServices.addDeposit(userId, data);
+  sendResponse(res, {
+    statusCode: 201,
+    message,
+  });
+});
 
-    const { message } = await depositeServices.addDeposit(userId, data);
-    return res.status(201).json({ message });
-  } catch (err) {
-    return next(err);
-  }
-};
+exports.updateDeposite = asyncHandler(async (req, res) => {
+  const { transactionId } = req.params;
+  console.log(req.params);
+  const { message } = await depositeServices.updateDeposite(
+    transactionId,
+    req.body
+  );
+  return res.status(200).json({ message });
+});
 
-exports.updateDeposite = async (req, res, next) => {
-  try {
-    const data = req.body;
-    const { transactionId } = req.params;
+exports.getAllDeposites = asyncHandler(async (req, res) => {
+  const { docs, pagination } = await transactionServices.getAllTransactions(
+    req.query,
+    { type: 'ايداع' }
+  );
 
-    const { message } = await depositeServices.updateDeposite(
-      transactionId,
-      data
-    );
-
-    return res.status(200).json({ message });
-  } catch (err) {
-    return next(err);
-  }
-};
-
-exports.getAllDeposites = async (req, res, next) => {
-  try {
-    const { page, limit, order, sort } = req.query;
-    let whereClause = { type: 'ايداع' };
-
-    const { transactions, pagination } =
-      await transactionServices.findAllTransactions(
-        whereClause,
-        page,
-        limit,
-        order,
-        sort
-      );
-    return res.status(200).json({ transactions, pagination });
-  } catch (err) {
-    return next(err);
-  }
-};
+  sendResponse(res, {
+    statusCode: 200,
+    meta: { pagination },
+    data: docs,
+  });
+});
 
 exports.deleteDeposite = async (req, res, next) => {
   try {

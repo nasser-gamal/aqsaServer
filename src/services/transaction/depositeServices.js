@@ -3,6 +3,8 @@ const transactionRepository = require('../../dataAccess/transaction/transactionR
 const transactionServicesUtils = require('../../utils/transactionServicesUtils.js');
 
 const constants = require('../../utils/constants.js');
+const { createDoc, updateDoc, getDoc } = require('../factory.js');
+const { Transaction, BankAccount } = require('../../models/index.js');
 
 const calcDeposite = (
   isPercentage,
@@ -31,18 +33,14 @@ exports.addDeposit = async (userId, data) => {
   const {
     isPercentage,
     bankAccountId,
-    date,
-    number,
     amount,
     providerFees,
     providerPercentage,
-    note,
   } = data;
 
   const bankAccount = await transactionServicesUtils.findBankAccount(
     bankAccountId
   );
-  // const treasury = await transactionServicesUtils.findTreasury();
 
   const { amountTotal, totalProviderDeduction, profit, providerRevenue } =
     calcDeposite(isPercentage, amount, providerFees, providerPercentage);
@@ -51,17 +49,11 @@ exports.addDeposit = async (userId, data) => {
 
   const { balanceBefore, balanceAfter } =
     await transactionServicesUtils.updateBankAccount(bankAccount, amountTotal);
-  // await transactionServicesUtils.updateTreasury(
-  //   treasury,
-  //   +treasury.amountTotal + +profit
-  // );
 
-  await transactionRepository.createOne({
-    isPercentage,
+  await createDoc(Transaction, {
+    ...data,
     type: 'ايداع',
     amount: Number(amount).toFixed(2),
-    number,
-    date,
     providerFees,
     amountTotal,
     providerRevenue,
@@ -73,7 +65,6 @@ exports.addDeposit = async (userId, data) => {
     status,
     createdBy: userId,
     bankAccountId,
-    note,
   });
 
   return { message: constants.CREATE_TRANSACTION_SUCCESS };
@@ -83,22 +74,17 @@ exports.updateDeposite = async (transactionId, data) => {
   const {
     isPercentage,
     bankAccountId,
-    date,
-    number,
     amount,
     providerFees,
     providerPercentage,
-    note,
   } = data;
 
-  // check if the Transaction is exists
-  const transaction = await transactionServicesUtils.isTransactionExists({
-    id: transactionId,
-  });
-
-  const bankAccount = await transactionServicesUtils.findBankAccount(
-    bankAccountId
-  );
+  console.log('data-----------', data);
+  
+  const transaction = await getDoc(Transaction, transactionId);
+  console.log('transaction-------------------', transaction);
+  const bankAccount = await getDoc(BankAccount, bankAccountId);
+  console.log('bankAccount------------------', bankAccount);
 
   const { amountTotal, totalProviderDeduction, profit, providerRevenue } =
     calcDeposite(isPercentage, amount, providerFees, providerPercentage);
@@ -120,10 +106,9 @@ exports.updateDeposite = async (transactionId, data) => {
 
   await bankAccount.update({ balance: bankBalance });
 
-  await transactionRepository.updateOne(transactionId, {
-    isPercentage,
+  await updateDoc(Transaction, transactionId, {
+    ...data,
     amount: Number(amount).toFixed(2),
-    number,
     providerFees,
     amountTotal,
     providerRevenue,
@@ -132,29 +117,20 @@ exports.updateDeposite = async (transactionId, data) => {
     profit,
     balanceAfter,
     status,
-    date,
-    note,
   });
 
   return { message: constants.UPDATE_TRANSACTION_SUCCESS };
 };
 
 exports.deleteDeposite = async (transactionId) => {
-  const transaction = await transactionServicesUtils.isTransactionExists({
-    id: transactionId,
-  });
+  const transaction = await getDoc(Transaction, transactionId);
 
-  const bankAccount = await transactionServicesUtils.findBankAccount(
-    transaction.bankAccountId
-  );
+  const bankAccount = await getDoc(BankAccount, transaction.bankAccountId);
 
   const balance = bankAccount.balance - transaction.amountTotal;
 
-  // update the bank account balance
-  await bankAccount.update({ balance });
-
-  transaction.isDeleted = true;
-  await transaction.save();
+  await updateDoc(BankAccount, transaction.bankAccountId, { balance });
+  await updateDoc(Transaction, transactionId, { isDeleted: true });
 
   return { message: constants.DELETE_TRANSACTION_SUCCESS };
 };

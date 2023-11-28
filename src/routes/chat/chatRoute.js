@@ -2,33 +2,44 @@ const express = require('express');
 const router = express.Router();
 
 const chatControllers = require('../../controllers/chat/chatController.js');
-const links = require('../../links/links.js');
-const validate = require('../../utils/validation.js');
-const auth = require('../../middlewares/auth.js');
-const { checkActive } = require('../../middlewares/checkActive.js');
-const {
-  creatChatValidate,
-} = require('../../utils/validation/chatValidator.js');
+const { protected, allowedTo, checkActive } = require('../../middlewares/auth');
+
+const { creatChatValidate } = require('../../validator/chatValidator');
 
 router
   .route('/')
-  .get(auth.isAuth, checkActive, chatControllers.getLoggedUserChats)
+  .get(protected, checkActive, chatControllers.getLoggedUserChats)
   .post(
-    auth.isAuth,
+    protected,
     checkActive,
-    auth.checkUserRole(['superAdmin']),
+    allowedTo(['superAdmin']),
     creatChatValidate,
     chatControllers.addChat
   );
 
 router
   .route('/:chatId')
-  .get(auth.isAuth, checkActive, chatControllers.getChat)
+  .get(protected, checkActive, chatControllers.getChat)
   .put(
-    auth.isAuth,
+    protected,
     checkActive,
-    auth.checkUserRole(['superAdmin']),
+    allowedTo(['superAdmin']),
     chatControllers.updateChat
+  );
+
+router
+  .route('/:chatId/members/:userId')
+  .post(
+    protected,
+    checkActive,
+    allowedTo(['superAdmin']),
+    chatControllers.addNewMember
+  )
+  .delete(
+    protected,
+    checkActive,
+    allowedTo(['superAdmin']),
+    chatControllers.removeMember
   );
 
 module.exports = router;

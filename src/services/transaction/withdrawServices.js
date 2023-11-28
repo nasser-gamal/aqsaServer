@@ -3,8 +3,6 @@ const transactionServicesUtils = require('../../utils/transactionServicesUtils.j
 
 const constants = require('../../utils/constants.js');
 
-
-
 const calcWithDraw = (
   isPercentage,
   amount,
@@ -20,17 +18,13 @@ const calcWithDraw = (
   let fees = isFeesPercentage ? (+providerFees / 100) * +amount : providerFees;
 
   // المخصوم م البنك
-  let amountTotal = (+amount + +fees).toFixed(2);
+  let amountTotal = (+amount + +fees + +additionalFees).toFixed(2);
 
   let providerRevenue = isPercentage
     ? (providerPercentage / 100) * amountTotal
     : providerPercentage;
   // المخصوم م المزود
-  let totalProviderDeduction = (
-    +amountTotal +
-    +additionalFees -
-    +providerRevenue
-  ).toFixed(2);
+  let totalProviderDeduction = (+amountTotal - +providerRevenue).toFixed(2);
 
   // المخصوم م المركز
   let totalAgentDeduction = (+agentDeduction - +agentRevenue).toFixed(2);
@@ -152,6 +146,8 @@ exports.updateWithDraw = async (transactionId, data) => {
     note,
   } = data;
 
+  console.log(transactionId, data);
+
   // check if the Transaction is exists
   const transaction = await transactionServicesUtils.isTransactionExists({
     id: transactionId,
@@ -191,7 +187,6 @@ exports.updateWithDraw = async (transactionId, data) => {
       totalProviderDeduction,
       bankAccount
     );
-
 
   await bankAccount.update({ balance: bankBalance });
 

@@ -8,6 +8,8 @@ const providerCommissionRepository = require('../../dataAccess/provider/provider
 const feesRepository = require('../../dataAccess/fees/feesRepository');
 const UserCommission = require('../../dataAccess/commission/userCommission.repository');
 const duesRepository = require('../../dataAccess/dues/dues.repository');
+const { sequelize } = require('../../config/database');
+const AgentCommission = require('../../models/commission/agentCommission');
 
 exports.getInventroy = async (query) => {
   const { startDate, endDate } = query;
@@ -16,6 +18,7 @@ exports.getInventroy = async (query) => {
   nextDay.setDate(nextDay.getDate() + 1);
 
   const dateClause = {
+    isDeleted: false,
     date: {
       [Op.between]: [startDate, nextDay.toISOString().slice(0, 10)],
     },
@@ -73,31 +76,33 @@ exports.getInventroy = async (query) => {
   const yearFrom = dateFrom.getFullYear();
   const yearTo = dateTo.getFullYear();
 
-  const { commissions } = await UserCommission.findAll({
-    [Op.or]: [
-      {
-        year: yearFrom,
-        [Op.and]: [
-          { month: { [Op.gte]: monthFrom } },
-          { month: { [Op.lte]: monthTo } },
-        ],
-      },
-      {
-        year: yearTo,
-        [Op.and]: [
-          { month: { [Op.gte]: monthFrom } },
-          { month: { [Op.lte]: monthTo } },
-        ],
-      },
+  const agentCommissions = await AgentCommission.findAll({
+    where: {
+      isDeleted: false,
+      [Op.or]: [
+        {
+          year: yearFrom,
+          [Op.and]: [
+            { month: { [Op.gte]: monthFrom } },
+            { month: { [Op.lte]: monthTo } },
+          ],
+        },
+        {
+          year: yearTo,
+          [Op.and]: [
+            { month: { [Op.gte]: monthFrom } },
+            { month: { [Op.lte]: monthTo } },
+          ],
+        },
+      ],
+    },
+    raw: true,
+    attributes: [
+      [
+        sequelize.fn('SUM', sequelize.literal('commissionAmount')),
+        'commissionAmount',
+      ],
     ],
-  });
-
-  let totalCommission = 0;
-
-  commissions.map((commission) => {
-    commission.commissions.map((com) => {
-      totalCommission += +com.commission;
-    });
   });
 
   const { providerCommissions } = await providerCommissionRepository.findAll(
@@ -121,7 +126,7 @@ exports.getInventroy = async (query) => {
   const totalProfits = (
     +profits +
     +totalProviderCommission -
-    (+totalCommission + +totalFees)
+    (+agentCommissions[0].commissionAmount + +totalFees)
   ).toFixed(2);
 
   const { dues } = await duesRepository.findAll(dateClause);
@@ -131,7 +136,6 @@ exports.getInventroy = async (query) => {
       return acc + due.amount;
     }, 0)
     .toFixed(2);
-
 
   const totalCurrentBalance =
     +totalAgentTreasury -

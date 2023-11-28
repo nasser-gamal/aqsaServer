@@ -1,8 +1,9 @@
 const Transaction = require('../../models/transaction/transactionModel.js');
-const User = require('../../models/auth/userModel.js');
-const BankAccount = require('../../models/banks/bankAccountModel.js');
-const Bank = require('../../models/banks/bankModel.js');
+const User = require('../../models/userModel');
+const BankAccount = require('../../models/bankAccountModel');
+const Bank = require('../../models/bankModel');
 const { pagination } = require('../../utils/pagination.js');
+const ApiFeature = require('../../utils/ApiFeature.js');
 
 exports.createOne = async (data) => {
   try {
@@ -37,6 +38,7 @@ exports.deleteOne = async (transactionId) => {
     throw new Error(err);
   }
 };
+
 
 exports.findAll = async (
   whereClause,
@@ -89,6 +91,7 @@ exports.findAll = async (
     throw new Error(err);
   }
 };
+
 
 exports.findById = async (transactionId) => {
   try {

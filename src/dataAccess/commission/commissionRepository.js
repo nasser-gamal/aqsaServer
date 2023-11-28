@@ -1,7 +1,7 @@
-const User = require('../../models/auth/userModel');
-const Category = require('../../models/category/categoryModel');
+const User = require('../../models/userModel');
+const Category = require('../../models/categoryModel');
 const Commission = require('../../models/commission/commissionModel');
-const Segment = require('../../models/segments/segmentsModel');
+const Segment = require('../../models/segmentsModel');
 const { pagination } = require('../../utils/pagination');
 
 exports.createMany = async (data) => {

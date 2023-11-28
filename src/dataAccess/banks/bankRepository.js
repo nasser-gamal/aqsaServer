@@ -1,4 +1,4 @@
-const BankAccount = require('../../models/banks/bankAccountModel');
+const BankAccount = require('../../models/bankAccountModel');
 const Bank = require('../../models/banks/bankModel');
 
 exports.createOne = async (data) => {

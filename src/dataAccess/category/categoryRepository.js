@@ -1,4 +1,4 @@
-const Category = require('../../models/category/categoryModel');
+const Category = require('../../models/categoryModel');
 const { pagination } = require('../../utils/pagination');
 
 exports.createOne = async (data) => {

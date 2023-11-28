@@ -1,11 +1,13 @@
 const commissionsServices = require('../../services/commission/commissionsServices');
+const sendResponse = require('../../utils/sendResponse');
+const asyncHandler = require('express-async-handler');
 
 exports.addCommission = async (req, res, next) => {
   try {
     const data = req.body;
     const userId = req.user.id;
 
-    const { message } = await commissionsServices.createCommission(
+    const { message } = await commissionsServices.createAgentCommission(
       userId,
       data
     );
@@ -14,6 +16,23 @@ exports.addCommission = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.getUserCommission = asyncHandler(async (req, res, next) => {
+  const { docs } = await commissionsServices.getUserCommission(req.query);
+  sendResponse(res, {
+    statusCode: 200,
+    data: docs,
+  });
+});
+
+exports.getLoggedUserCommission = asyncHandler(async (req, res, next) => {
+  req.query.agentId = req.user.id;
+  const { docs } = await commissionsServices.getUserCommission(req.query);
+  sendResponse(res, {
+    statusCode: 200,
+    data: docs,
+  });
+});
 
 exports.updateCommission = async (req, res, next) => {
   try {
@@ -39,20 +58,6 @@ exports.deleteCommission = async (req, res, next) => {
     );
     return res.status(200).json({ message });
   } catch (err) {
-    return next(err);
-  }
-};
-
-exports.getAllCommissions = async (req, res, next) => {
-  try {
-    const query = req.query;
-    const { userCommission, commissions, totalAmount, totalCommissions } =
-      await commissionsServices.findAllCommissions(query);
-    return res
-      .status(200)
-      .json({ userCommission, commissions, totalAmount, totalCommissions });
-  } catch (err) {
-    return res.status(500).json(err)
     return next(err);
   }
 };

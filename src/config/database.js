@@ -1,15 +1,25 @@
 const Sequelize = require('sequelize');
 const dotenv = require('dotenv');
+const { config } = require('./config');
 dotenv.config();
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USERNAME,
-  process.env.DB_PASSWORD,
+  config.db.db_name,
+  config.db.username,
+  config.db.password,
   {
     dialect: 'mysql',
-    host: process.env.DB_HOST,
+    host: config.db.host,
   }
 );
 
-module.exports = sequelize;
+const connectDB = () => {
+  sequelize
+    .sync()
+    .then((result) => {
+      console.log('db connected');
+    })
+    .catch((err) => console.log(err));
+};
+
+module.exports = { connectDB, sequelize };

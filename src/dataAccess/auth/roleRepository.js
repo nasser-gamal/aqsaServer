@@ -1,4 +1,4 @@
-const Role = require('../../models/auth/roleModel');
+const Role = require('../../models/roleModel');
 
 
 exports.findById = async (roleId) => {

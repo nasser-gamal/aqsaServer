@@ -1,5 +1,5 @@
-const BankAccount = require('../../models/banks/bankAccountModel');
-const Bank = require('../../models/banks/bankModel');
+const BankAccount = require('../../models/bankAccountModel');
+const Bank = require('../../models/bankModel');
 const { pagination } = require('../../utils/pagination');
 
 exports.createOne = async (data) => {

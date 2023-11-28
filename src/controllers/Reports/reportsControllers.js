@@ -1,4 +1,5 @@
 const reportsServices = require('../../services/reports/reportsServices');
+const asyncHandler = require('express-async-handler');
 
 exports.bankAccountReports = async (req, res, next) => {
   try {
@@ -157,17 +158,13 @@ exports.feesReports = async (req, res, next) => {
   }
 };
 
-exports.userCommissionReports = async (req, res, next) => {
-  try {
-    const query = req.query;
+exports.userCommissionReports = asyncHandler(async (req, res, next) => {
+  const query = req.query;
 
-    const { groupedCommissions, totalCommission } =
-      await reportsServices.userCommissionReports(query);
+  // const { groupedCommissions, totalCommission } =
+  const { agentCommissions, totalCommission } =
+    await reportsServices.userCommissionReports(query);
 
-    return res
-      .status(200)
-      .json({ commissions: groupedCommissions, totalCommission });
-  } catch (err) {
-    next(err);
-  }
-};
+  return res.status(200).json({ agentCommissions, totalCommission });
+  // .json({ commissions: groupedCommissions, totalCommission });
+});
