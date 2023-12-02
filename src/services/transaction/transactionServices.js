@@ -10,6 +10,33 @@ const asyncHandler = require('express-async-handler');
 const { sequelize } = require('../../config/database.js');
 const ApiFeature = require('../../utils/ApiFeature.js');
 
+const calcTotalTransactions = (docs) => {
+  const deposite = docs.filter((transaction) => {
+    return transaction.type === 'ايداع';
+  });
+
+  const totalDeposite = deposite
+    .reduce((acc, transaction) => {
+      return acc + transaction.amountTotal;
+    }, 0)
+    .toFixed(2);
+
+  const withdraw = docs.filter((transaction) => {
+    return transaction.type === 'سحب';
+  });
+  const totalWithdraw = withdraw
+    .reduce((total, transaction) => {
+      return (transaction.balanceBefore - transaction.balanceAfter).toFixed(
+        2
+      ) == transaction.amountTotal.toFixed(2)
+        ? total + transaction.amountTotal
+        : total + transaction.providerDeduction;
+    }, 0)
+    .toFixed(2);
+
+  return { totalDeposite, totalWithdraw };
+};
+
 exports.getAllTransactions = asyncHandler(async (queryObj, filterObj) => {
   const { docs, pagination } = await getDocs(Transaction, queryObj, filterObj, [
     {
@@ -25,7 +52,16 @@ exports.getAllTransactions = asyncHandler(async (queryObj, filterObj) => {
       include: [{ model: Bank, attributes: ['id', 'bankName'] }],
     },
   ]);
-  return { docs, pagination };
+
+  const { totalDeposite, totalWithdraw } = calcTotalTransactions(docs);
+
+  const profit = docs
+    .reduce((acc, transaction) => {
+      return acc + transaction.profit;
+    }, 0)
+    .toFixed(2);
+
+  return { docs, pagination, totalDeposite, totalWithdraw, profit };
 });
 
 exports.aggregation = asyncHandler(async (queryObj, filterObj) => {
@@ -35,7 +71,6 @@ exports.aggregation = asyncHandler(async (queryObj, filterObj) => {
     .sort()
     .paginate(numOfDocs);
 
-  
   const docs = await Transaction.findAll({
     where: {
       ...conditions,

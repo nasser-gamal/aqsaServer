@@ -27,7 +27,7 @@ const {
 
 router.use(protected);
 router.use(checkActive);
-router.use(allowedTo(['superAdmin']));
+router.use(allowedTo(['superAdmin', 'admin']));
 
 router.route('/').get(getUsers).post(createUserValidate, createUser);
 

@@ -3,12 +3,11 @@ const transactionServices = require('../../services/transaction/transactionServi
 const sendResponse = require('../../utils/sendResponse.js');
 
 exports.getAllTransactions = asyncHandler(async (req, res) => {
-  const { docs, pagination } = await transactionServices.getAllTransactions(
-    req.query
-  );
+  const { docs, pagination, totalDeposite, totalWithdraw, profit } =
+    await transactionServices.getAllTransactions(req.query);
   sendResponse(res, {
     statusCode: 200,
-    meta: { pagination },
+    meta: { pagination, totalDeposite, totalWithdraw, profit },
     data: docs,
   });
 });
