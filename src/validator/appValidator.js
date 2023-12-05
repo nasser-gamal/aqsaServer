@@ -12,12 +12,13 @@ exports.createAppValidate = [
 
     // Check if the uploaded file is an image
     const allowedImageTypes = ['image/jpeg', 'image/png'];
-    const isImage = imgFile.every((file) =>
-      allowedImageTypes.includes(file.mimetype)
-    );
-
-    if (!isImage) {
-      throw new BadRequestError('الرجاء تحميل صورة صحيحة (jpeg أو png)');
+    if (imgFile) {
+      const isImage = imgFile.every((file) =>
+        allowedImageTypes.includes(file.mimetype)
+      );
+        if (!isImage) {
+          throw new BadRequestError('الرجاء تحميل صورة صحيحة (jpeg أو png)');
+        }
     }
 
     return true;
