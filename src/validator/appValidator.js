@@ -40,12 +40,15 @@ exports.createAppValidate = [
 
     // Check if the uploaded file is an APK
     const allowedApkTypes = ['application/vnd.android.package-archive'];
-    const isApk = apkFile.every((file) =>
-      allowedApkTypes.includes(file.mimetype)
-    );
+    if (apkFile) {
+          const isApk = apkFile.every((file) =>
+            allowedApkTypes.includes(file.mimetype)
+          );
 
-    if (!isApk) {
-      throw new BadRequestError('الرجاء تحميل ملف APK صحيح');
+          if (!isApk) {
+            throw new BadRequestError('الرجاء تحميل ملف APK صحيح');
+          }
+
     }
 
     return true;
