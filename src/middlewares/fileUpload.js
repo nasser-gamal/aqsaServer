@@ -12,18 +12,6 @@ const storage = multer.diskStorage({
   },
 });
 
-// const fileFilter = (req, file, cb) => {
-//   if (!file) {
-//     return cb(new BadRequestError('اختر الصورة'));
-//   }
-
-//   const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
-//   if (!allowedMimeTypes.includes(file.mimetype)) {
-//     return cb(new BadRequestError('الصورة غير صالحة'));
-//   }
-
-//   cb(null, true);
-// };
 
 const upload = multer({ storage });
 

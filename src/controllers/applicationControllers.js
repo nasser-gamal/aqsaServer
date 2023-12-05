@@ -31,7 +31,6 @@ exports.getApp = asyncHandler(async (req, res) => {
 
 exports.updateApp = asyncHandler(async (req, res) => {
   const { appId } = req.params;
-
   const { message } = await applicationServices.updateApp(
     appId,
     req.files,
