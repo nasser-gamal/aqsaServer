@@ -17,6 +17,7 @@ exports.getDocs = asyncHandler(
       .search();
 
     const { conditions, sortArr, included, excluded, keyword } = features;
+    console.log('included-----,', included);
 
     const numOfDocs = (
       await modelName.findAndCountAll({

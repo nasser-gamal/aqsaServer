@@ -140,7 +140,7 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  methods: ['GET', 'POST'], // Specify the HTTP methods allowed
+  methods: ['GET', 'POST', 'DELETE', 'PUT'], // Specify the HTTP methods allowed
   optionsSuccessStatus: 204, // Respond with a 204 status for preflight requests
   credentials: true,
 };

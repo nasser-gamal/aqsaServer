@@ -12,6 +12,7 @@ exports.createUser = asyncHandler(async (req, res) => {
 });
 
 exports.getUsers = asyncHandler(async (req, res) => {
+  console.log(req.query)
   const { docs, pagination } = await userServices.getUsers(req.query);
   sendResponse(res, {
     statusCode: 200,
@@ -64,6 +65,18 @@ exports.updatePassword = asyncHandler(async (req, res) => {
   sendResponse(res, {
     statusCode: 200,
     message,
+  });
+});
+
+exports.getAgents = asyncHandler(async (req, res) => {
+  const { docs } = await userServices.getUsers({
+    roleId: 3,
+    limit: 99999,
+    fields: '-nationalId,-email,-role,-roldId',
+  });
+  sendResponse(res, {
+    statusCode: 200,
+    data: docs,
   });
 });
 

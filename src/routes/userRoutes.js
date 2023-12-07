@@ -10,6 +10,7 @@ const {
   updatePassword,
   updateUserStatus,
   deleteUser,
+  getAgents,
 } = require('../controllers/userControllers.js');
 const { protected, allowedTo, checkActive } = require('../middlewares/auth');
 const { checkPassword } = require('../middlewares/checkPassword');
@@ -25,11 +26,13 @@ const {
 
 
 
+router.get('/agents', getAgents)
 router.use(protected);
 router.use(checkActive);
 router.use(allowedTo(['superAdmin', 'admin']));
 
 router.route('/').get(getUsers).post(createUserValidate, createUser);
+
 
 router
   .route('/:userId')
