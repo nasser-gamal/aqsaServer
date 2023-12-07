@@ -13,7 +13,8 @@ exports.config = {
   jwt: {
     secret: process.env.JWT_SECRET,
   },
-  client_URL: process.env.CLIENT_URL,
+  client_URL_1: process.env.CLIENT_URL_1,
+  client_URL_2: process.env.CLIENT_URL_2,
   sms: {
     url: process.env.SMS_API,
     username: process.env.SMS_USER_NAME,

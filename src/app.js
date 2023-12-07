@@ -85,7 +85,6 @@ Segment.belongsTo(User, {
   as: 'creator',
 });
 
-
 Fees.belongsTo(User, {
   foreignKey: 'createdBy',
   as: 'creator',
@@ -131,12 +130,22 @@ Dues.belongsTo(User, {
   as: 'creator',
 });
 
+const allowedOrigins = [config.client_URL_1, config.client_URL_2];
+
 const corsOptions = {
-  origin: config.client_URL,
+   origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST'], // Specify the HTTP methods allowed
+  optionsSuccessStatus: 204, // Respond with a 204 status for preflight requests
   credentials: true,
-  // allowedHeaders: ['Content-Type', 'Authorization'],
-  // methods: ['GET', 'POST', 'PUT', 'DELETE'],
 };
+  // origin: config.client_URL,
+  // credentials: true,
 
 // app.use((req, res, next) => {
 //   res.header('Access-Control-Allow-Origin', config.CLIENT_URL);
