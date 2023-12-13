@@ -18,7 +18,12 @@ const calcWithDraw = (
   let fees = isFeesPercentage ? (+providerFees / 100) * +amount : providerFees;
 
   // المخصوم م البنك
-  let amountTotal = (+amount + +fees + +additionalFees).toFixed(2);
+  let amountTotal = (
+    +amount +
+    +fees +
+    +additionalFees -
+    +additionalRevenue
+  ).toFixed(2);
 
   let providerRevenue = isPercentage
     ? (providerPercentage / 100) * amountTotal
@@ -145,7 +150,6 @@ exports.updateWithDraw = async (transactionId, data) => {
     isFeesPercentage,
     note,
   } = data;
-
 
   // check if the Transaction is exists
   const transaction = await transactionServicesUtils.isTransactionExists({
