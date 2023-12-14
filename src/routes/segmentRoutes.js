@@ -16,10 +16,12 @@ const {
   deleteSegmentValidate,
 } = require('../validator/segmentValidator');
 
+
+router.get('/', getSegments);
+
 router.use(protected);
 router.use(checkActive);
 
-router.get('/', getSegments);
 
 router.use(allowedTo(['superAdmin', 'admin']));
 
