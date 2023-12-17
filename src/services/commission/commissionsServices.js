@@ -125,6 +125,8 @@ exports.createAgentCommission = async (userId, data) => {
       0
     );
     const segment = await findSegment(categoryId, amountTotal);
+    agentTotalAmount += 1;
+    console.log(agentTotalAmount);
     const commissionAmount = calcCommission(amountTotal, segment.percentage);
 
     const commission = await createCommission(
@@ -138,7 +140,7 @@ exports.createAgentCommission = async (userId, data) => {
 
     await createCommissionItem(category, commission.id);
 
-    agentTotalAmount += amountTotal;
+    // agentTotalAmount += amountTotal;
     agentTotalCount += totalCount;
     agentTotalCommission += commissionAmount;
   });
