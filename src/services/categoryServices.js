@@ -20,7 +20,7 @@ exports.findAllCategories = asyncHandler(async (query, filterObj) =>
     [
     {
       model: SubCategory,
-      // where: { isDeleted: false },
+      where: { isDeleted: false },
       attributes: ['id', 'name', 'categoryId'],
     },
   ]

@@ -199,20 +199,24 @@ exports.getUserCommission = asyncHandler(async (query, queryObj) => {
         {
           model: Category,
           as: 'service',
+          // where: { isDeleted: false },
           attributes: ['id', 'name'],
         },
         {
           model: Segment,
           as: 'segment',
+          // where: { isDeleted: false },
           attributes: ['id', 'title', 'percentage'],
         },
         {
           model: CommissionItems,
           as: 'commissionItems',
+          // where: { isDeleted: false },
           include: [
             {
               model: SubCategory,
               as: 'subCategory',
+              // where: { isDeleted: false },
               attributes: ['id', 'name'],
             },
           ],
