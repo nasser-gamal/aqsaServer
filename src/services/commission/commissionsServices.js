@@ -100,7 +100,8 @@ const createCommissionItem = asyncHandler(async (category, commissionId) => {
 });
 
 exports.createAgentCommission = async (userId, data) => {
-  const { agentId, month, year } = data;
+  try {
+    const { agentId, month, year } = data;
 
   const agentCommission = await createDoc(AgentCommission, {
     agentId,
@@ -124,7 +125,6 @@ exports.createAgentCommission = async (userId, data) => {
       0
     );
     const segment = await findSegment(categoryId, amountTotal);
-    console.log(segment);
     const commissionAmount = calcCommission(amountTotal, segment.percentage);
 
     const commission = await createCommission(
@@ -145,14 +145,15 @@ exports.createAgentCommission = async (userId, data) => {
 
   await Promise.all(promises);
 
-  console.log(agentTotalAmount);
-  console.log(agentTotalAmount)
   await updateDoc(AgentCommission, agentCommission.id, {
     amountTotal: agentTotalAmount,
     totalCount: agentTotalCount,
     commissionAmount: agentTotalCommission,
   });
   return { message: constants.CREATE_COMMISSION_SUCCESS };
+  } catch (err) {
+    console.log('error -------------------------------------', err)
+ }
 };
 
 exports.updateCommission = async (commissionId, data) => {
