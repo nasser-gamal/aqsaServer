@@ -36,6 +36,7 @@ const isCommissionExist = async (commissionId) => {
 const findSegment = async (serviceId, amountTotal) => {
   const query = {
     serviceId,
+    isDeleted: false,
     [Op.or]: [
       {
         start: { [Op.lte]: amountTotal },
@@ -143,6 +144,8 @@ exports.createAgentCommission = async (userId, data) => {
 
   await Promise.all(promises);
 
+  console.log(agentTotalAmount);
+  console.log(agentTotalAmount)
   await updateDoc(AgentCommission, agentCommission.id, {
     amountTotal: agentTotalAmount,
     totalCount: agentTotalCount,
