@@ -9,11 +9,6 @@ const User = require('../models/userModel');
 const Role = require('../models/roleModel');
 const { sequelize } = require('../config/database.js');
 
-const isUserExist = async (userId) => {
-  const user = await userRepository.findById(userId);
-  return checkResourceExists(user, constants.USER_NOT_FOUND);
-};
-
 exports.createUser = asyncHandler(async (data) => {
   // Generate Rendom Passwordّ
   data.password = generatePassword();
@@ -21,7 +16,7 @@ exports.createUser = asyncHandler(async (data) => {
 
   let message = `الرقم السري الخاص بك ${data.password}`;
 
-  // const response = await sendSMSMessage(phoneNumber, message);
+  const response = await sendSMSMessage(phoneNumber, message);
   // if (response.code !== 1901) {
   //   throw new BadRequestError(constants.SMS_ERROR);
   // }
@@ -66,8 +61,9 @@ exports.updatePasswordManual = asyncHandler(async (userId, body) => {
 exports.updatePassword = asyncHandler(async (userId) => {
   const user = await getDoc(User, userId);
 
-  const password = await user.hashPassword(generatePassword());
-  await updateDoc(User, userId, { password });
+  const password = generatePassword();
+  const hashPassword = await user.hashPassword(password);
+  await updateDoc(User, userId, { password: hashPassword });
 
   // send password as SMS Message to the user
   let message = `الرقم السري الخاص بك ${password}`;

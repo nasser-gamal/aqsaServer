@@ -49,7 +49,6 @@ router.put(
 
 router.put(
   '/update-password-manual/:userId',
-  updateUser,
   updatePasswordManualValidate,
   updatePasswordManual
 );

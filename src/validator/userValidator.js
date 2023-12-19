@@ -98,19 +98,18 @@ exports.updateUserStatusValidate = [
 
 exports.updatePasswordValidate = [
   check('userId').isInt().withMessage('invalid user id'),
-  body('password')
-    .trim()
-    .not()
-    .isEmpty()
-    .withMessage('ادخل  كلمة المرور')
-    .isLength({ min: 8, max: 30 })
-    .withMessage(' كلمة سر يجب ان تكون علي الاقل 8 حروف او 30 حرف علي الاكثر '),
   validatorMiddleware,
 ];
 
 exports.updatePasswordManualValidate = [
   check('userId').isInt().withMessage('invalid user id'),
-  body('password').notEmpty().withMessage('الرقم السري الجديد مطلوب'),
+  body('password')
+    .trim()
+    .not()
+    .isEmpty()
+    .withMessage('ادخل  كلمة المرور')
+    .isLength({ min: 6, max: 30 })
+    .withMessage(' كلمة سر يجب ان تكون علي الاقل 8 حروف او 30 حرف علي الاكثر '),
   validatorMiddleware,
 ];
 
