@@ -10,15 +10,9 @@ router.use(protected);
 router.use(checkActive);
 router.use(allowedTo(['superAdmin', 'admin']));
 
-router.route('/').get(transferControllers.getTransfers);
-
 router
-  .route('/:transactionId')
-  .get(transferControllers.getTransfer)
-  .delete(transferControllers.deleteTransfer);
-
-router
-  .route(links.transaction.CREATE_TRANSACTION)
+  .route('/')
+  .get(transferControllers.getTransfers)
   .post(
     validate.transferValidate,
     validate.validateInputs,
@@ -26,11 +20,13 @@ router
   );
 
 router
-  .route(links.transaction.UPDATE_TRANSFER)
+  .route('/:transactionId')
+  .get(transferControllers.getTransfer)
   .put(
     validate.transferValidate,
     validate.validateInputs,
     transferControllers.updateTransfer
-  );
+  )
+  .delete(transferControllers.deleteTransfer);
 
 module.exports = router;
