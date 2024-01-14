@@ -655,8 +655,11 @@ exports.exportTransferReportExcel = async (query) => {
 exports.feesReports = async (query) => {
   const { startDate, endDate, page, limit, order, sort } = query;
 
+  console.log('query', query);
+  
   const nextDay = new Date(endDate);
   nextDay.setDate(nextDay.getDate() + 1);
+  console.log('nextDay', nextDay);
 
   const whereClause = {
     date: {
