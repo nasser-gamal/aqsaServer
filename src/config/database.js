@@ -10,6 +10,7 @@ const sequelize = new Sequelize(
   {
     dialect: 'mysql',
     host: config.db.host,
+    logging: false, // Disable logging
   }
 );
 
