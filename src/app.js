@@ -168,7 +168,7 @@ app.use('*', (req, res, next) => {
 });
 app.use(globlaError);
 
-const PORT = config.app.port || 5000;
+const PORT = config.app.port || 3000;
 
 connectDB();
 

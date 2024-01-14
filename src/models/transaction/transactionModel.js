@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+﻿const Sequelize = require('sequelize');
 const { sequelize } = require('../../config/database.js');
 
 const Transaction = sequelize.define('transaction', {
@@ -105,6 +105,7 @@ const Transaction = sequelize.define('transaction', {
   },
   isDeleted: {
     type: Sequelize.BOOLEAN,
+    allowNull: false,
     defaultValue: false,
   },
   note: {
